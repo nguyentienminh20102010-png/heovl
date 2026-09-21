@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PINKGAME.SHOP — Shop Mini Game</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fff7fa;
+  --surface:#ffffff;
+  --surface-2:#ffeef5;
+  --line:#ffd5e6;
+  --text:#4a2338;
+  --muted:#96708a;
+  --brand:#ff7ab2;
+  --brand-strong:#ff4d97;
+  --brand-soft:#ffe1ee;
+  --accent:#ffd166;
+  --ok:#3fbf8f;
+  --bad:#ff5d6c;
+  --shadow:0 10px 28px rgba(255,120,175,.18);
+  --radius:18px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#2a1622; --surface:#381f2e; --surface-2:#452537; --line:#5a3147;
+    --text:#ffe9f2; --muted:#d2a8bf; --brand:#ff8cc0; --brand-strong:#ff69ad;
+    --brand-soft:#4d2a3c; --shadow:0 10px 28px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#2a1622; --surface:#381f2e; --surface-2:#452537; --line:#5a3147;
+  --text:#ffe9f2; --muted:#d2a8bf; --brand:#ff8cc0; --brand-strong:#ff69ad;
+  --brand-soft:#4d2a3c; --shadow:0 10px 28px rgba(0,0,0,.35);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px)}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  font-size:15px; line-height:1.55;
+}
+img{max-width:100%}
+button{font-family:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+
+/* ---------- HEADER ---------- */
+.topbar{
+  position:sticky; top:env(safe-area-inset-top,0px); z-index:40;
+  background:linear-gradient(90deg,var(--brand),var(--brand-strong));
+  box-shadow:var(--shadow);
+}
+.topbar .wrap{display:flex;align-items:center;gap:8px;min-height:58px;flex-wrap:wrap}
+.nav{display:flex;gap:4px;flex:1;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{
+  color:#fff;text-decoration:none;font-weight:600;font-size:14px;
+  padding:8px 12px;border-radius:999px;white-space:nowrap;
+}
+.nav a:hover{background:rgba(255,255,255,.22)}
+.me{display:flex;align-items:center;gap:8px;color:#fff;font-weight:700;white-space:nowrap}
+.avatar{width:34px;height:34px;border-radius:50%;background:#fff;color:var(--brand-strong);
+  display:grid;place-items:center;font-weight:800;font-size:15px}
+
+.searchrow{background:var(--surface);border-bottom:1px solid var(--line)}
+.searchrow .wrap{display:flex;gap:10px;align-items:center;padding-top:12px;padding-bottom:12px;flex-wrap:wrap}
+.logo{width:44px;height:44px;border-radius:14px;background:var(--brand-soft);display:grid;place-items:center;font-size:24px}
+.search{
+  flex:1;min-width:180px;display:flex;align-items:center;gap:8px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:10px 16px;
+}
+.search input{flex:1;border:0;background:transparent;outline:none;color:var(--text);font-size:14px}
+.btn{
+  border:0;border-radius:999px;padding:11px 18px;font-weight:700;font-size:14px;cursor:pointer;
+  background:linear-gradient(90deg,var(--brand),var(--brand-strong));color:#fff;
+  box-shadow:0 6px 16px rgba(255,90,160,.3);transition:transform .12s ease;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn.ghost{background:var(--surface);color:var(--brand-strong);border:1.5px solid var(--brand);box-shadow:none}
+.btn.small{padding:8px 14px;font-size:13px}
+.btn.block{width:100%;display:block}
+.btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+
+/* ---------- HERO ---------- */
+.hero{
+  margin:18px 0; border-radius:24px; overflow:hidden; position:relative;
+  background:linear-gradient(120deg,#ffd7e9,#ffeaf3 45%,#ffe0c9);
+  border:1px solid var(--line); box-shadow:var(--shadow);
+}
+.hero-in{padding:34px 24px;display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.hero h1{
+  margin:0 0 6px;font-size:clamp(26px,5vw,44px);line-height:1.1;font-weight:800;
+  color:#c9256f; letter-spacing:.5px;
+}
+.hero p{margin:0;color:#8e3d69;font-weight:600;max-width:520px}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.badge{background:#fff;border:1px solid #ffc4dd;color:#c9256f;border-radius:999px;padding:6px 14px;font-size:12.5px;font-weight:700}
+.hero-emoji{font-size:clamp(56px,14vw,110px);filter:drop-shadow(0 8px 14px rgba(200,40,110,.25))}
+
+/* ---------- CHIPS ---------- */
+.chips{display:flex;gap:10px;overflow-x:auto;padding:4px 0 14px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{
+  flex:0 0 auto;background:var(--surface);border:1px solid var(--line);border-radius:16px;
+  padding:10px 16px;font-weight:700;font-size:13px;color:var(--text);cursor:pointer;white-space:nowrap;
+}
+.chip[aria-pressed="true"]{background:var(--brand);color:#fff;border-color:var(--brand)}
+
+/* ---------- LAYOUT ---------- */
+.cols{display:grid;grid-template-columns:300px 1fr;gap:18px;align-items:start}
+@media (max-width:860px){.cols{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.card-h{background:linear-gradient(90deg,var(--brand),var(--brand-strong));color:#fff;padding:12px 16px;font-weight:800;display:flex;align-items:center;gap:8px}
+.card-b{padding:14px 16px}
+.rank{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line)}
+.rank:last-child{border-bottom:0}
+.rank .n{width:26px;height:26px;border-radius:9px;display:grid;place-items:center;font-weight:800;font-size:13px;background:var(--brand-soft);color:var(--brand-strong)}
+.rank .n.g1{background:#ffd166;color:#7a4b00}
+.rank .n.g2{background:#d9dde3;color:#4a5560}
+.rank .n.g3{background:#f0b47a;color:#6b3b12}
+.rank .nm{flex:1;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank .sc{font-weight:800;color:var(--brand-strong);font-size:13.5px}
+
+.section-title{
+  display:inline-block;margin:22px 0 14px;font-size:22px;font-weight:800;color:var(--brand-strong);
+  background:var(--brand-soft);padding:6px 16px;border-radius:12px;
+}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.game{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.game:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(255,110,170,.26)}
+.thumb{height:130px;display:grid;place-items:center;font-size:54px;position:relative}
+.tag{position:absolute;top:10px;left:10px;background:var(--bad);color:#fff;font-size:11px;font-weight:800;padding:4px 10px;border-radius:8px;letter-spacing:.4px}
+.game h3{margin:0;padding:12px 14px 0;font-size:15.5px;font-weight:800}
+.game p{margin:4px 14px 0;color:var(--muted);font-size:13px;flex:1}
+.game .foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px}
+.price{font-weight:800;color:var(--brand-strong);font-size:14px}
+
+/* ---------- FOOTER ---------- */
+footer{margin-top:34px;border-top:2px solid var(--line);background:var(--surface)}
+footer .wrap{display:flex;gap:24px;flex-wrap:wrap;justify-content:space-between;padding-top:26px;padding-bottom:34px}
+footer h4{color:var(--brand-strong);margin:0 0 8px}
+footer p{margin:0;color:var(--muted);font-size:13.5px;max-width:460px}
+.socials{display:flex;gap:10px;margin-top:12px}
+.soc{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--brand);color:var(--brand-strong);
+  display:grid;place-items:center;font-size:17px;background:var(--surface)}
+
+/* ---------- MODAL ---------- */
+.overlay{
+  position:fixed;inset:0;background:rgba(80,20,50,.45);backdrop-filter:blur(3px);
+  display:none;align-items:center;justify-content:center;z-index:60;padding:16px;
+  padding-top:calc(16px + env(safe-area-inset-top,0px));
+  padding-bottom:calc(16px + env(safe-area-inset-bottom,0px));
+}
+.overlay.open{display:flex}
+.modal{
+  background:var(--surface);border-radius:22px;box-shadow:0 24px 60px rgba(120,20,70,.35);
+  width:100%;max-width:420px;max-height:100%;overflow:auto;border:1px solid var(--line);
+}
+.modal.wide{max-width:600px}
+.modal-h{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--line)}
+.modal-h b{font-size:17px;color:var(--brand-strong)}
+.x{border:0;background:var(--surface-2);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;color:var(--text)}
+.modal-b{padding:18px}
+.tabs{display:flex;gap:8px;margin-bottom:16px;background:var(--surface-2);padding:5px;border-radius:14px}
+.tabs button{flex:1;border:0;background:transparent;padding:9px;border-radius:10px;font-weight:700;cursor:pointer;color:var(--muted)}
+.tabs button[aria-selected="true"]{background:var(--brand);color:#fff}
+label{display:block;font-size:13px;font-weight:700;margin:12px 0 5px}
+input[type=text],input[type=password],input[type=email],input[type=number]{
+  width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid var(--line);
+  background:var(--surface-2);color:var(--text);outline:none;font-size:14.5px;font-family:inherit;
+}
+input:focus{border-color:var(--brand)}
+.hint{font-size:12px;color:var(--muted);margin-top:5px}
+.msg{margin-top:12px;padding:10px 12px;border-radius:12px;font-size:13.5px;font-weight:600;display:none}
+.msg.show{display:block}
+.msg.err{background:#ffe3e6;color:#b3273a}
+.msg.ok{background:#e0f7ee;color:#1d7a5a}
+:root[data-theme="dark"] .msg.err{background:#5c2530;color:#ffc9d1}
+:root[data-theme="dark"] .msg.ok{background:#1e4d3e;color:#bdf0dd}
+.sep{display:flex;align-items:center;gap:10px;margin:16px 0;color:var(--muted);font-size:12.5px}
+.sep::before,.sep::after{content:"";height:1px;background:var(--line);flex:1}
+.gbtn{
+  width:100%;display:flex;align-items:center;justify-content:center;gap:10px;
+  padding:11px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);
+  color:var(--text);font-weight:700;cursor:pointer;font-size:14px;
+}
+.gbtn:hover{background:var(--surface-2)}
+
+/* ---------- GAME AREA ---------- */
+#gameArea{min-height:220px}
+.center{text-align:center}
+.big{font-size:20px;font-weight:800;margin:10px 0}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+.pick{font-size:34px;background:var(--surface-2);border:2px solid var(--line);border-radius:16px;
+  width:74px;height:74px;cursor:pointer}
+.pick:hover{border-color:var(--brand)}
+.board{display:grid;grid-template-columns:repeat(3,74px);gap:8px;justify-content:center;margin:14px auto}
+.cell{width:74px;height:74px;border-radius:14px;border:2px solid var(--line);background:var(--surface-2);
+  font-size:32px;font-weight:800;cursor:pointer;color:var(--brand-strong)}
+.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:330px;margin:14px auto}
+.mcard{aspect-ratio:1;border-radius:14px;border:2px solid var(--line);background:var(--brand);
+  font-size:26px;cursor:pointer;display:grid;place-items:center;color:transparent}
+.mcard.up{background:var(--surface-2);color:var(--text)}
+.mcard.done{background:#dff6ec;border-color:#9fdcc4;color:var(--text);cursor:default}
+canvas{background:var(--surface-2);border:2px solid var(--line);border-radius:16px;display:block;margin:12px auto;touch-action:none;max-width:100%}
+.pad{display:grid;grid-template-columns:repeat(3,54px);gap:6px;justify-content:center;margin-top:10px}
+.pad button{height:48px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface-2);font-size:18px;cursor:pointer;color:var(--text)}
+.pad .sp{visibility:hidden}
+.react{height:170px;border-radius:16px;display:grid;place-items:center;cursor:pointer;font-weight:800;font-size:17px;color:#fff;margin:12px 0;user-select:none}
+.stat{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.stat span{background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:13px;font-weight:700}
+.coin{background:var(--accent);color:#6b4a00;border-radius:999px;padding:4px 12px;font-weight:800;font-size:13px}
+.notice{background:var(--brand-soft);border:1px dashed var(--brand);border-radius:14px;padding:12px 14px;font-size:13px;color:var(--text);margin-top:16px}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <nav class="nav">
+      <a href="#home">Trang chủ</a>
+      <a href="#games">Kho mini game</a>
+      <a href="#top">Bảng xếp hạng</a>
+      <a href="#huongdan">Hướng dẫn</a>
+      <a href="#lienhe">Liên hệ</a>
+    </nav>
+    <div class="me">
+      <span id="coinBox" class="coin" style="display:none">0 xu</span>
+      <div class="avatar" id="avatar">?</div>
+      <span id="meName">Khách</span>
+      <button class="btn ghost small" id="logoutBtn" style="display:none">Thoát</button>
+    </div>
+  </div>
+</header>
+
+<div class="searchrow">
+  <div class="wrap">
+    <div class="logo">🎀</div>
+    <div class="search">
+      <span>🔍</span>
+      <input id="q" type="text" placeholder="Nhập tên mini game bạn muốn tìm...">
+    </div>
+    <button class="btn" id="authBtn">Đăng ký / Đăng nhập</button>
+  </div>
+</div>
+
+<main class="wrap" id="home">
+
+  <section class="hero">
+    <div class="hero-in">
+      <div>
+        <h1>PINKGAME.SHOP</h1>
+        <p>Kho mini game chơi ngay trên web — không cần tải, không cần acc game, đăng nhập là chơi và tích xu.</p>
+        <div class="badges">
+          <span class="badge">🎀 Uy tín</span>
+          <span class="badge">⚡ Chơi ngay</span>
+          <span class="badge">🪙 Tích xu miễn phí</span>
+          <span class="badge">📱 Chơi trên điện thoại</span>
+        </div>
+      </div>
+      <div class="hero-emoji">🕹️</div>
+    </div>
+  </section>
+
+  <div class="chips" id="chips">
+    <button class="chip" data-f="all" aria-pressed="true">🎮 Tất cả</button>
+    <button class="chip" data-f="tuduy" aria-pressed="false">🧠 Tư duy</button>
+    <button class="chip" data-f="phanxa" aria-pressed="false">⚡ Phản xạ</button>
+    <button class="chip" data-f="maylan" aria-pressed="false">🎲 May rủi</button>
+    <button class="chip" data-f="cothu" aria-pressed="false">♟️ Cờ</button>
+  </div>
+
+  <div class="cols">
+    <div>
+      <div class="card" id="top">
+        <div class="card-h">🏆 TOP THỦ</div>
+        <div class="card-b" id="topList"></div>
+      </div>
+
+      <div class="card" style="margin-top:16px" id="huongdan">
+        <div class="card-h">📌 HƯỚNG DẪN</div>
+        <div class="card-b" style="font-size:13.5px;color:var(--muted)">
+          <p style="margin:0 0 8px">1. Bấm <b>Đăng ký / Đăng nhập</b> để tạo tài khoản.</p>
+          <p style="margin:0 0 8px">2. Mật khẩu phải có <b>tối thiểu 8 ký tự</b>.</p>
+          <p style="margin:0 0 8px">3. Chọn một mini game bất kỳ và bấm <b>CHƠI NGAY</b>.</p>
+          <p style="margin:0">4. Thắng game sẽ được cộng <b>xu</b> và leo bảng xếp hạng.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="games">
+      <span class="section-title">🎮 KHO MINI GAME</span>
+      <div class="grid" id="gameGrid"></div>
+    </div>
+  </div>
+</main>
+
+<footer id="lienhe">
+  <div class="wrap">
+    <div>
+      <h4>PINKGAME.SHOP</h4>
+      <p>Trang web mini game giải trí — toàn bộ trò chơi được viết bằng code và chạy trực tiếp trên trình duyệt của bạn.</p>
+    </div>
+    <div>
+      <h4>LIÊN HỆ HỖ TRỢ</h4>
+      <p>Có góp ý hoặc muốn thêm game mới? Nhắn cho bộ phận hỗ trợ để được phản hồi sớm nhất.</p>
+      <div class="socials"><div class="soc">📞</div><div class="soc">💬</div><div class="soc">✉️</div></div>
+    </div>
+  </div>
+</footer>
+
+<!-- AUTH MODAL -->
+<div class="overlay" id="authModal">
+  <div class="modal">
+    <div class="modal-h"><b id="authTitle">Đăng nhập</b><button class="x" data-close>✕</button></div>
+    <div class="modal-b">
+      <div class="tabs">
+        <button id="tabLogin" aria-selected="true">Đăng nhập</button>
+        <button id="tabReg" aria-selected="false">Đăng ký</button>
+      </div>
+
+      <div id="formLogin">
+        <label for="li_user">Tên đăng nhập</label>
+        <input id="li_user" type="text" placeholder="Nhập tên tài khoản" autocomplete="username">
+        <label for="li_pass">Mật khẩu</label>
+        <input id="li_pass" type="password" placeholder="Nhập mật khẩu" autocomplete="current-password">
+        <div class="msg" id="li_msg"></div>
+        <button class="btn block" id="doLogin" style="margin-top:16px">Đăng nhập</button>
+      </div>
+
+      <div id="formReg" style="display:none">
+        <label for="rg_user">Tên đăng nhập</label>
+        <input id="rg_user" type="text" placeholder="VD: trumgame123" autocomplete="username">
+        <div class="hint">3–20 ký tự, chỉ gồm chữ, số và dấu _</div>
+        <label for="rg_pass">Mật khẩu</label>
+        <input id="rg_pass" type="password" placeholder="Tối thiểu 8 ký tự" autocomplete="new-password">
+        <div class="hint">Mật khẩu phải có tối thiểu 8 ký tự.</div>
+        <label for="rg_pass2">Nhập lại mật khẩu</label>
+        <input id="rg_pass2" type="password" placeholder="Nhập lại mật khẩu" autocomplete="new-password">
+        <div class="msg" id="rg_msg"></div>
+        <button class="btn block" id="doReg" style="margin-top:16px">Tạo tài khoản</button>
+      </div>
+
+      <div class="sep">hoặc</div>
+      <button class="gbtn" id="googleBtn">
+        <span style="font-weight:800;color:#4285F4">G</span> Tiếp tục với Google
+      </button>
+      <div class="notice">
+        Tài khoản được lưu ngay trên trình duyệt của bạn (demo). Nút Google ở đây là bản mô phỏng giao diện, chưa kết nối tài khoản Google thật.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GAME MODAL -->
+<div class="overlay" id="gameModal">
+  <div class="modal wide">
+    <div class="modal-h"><b id="gameTitle">Game</b><button class="x" data-close>✕</button></div>
+    <div class="modal-b"><div id="gameArea"></div></div>
+  </div>
+</div>
+
+<script>
+/* ================= STORAGE ================= */
+const K_USERS='pg_users', K_SESS='pg_sess';
+function load(k,d){ try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;} }
+function save(k,v){ try{localStorage.setItem(k,JSON.stringify(v));}catch(e){} }
+function hash(s){let h=5381;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))>>>0;return 'h'+h.toString(36);}
+
+let users=load(K_USERS,null);
+if(!users){
+  users={
+    "anonymous":{p:null,coin:3920,google:false},
+    "linh_xinh":{p:null,coin:2750,google:false},
+    "hoangpro":{p:null,coin:1980,google:false},
+    "meomeo":{p:null,coin:1200,google:false},
+    "bin_gaming":{p:null,coin:860,google:false}
+  };
+  save(K_USERS,users);
+}
+let sess=load(K_SESS,null);
+
+/* ================= AUTH UI ================= */
+const $=id=>document.getElementById(id);
+const authModal=$('authModal'), gameModal=$('gameModal');
+function openM(m){m.classList.add('open')} function closeM(m){m.classList.remove('open')}
+document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>closeM(b.closest('.overlay')));
+[authModal,gameModal].forEach(o=>o.addEventListener('click',e=>{if(e.target===o){closeM(o);stopGame();}}));
+
+$('authBtn').onclick=()=>{ if(sess){ closeM(authModal); return; } openM(authModal); };
+$('tabLogin').onclick=()=>switchTab('login');
+$('tabReg').onclick=()=>switchTab('reg');
+function switchTab(t){
+  const L=t==='login';
+  $('tabLogin').setAttribute('aria-selected',L); $('tabReg').setAttribute('aria-selected',!L);
+  $('formLogin').style.display=L?'':'none'; $('formReg').style.display=L?'none':'';
+  $('authTitle').textContent=L?'Đăng nhập':'Đăng ký tài khoản';
+  msg('li_msg',''); msg('rg_msg','');
+}
+function msg(id,text,type){
+  const e=$(id); e.textContent=text; e.className='msg'+(text?' show '+(type||'err'):'');
+}
+
+$('doReg').onclick=()=>{
+  const u=$('rg_user').value.trim(), p=$('rg_pass').value, p2=$('rg_pass2').value;
+  if(!u) return msg('rg_msg','Vui lòng nhập tên đăng nhập.');
+  if(!/^[A-Za-z0-9_]{3,20}$/.test(u)) return msg('rg_msg','Tên đăng nhập chỉ gồm chữ, số, dấu _ và dài 3–20 ký tự.');
+  if(users[u.toLowerCase()]) return msg('rg_msg','Tên này đã tồn tại. Vui lòng chọn tên khác.');
+  if(p.length<8) return msg('rg_msg','Mật khẩu phải có tối thiểu 8 ký tự.');
+  if(p!==p2) return msg('rg_msg','Mật khẩu nhập lại không khớp.');
+  users[u.toLowerCase()]={p:hash(p),coin:0,google:false,name:u};
+  save(K_USERS,users);
+  msg('rg_msg','Tạo tài khoản thành công! Đang đăng nhập...','ok');
+  setTimeout(()=>{ login(u); },600);
+};
+
+$('doLogin').onclick=()=>{
+  const u=$('li_user').value.trim(), p=$('li_pass').value;
+  const acc=users[u.toLowerCase()];
+  if(!acc) return msg('li_msg','Tài khoản không tồn tại.');
+  if(acc.google) return msg('li_msg','Tài khoản này đăng nhập bằng Google.');
+  if(!acc.p || acc.p!==hash(p)) return msg('li_msg','Mật khẩu không đúng.');
+  login(u);
+};
+
+$('googleBtn').onclick=()=>{
+  let n='google_user', i=1;
+  while(users[n] && !users[n].google){ n='google_user'+(++i); }
+  if(!users[n]) users[n]={p:null,coin:0,google:true,name:n};
+  save(K_USERS,users);
+  login(n);
+};
+
+function login(u){
+  sess=u.toLowerCase(); save(K_SESS,sess);
+  const a=users[sess]; if(a && !a.name) a.name=u; save(K_USERS,users);
+  closeM(authModal); renderMe(); renderTop();
+  $('li_user').value=''; $('li_pass').value='';
+  $('rg_user').value=''; $('rg_pass').value=''; $('rg_pass2').value='';
+}
+$('logoutBtn').onclick=()=>{ sess=null; localStorage.removeItem(K_SESS); renderMe(); };
+
+function renderMe(){
+  const a=sess?users[sess]:null;
+  $('meName').textContent=a?(a.name||sess):'Khách';
+  $('avatar').textContent=a?(a.name||sess).charAt(0).toUpperCase():'?';
+  $('logoutBtn').style.display=a?'':'none';
+  $('authBtn').style.display=a?'none':'';
+  $('coinBox').style.display=a?'':'none';
+  if(a) $('coinBox').textContent=(a.coin||0).toLocaleString('vi-VN')+' xu';
+}
+function addCoin(n){
+  if(!sess) return;
+  users[sess].coin=(users[sess].coin||0)+n; save(K_USERS,users); renderMe(); renderTop();
+}
+function renderTop(){
+  const arr=Object.keys(users).map(k=>({k,n:users[k].name||k,c:users[k].coin||0}))
+    .sort((a,b)=>b.c-a.c).slice(0,8);
+  $('topList').innerHTML=arr.map((r,i)=>
+    `<div class="rank"><div class="n ${i<3?'g'+(i+1):''}">${i+1}</div>
+     <div class="nm">${r.k===sess?'<b>'+esc(r.n)+' (bạn)</b>':esc(r.n)}</div>
+     <div class="sc">${r.c.toLocaleString('vi-VN')} xu</div></div>`).join('');
+}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+/* ================= GAME LIST ================= */
+const GAMES=[
+  {id:'rps', t:'Oẳn Tù Tì', e:'✊', bg:'linear-gradient(135deg,#ffd9e8,#ffc0d9)', d:'Kéo búa bao với máy, thắng 3 hiệp ăn xu.', f:'maylan', tag:'HOT', r:'+20 xu'},
+  {id:'guess', t:'Đoán Số Bí Ẩn', e:'🔢', bg:'linear-gradient(135deg,#ffe3d0,#ffd0b8)', d:'Đoán số từ 1–100 trong 7 lượt.', f:'tuduy', tag:'', r:'+30 xu'},
+  {id:'ttt', t:'Cờ Caro 3x3', e:'⭕', bg:'linear-gradient(135deg,#e6dcff,#d4c6ff)', d:'Đấu trí với máy, ai thẳng hàng trước thì thắng.', f:'cothu', tag:'BÁN CHẠY', r:'+40 xu'},
+  {id:'memo', t:'Lật Thẻ Trí Nhớ', e:'🃏', bg:'linear-gradient(135deg,#d6f2ff,#bfe6ff)', d:'Tìm 8 cặp thẻ giống nhau càng nhanh càng tốt.', f:'tuduy', tag:'', r:'+50 xu'},
+  {id:'snake', t:'Rắn Săn Mồi', e:'🐍', bg:'linear-gradient(135deg,#d9f7e4,#bdeecd)', d:'Ăn mồi để dài ra, đừng đâm vào tường.', f:'phanxa', tag:'SALE', r:'+5 xu/mồi'},
+  {id:'react', t:'Test Phản Xạ', e:'⚡', bg:'linear-gradient(135deg,#fff0c2,#ffe28a)', d:'Bấm ngay khi ô chuyển màu, đo mili giây.', f:'phanxa', tag:'', r:'+25 xu'},
+  {id:'click', t:'Bấm Nhanh 10s', e:'🖱️', bg:'linear-gradient(135deg,#ffd8f2,#ffc2ea)', d:'Bấm nhiều nhất có thể trong 10 giây.', f:'phanxa', tag:'', r:'+1 xu/lượt'},
+  {id:'dice', t:'Tài Xỉu May Mắn', e:'🎲', bg:'linear-gradient(135deg,#e0e7ff,#c7d3ff)', d:'Đoán Tài hay Xỉu từ 3 viên xúc xắc.', f:'maylan', tag:'', r:'+35 xu'}
+];
+let filter='all';
+function renderGames(){
+  const q=$('q').value.trim().toLowerCase();
+  const list=GAMES.filter(g=>(filter==='all'||g.f===filter)&&(!q||g.t.toLowerCase().includes(q)));
+  $('gameGrid').innerHTML=list.length?list.map(g=>`
+    <article class="game">
+      <div class="thumb" style="background:${g.bg}">${g.tag?`<span class="tag">${g.tag}</span>`:''}${g.e}</div>
+      <h3>${g.t}</h3><p>${g.d}</p>
+      <div class="foot"><span class="price">${g.r}</span>
+      <button class="btn small" data-g="${g.id}">CHƠI NGAY</button></div>
+    </article>`).join('')
+    :`<p style="color:var(--muted)">Không tìm thấy mini game nào phù hợp.</p>`;
+  $('gameGrid').querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>openGame(b.dataset.g));
+}
+$('q').addEventListener('input',renderGames);
+$('chips').querySelectorAll('.chip').forEach(c=>c.onclick=()=>{
+  $('chips').querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false'));
+  c.setAttribute('aria-pressed','true'); filter=c.dataset.f; renderGames();
+});
+
+/* ================= GAME ENGINE ================= */
+let cleanup=null;
+function stopGame(){ if(cleanup){cleanup();cleanup=null;} }
+function openGame(id){
+  const g=GAMES.find(x=>x.id===id); if(!g) return;
+  stopGame();
+  $('gameTitle').textContent=g.e+' '+g.t;
+  $('gameArea').innerHTML='';
+  if(!sess){
+    $('gameArea').innerHTML=`<div class="center"><div class="big">Bạn cần đăng nhập để chơi</div>
+      <p style="color:var(--muted)">Đăng nhập để lưu xu và lên bảng xếp hạng.</p>
+      <button class="btn" id="goAuth">Đăng ký / Đăng nhập</button></div>`;
+    openM(gameModal);
+    $('goAuth').onclick=()=>{closeM(gameModal);openM(authModal);};
+    return;
+  }
+  openM(gameModal);
+  ({rps:gRPS,guess:gGuess,ttt:gTTT,memo:gMemo,snake:gSnake,react:gReact,click:gClick,dice:gDice}[id])($('gameArea'));
+}
+
+/* --- Oẳn tù tì --- */
+function gRPS(el){
+  let me=0,ai=0;
+  const N={r:'✊ Búa',p:'✋ Bao',s:'✌️ Kéo'};
+  el.innerHTML=`<div class="center">
+    <div class="big" id="rpsRes">Chọn một nước đi!</div>
+    <div class="row">
+      <button class="pick" data-m="r">✊</button>
+      <button class="pick" data-m="p">✋</button>
+      <button class="pick" data-m="s">✌️</button>
+    </div>
+    <div class="stat"><span>Bạn: <b id="rpsMe">0</b></span><span>Máy: <b id="rpsAi">0</b></span><span>Thắng 3 hiệp = +20 xu</span></div>
+  </div>`;
+  el.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{
+    if(me>=3||ai>=3) return;
+    const m=b.dataset.m, c=['r','p','s'][Math.floor(Math.random()*3)];
+    let t;
+    if(m===c) t='Hòa!';
+    else if((m==='r'&&c==='s')||(m==='p'&&c==='r')||(m==='s'&&c==='p')){t='Bạn thắng hiệp này!';me++;}
+    else {t='Máy thắng hiệp này!';ai++;}
+    $('rpsMe').textContent=me; $('rpsAi').textContent=ai;
+    $('rpsRes').textContent=`${N[m]} vs ${N[c]} — ${t}`;
+    if(me>=3){$('rpsRes').textContent='🎉 Bạn thắng chung cuộc! +20 xu';addCoin(20);}
+    else if(ai>=3){$('rpsRes').textContent='😢 Máy thắng chung cuộc. Thử lại nhé!';}
+  });
+}
+
+/* --- Đoán số --- */
+function gGuess(el){
+  const target=Math.floor(Math.random()*100)+1; let left=7;
+  el.innerHTML=`<div class="center">
+    <div class="big">Tôi đang nghĩ một số từ 1 đến 100</div>
+    <div style="max-width:260px;margin:0 auto"><input id="gv" type="number" min="1" max="100" placeholder="Nhập số của bạn"></div>
+    <div class="row"><button class="btn" id="gb">Đoán</button></div>
+    <div class="big" id="gr">Bạn còn 7 lượt.</div></div>`;
+  const go=()=>{
+    const v=parseInt($('gv').value,10);
+    if(!v||v<1||v>100){$('gr').textContent='Vui lòng nhập số từ 1 đến 100.';return;}
+    left--;
+    if(v===target){$('gr').textContent=`🎉 Chính xác! Số đó là ${target}. +30 xu`;addCoin(30);$('gb').disabled=true;}
+    else if(left<=0){$('gr').textContent=`😢 Hết lượt! Số đúng là ${target}.`;$('gb').disabled=true;}
+    else $('gr').textContent=`${v<target?'📈 Lớn hơn nữa!':'📉 Nhỏ hơn nữa!'} Còn ${left} lượt.`;
+    $('gv').value='';$('gv').focus();
+  };
+  $('gb').onclick=go;
+  $('gv').onkeydown=e=>{if(e.key==='Enter')go();};
+}
+
+/* --- Caro 3x3 --- */
+function gTTT(el){
+  let b=Array(9).fill(''),over=false;
+  el.innerHTML=`<div class="center"><div class="big" id="tr">Lượt của bạn (X)</div>
+    <div class="board" id="tb"></div>
+    <div class="row"><button class="btn ghost small" id="tnew">Ván mới</button></div></div>`;
+  const W=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  const win=(s,p)=>W.some(l=>l.every(i=>s[i]===p));
+  function draw(){
+    $('tb').innerHTML=b.map((c,i)=>`<button class="cell" data-i="${i}">${c}</button>`).join('');
+    $('tb').querySelectorAll('[data-i]').forEach(x=>x.onclick=()=>play(+x.dataset.i));
+  }
+  function best(p){ for(let i=0;i<9;i++){ if(!b[i]){const t=[...b];t[i]=p;if(win(t,p))return i;} } return -1; }
+  function play(i){
+    if(over||b[i])return; b[i]='X'; draw();
+    if(win(b,'X')){$('tr').textContent='🎉 Bạn thắng! +40 xu';addCoin(40);over=true;return;}
+    if(b.every(Boolean)){$('tr').textContent='🤝 Hòa!';over=true;return;}
+    let m=best('O'); if(m<0)m=best('X');
+    if(m<0&&!b[4])m=4;
+    if(m<0){const f=[0,2,6,8,1,3,5,7].filter(x=>!b[x]);m=f[0];}
+    b[m]='O'; draw();
+    if(win(b,'O')){$('tr').textContent='😢 Máy thắng. Thử lại nhé!';over=true;return;}
+    if(b.every(Boolean)){$('tr').textContent='🤝 Hòa!';over=true;return;}
+    $('tr').textContent='Lượt của bạn (X)';
+  }
+  $('tnew').onclick=()=>{b=Array(9).fill('');over=false;$('tr').textContent='Lượt của bạn (X)';draw();};
+  draw();
+}
+
+/* --- Lật thẻ trí nhớ --- */
+function gMemo(el){
+  const ic=['🍓','🍰','🌸','🦄','🐰','🎀','⭐','🍭'];
+  const deck=[...ic,...ic].sort(()=>Math.random()-.5);
+  let open=[],done=0,moves=0,lock=false;
+  el.innerHTML=`<div class="center"><div class="big" id="mr">Tìm 8 cặp thẻ giống nhau</div>
+    <div class="mgrid" id="mg"></div>
+    <div class="stat"><span>Lượt lật: <b id="mv">0</b></span><span>Cặp đã tìm: <b id="mp">0</b>/8</span></div></div>`;
+  $('mg').innerHTML=deck.map((c,i)=>`<button class="mcard" data-i="${i}">${c}</button>`).join('');
+  $('mg').querySelectorAll('[data-i]').forEach(btn=>btn.onclick=()=>{
+    const i=+btn.dataset.i;
+    if(lock||btn.classList.contains('up')||btn.classList.contains('done'))return;
+    btn.classList.add('up'); open.push(i);
+    if(open.length===2){
+      moves++; $('mv').textContent=moves; lock=true;
+      const [a,c]=open, ea=$('mg').querySelector(`[data-i="${a}"]`), ec=$('mg').querySelector(`[data-i="${c}"]`);
+      if(deck[a]===deck[c]){
+        setTimeout(()=>{ea.className='mcard done';ec.className='mcard done';open=[];lock=false;done++;$('mp').textContent=done;
+          if(done===8){$('mr').textContent=`🎉 Hoàn thành trong ${moves} lượt! +50 xu`;addCoin(50);} },380);
+      }else{
+        setTimeout(()=>{ea.classList.remove('up');ec.classList.remove('up');open=[];lock=false;},700);
+      }
+    }
+  });
+}
+
+/* --- Rắn săn mồi --- */
+function gSnake(el){
+  const S=16,C=18;
+  el.innerHTML=`<div class="center"><div class="big" id="sr">Dùng phím mũi tên hoặc nút bên dưới</div>
+    <canvas id="sc" width="${S*C}" height="${S*C}"></canvas>
+    <div class="stat"><span>Điểm: <b id="ss">0</b></span><span>Mỗi mồi +5 xu</span></div>
+    <div class="pad">
+      <button class="sp"></button><button data-d="u">▲</button><button class="sp"></button>
+      <button data-d="l">◀</button><button data-d="d">▼</button><button data-d="r">▶</button>
+    </div>
+    <div class="row"><button class="btn ghost small" id="snew">Chơi lại</button></div></div>`;
+  const cv=$('sc'),ctx=cv.getContext('2d');
+  let sn,dir,nd,food,score,timer,dead;
+  function reset(){
+    sn=[{x:8,y:8},{x:7,y:8}]; dir={x:1,y:0}; nd=dir; score=0; dead=false; place();
+    $('ss').textContent=0; $('sr').textContent='Dùng phím mũi tên hoặc nút bên dưới';
+    clearInterval(timer); timer=setInterval(tick,140); draw();
+  }
+  function place(){ do{food={x:Math.floor(Math.random()*S),y:Math.floor(Math.random()*S)};}
+    while(sn.some(s=>s.x===food.x&&s.y===food.y)); }
+  function tick(){
+    if(dead)return; dir=nd;
+    const h={x:sn[0].x+dir.x,y:sn[0].y+dir.y};
+    if(h.x<0||h.y<0||h.x>=S||h.y>=S||sn.some(s=>s.x===h.x&&s.y===h.y)){
+      dead=true; clearInterval(timer); $('sr').textContent=`💥 Game over! Điểm: ${score}`; return;
+    }
+    sn.unshift(h);
+    if(h.x===food.x&&h.y===food.y){score++;$('ss').textContent=score;addCoin(5);place();}
+    else sn.pop();
+    draw();
+  }
+  function draw(){
+    const cs=getComputedStyle(document.documentElement);
+    ctx.clearRect(0,0,cv.width,cv.height);
+    ctx.fillStyle=cs.getPropertyValue('--brand-strong').trim()||'#ff4d97';
+    ctx.fillRect(food.x*C+3,food.y*C+3,C-6,C-6);
+    sn.forEach((s,i)=>{ctx.fillStyle=i?(cs.getPropertyValue('--brand').trim()||'#ff7ab2'):'#c9256f';
+      ctx.fillRect(s.x*C+1,s.y*C+1,C-2,C-2);});
+  }
+  const set=(x,y)=>{ if(dir.x===-x&&dir.y===-y)return; nd={x,y}; };
+  const key=e=>{const m={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0]}[e.key];
+    if(m){e.preventDefault();set(m[0],m[1]);}};
+  window.addEventListener('keydown',key);
+  el.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{
+    const m={u:[0,-1],d:[0,1],l:[-1,0],r:[1,0]}[b.dataset.d]; set(m[0],m[1]);
+  });
+  $('snew').onclick=reset;
+  cleanup=()=>{clearInterval(timer);window.removeEventListener('keydown',key);};
+  reset();
+}
+
+/* --- Test phản xạ --- */
+function gReact(el){
+  let state='idle',t0,to;
+  el.innerHTML=`<div class="center"><div class="big" id="rr">Bấm vào ô để bắt đầu</div>
+    <div class="react" id="rb" style="background:var(--brand)">BẤM ĐỂ BẮT ĐẦU</div>
+    <div class="stat"><span>Dưới 250ms = +25 xu</span></div></div>`;
+  const box=$('rb');
+  box.onclick=()=>{
+    if(state==='idle'){
+      state='wait'; box.style.background='#e05a7a'; box.textContent='CHỜ MÀU XANH...';
+      $('rr').textContent='Đừng bấm vội!';
+      to=setTimeout(()=>{state='go';box.style.background='#3fbf8f';box.textContent='BẤM NGAY!';t0=Date.now();},
+        1200+Math.random()*2500);
+    }else if(state==='wait'){
+      clearTimeout(to); state='idle'; box.style.background='var(--brand)'; box.textContent='BẤM ĐỂ BẮT ĐẦU';
+      $('rr').textContent='❌ Bấm sớm quá! Thử lại.';
+    }else if(state==='go'){
+      const ms=Date.now()-t0; state='idle';
+      box.style.background='var(--brand)'; box.textContent='BẤM ĐỂ CHƠI LẠI';
+      if(ms<250){$('rr').textContent=`⚡ ${ms}ms — siêu nhanh! +25 xu`;addCoin(25);}
+      else $('rr').textContent=`⏱️ ${ms}ms — cố nhanh hơn nữa nhé!`;
+    }
+  };
+  cleanup=()=>clearTimeout(to);
+}
+
+/* --- Bấm nhanh 10s --- */
+function gClick(el){
+  let n=0,run=false,left=10,iv;
+  el.innerHTML=`<div class="center"><div class="big" id="cr">Bấm nhiều nhất trong 10 giây!</div>
+    <div class="react" id="cb" style="background:var(--brand)">BẮT ĐẦU</div>
+    <div class="stat"><span>Lượt bấm: <b id="cn">0</b></span><span>Thời gian: <b id="ct">10</b>s</span></div></div>`;
+  $('cb').onclick=()=>{
+    if(!run){ run=true;n=0;left=10;$('cn').textContent=0;$('cb').textContent='BẤM! BẤM! BẤM!';
+      $('cb').style.background='#3fbf8f';
+      iv=setInterval(()=>{ left--;$('ct').textContent=left;
+        if(left<=0){clearInterval(iv);run=false;$('cb').textContent='CHƠI LẠI';
+          $('cb').style.background='var(--brand)';
+          $('cr').textContent=`🏁 Bạn bấm được ${n} lần! +${n} xu`; addCoin(n);} },1000);
+    } else { n++; $('cn').textContent=n; }
+  };
+  cleanup=()=>clearInterval(iv);
+}
+
+/* --- Tài xỉu --- */
+function gDice(el){
+  el.innerHTML=`<div class="center"><div class="big" id="dr">Chọn Tài (11–17) hoặc Xỉu (4–10)</div>
+    <div style="font-size:46px;margin:10px 0" id="dd">🎲 🎲 🎲</div>
+    <div class="row"><button class="btn" data-b="x">XỈU</button><button class="btn" data-b="t">TÀI</button></div>
+    <div class="stat"><span>Đoán đúng +35 xu</span></div></div>`;
+  el.querySelectorAll('[data-b]').forEach(b=>b.onclick=()=>{
+    const F=['⚀','⚁','⚂','⚃','⚄','⚅'];
+    const d=[0,0,0].map(()=>Math.floor(Math.random()*6)+1), s=d.reduce((a,c)=>a+c);
+    $('dd').textContent=d.map(x=>F[x-1]).join(' ');
+    const res=s>=11?'t':'x', name=res==='t'?'TÀI':'XỈU';
+    if(s===3||s===18){$('dr').textContent=`Tổng ${s} — Bão! Nhà cái ăn, thử lại nhé.`;return;}
+    if(b.dataset.b===res){$('dr').textContent=`🎉 Tổng ${s} — ${name}. Bạn đoán đúng! +35 xu`;addCoin(35);}
+    else $('dr').textContent=`😢 Tổng ${s} — ${name}. Bạn đoán sai rồi.`;
+  });
+}
+
+/* ================= INIT ================= */
+renderMe(); renderTop(); renderGames(); switchTab('login');
+</script>
+</body>
+</html>
