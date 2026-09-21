@@ -238,6 +238,26 @@ canvas{background:var(--surface-2);border:2px solid var(--line);border-radius:16
 .tkwrap{width:100%;max-width:340px;margin:0 auto;aspect-ratio:9/16;max-height:60vh;border-radius:16px;overflow:hidden;background:#000;border:2px solid var(--line)}
 .tkwrap iframe{width:100%;height:100%;border:0;display:block}
 
+/* ---------- TOÀN MÀN HÌNH (nút Video tiếp vẫn nằm trong màn hình) ---------- */
+#tkModal.full{padding:0}
+#tkModal.full .modal{max-width:none;width:100%;height:100%;max-height:none;border:0;border-radius:0;display:flex;flex-direction:column;overflow:hidden}
+#tkModal.full .modal-b{flex:1;min-height:0;display:flex;flex-direction:column;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px))}
+#tkModal.full .stat{margin:0 0 8px !important}
+#tkModal.full #tkStage{flex:1;min-height:0;display:flex;justify-content:center}
+#tkModal.full .tkwrap{height:100%;width:auto;max-width:100%;max-height:none;margin:0}
+#tkModal.full .row{margin:8px 0 0}
+#tkModal.full .tk-extra{display:none}
+
+/* ---------- NÚT TIKTOK NỔI (luôn hiện khi cuộn / phóng to) ---------- */
+.fab{
+  position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));
+  z-index:35;border:0;border-radius:999px;padding:12px 18px;font-weight:800;font-size:14px;cursor:pointer;
+  color:#fff;background:linear-gradient(90deg,var(--brand),var(--brand-strong));
+  box-shadow:0 10px 24px rgba(255,80,150,.4);font-family:inherit;transition:transform .12s ease;
+}
+.fab:hover{transform:translateY(-2px)}
+@media (max-width:480px){.fab{padding:11px 14px;font-size:13px}}
+
 /* ---------- TOAST ---------- */
 .toast{
   position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));
@@ -304,8 +324,7 @@ canvas{background:var(--surface-2);border:2px solid var(--line);border-radius:16
     <button class="chip" data-f="all" aria-pressed="true">🎮 Tất cả</button>
     <button class="chip" data-f="tuduy" aria-pressed="false">🧠 Tư duy</button>
     <button class="chip" data-f="phanxa" aria-pressed="false">⚡ Phản xạ</button>
-    <button class="chip" data-f="maylan" aria-pressed="false">🎲 May rủi</button>
-    <button class="chip" data-f="cothu" aria-pressed="false">♟️ Cờ</button>
+    <button class="chip" data-f="cothu" aria-pressed="false">🤝 Đối kháng</button>
   </div>
 
   <div class="cols">
@@ -422,9 +441,11 @@ canvas{background:var(--surface-2);border:2px solid var(--line);border-radius:16
       <div id="tkStage"></div>
       <div class="row">
         <button class="btn" id="tkNextBtn">⏭ Video tiếp (−5 xu)</button>
+        <button class="btn ghost" id="tkFsBtn">⛶ Toàn màn hình</button>
         <button class="btn ghost" id="tkExitBtn">Thoát</button>
       </div>
       <div class="msg" id="tk_msg"></div>
+      <div class="tk-extra">
       <div class="sep">thêm video vào danh sách</div>
       <label for="tkLink">Dán link video TikTok</label>
       <div style="display:flex;gap:8px">
@@ -432,9 +453,12 @@ canvas{background:var(--surface-2);border:2px solid var(--line);border-radius:16
         <button class="btn small" id="tkAdd">Thêm</button>
       </div>
       <div class="hint">Cần link đầy đủ có dạng .../video/số. Link rút gọn (vm.tiktok.com) không đọc được.</div>
+      </div>
     </div>
   </div>
 </div>
+
+<button class="fab" id="fabTk" aria-label="Xem TikTok, 5 xu một video">📺 TikTok · 5 xu / video</button>
 
 <div class="toast" id="toast" role="status"></div>
 
@@ -451,7 +475,7 @@ function hash(s){let h=5381;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(
 let users=load(K_USERS,{});
 Object.keys(users).forEach(k=>{ if(users[k].p===null && !users[k].google) delete users[k]; });
 save(K_USERS,users);
-let logs=load(K_LOG,[]);
+let logs=load(K_LOG,[]).filter(l=>l.g!=='Tài Xỉu May Mắn');
 let sess=load(K_SESS,null);
 if(sess && !users[sess]){ sess=null; del(K_SESS); }
 
@@ -605,14 +629,13 @@ function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','
 
 /* ================= GAME LIST ================= */
 const GAMES=[
-  {id:'rps', t:'Oẳn Tù Tì', e:'✊', bg:'linear-gradient(135deg,#ffd9e8,#ffc0d9)', d:'Kéo búa bao với máy, thắng 3 hiệp ăn xu.', f:'maylan', tag:'HOT', r:'+20 xu'},
+  {id:'rps', t:'Oẳn Tù Tì', e:'✊', bg:'linear-gradient(135deg,#ffd9e8,#ffc0d9)', d:'Kéo búa bao với máy, thắng 3 hiệp ăn xu.', f:'cothu', tag:'HOT', r:'+20 xu'},
   {id:'guess', t:'Đoán Số Bí Ẩn', e:'🔢', bg:'linear-gradient(135deg,#ffe3d0,#ffd0b8)', d:'Đoán số từ 1–100 trong 7 lượt.', f:'tuduy', tag:'', r:'+30 xu'},
   {id:'ttt', t:'Cờ Caro 3x3', e:'⭕', bg:'linear-gradient(135deg,#e6dcff,#d4c6ff)', d:'Đấu trí với máy, ai thẳng hàng trước thì thắng.', f:'cothu', tag:'BÁN CHẠY', r:'+40 xu'},
   {id:'memo', t:'Lật Thẻ Trí Nhớ', e:'🃏', bg:'linear-gradient(135deg,#d6f2ff,#bfe6ff)', d:'Tìm 8 cặp thẻ giống nhau càng nhanh càng tốt.', f:'tuduy', tag:'', r:'+50 xu'},
   {id:'snake', t:'Rắn Săn Mồi', e:'🐍', bg:'linear-gradient(135deg,#d9f7e4,#bdeecd)', d:'Ăn mồi để dài ra, đừng đâm vào tường.', f:'phanxa', tag:'SALE', r:'+5 xu/mồi'},
   {id:'react', t:'Test Phản Xạ', e:'⚡', bg:'linear-gradient(135deg,#fff0c2,#ffe28a)', d:'Bấm ngay khi ô chuyển màu, đo mili giây.', f:'phanxa', tag:'', r:'+25 xu'},
-  {id:'click', t:'Bấm Nhanh 10s', e:'🖱️', bg:'linear-gradient(135deg,#ffd8f2,#ffc2ea)', d:'Bấm nhiều nhất có thể trong 10 giây.', f:'phanxa', tag:'', r:'+1 xu/lượt'},
-  {id:'dice', t:'Tài Xỉu May Mắn', e:'🎲', bg:'linear-gradient(135deg,#e0e7ff,#c7d3ff)', d:'Đoán Tài hay Xỉu từ 3 viên xúc xắc.', f:'maylan', tag:'', r:'+35 xu'}
+  {id:'click', t:'Bấm Nhanh 10s', e:'🖱️', bg:'linear-gradient(135deg,#ffd8f2,#ffc2ea)', d:'Bấm nhiều nhất có thể trong 10 giây.', f:'phanxa', tag:'', r:'+1 xu/lượt'}
 ];
 let filter='all';
 function renderGames(){
@@ -652,7 +675,7 @@ function openGame(id){
     return;
   }
   openM(gameModal);
-  ({rps:gRPS,guess:gGuess,ttt:gTTT,memo:gMemo,snake:gSnake,react:gReact,click:gClick,dice:gDice}[id])($('gameArea'));
+  ({rps:gRPS,guess:gGuess,ttt:gTTT,memo:gMemo,snake:gSnake,react:gReact,click:gClick}[id])($('gameArea'));
 }
 
 /* --- Oẳn tù tì --- */
@@ -853,29 +876,11 @@ function gClick(el){
   cleanup=()=>clearInterval(iv);
 }
 
-/* --- Tài xỉu --- */
-function gDice(el){
-  el.innerHTML=`<div class="center"><div class="big" id="dr">Chọn Tài (11–17) hoặc Xỉu (4–10)</div>
-    <div style="font-size:46px;margin:10px 0" id="dd">🎲 🎲 🎲</div>
-    <div class="row"><button class="btn" data-b="x">XỈU</button><button class="btn" data-b="t">TÀI</button></div>
-    <div class="stat"><span>Đoán đúng +35 xu</span></div></div>`;
-  el.querySelectorAll('[data-b]').forEach(b=>b.onclick=()=>{
-    const F=['⚀','⚁','⚂','⚃','⚄','⚅'];
-    const d=[0,0,0].map(()=>Math.floor(Math.random()*6)+1), s=d.reduce((a,c)=>a+c);
-    $('dd').textContent=d.map(x=>F[x-1]).join(' ');
-    const res=s>=11?'t':'x', name=res==='t'?'TÀI':'XỈU';
-    if(s===3||s===18){$('dr').textContent=`Tổng ${s} — Bão! Nhà cái ăn, thử lại nhé.`;return;}
-    if(b.dataset.b===res){$('dr').textContent=`🎉 Tổng ${s} — ${name}. Bạn đoán đúng! +35 xu`;addCoin(35);}
-    else $('dr').textContent=`😢 Tổng ${s} — ${name}. Bạn đoán sai rồi.`;
-  });
-}
-
 /* ================= TIÊU XU ================= */
 const TK_COST=5;
 
 /* >>> THÊM VIDEO TIKTOK CỦA BẠN VÀO ĐÂY <<<
-   Mỗi video là một dãy số: lấy từ link tiktok.com/@ten/video/SỐ_NÀY.
-   (Video mẫu bên dưới là video ví dụ trong tài liệu chính thức của TikTok.) */
+   Mỗi video là một dãy số: lấy từ link tiktok.com/@ten/video/SỐ_NÀY. */
 const TIKTOK_VIDEOS=[
   '7674973383435783445',
   '7674199172936994049',
@@ -909,7 +914,18 @@ const TIKTOK_VIDEOS=[
   '7670299563797892365',
   '7681696157122268424',
   '7644277914627869974',
-  '7613860201304722702'
+  '7613860201304722702',
+  '7686938950782536968',
+  '7686509768533462290',
+  '7687036920047750420',
+  '7656311054598802709',
+  '7687523976054082837',
+  '7682348197603200276',
+  '7218851823052983578',
+  '7686844575595400466',
+  '7679327128315366674',
+  '7686809226169224469',
+  '7568862777465376008'
 ];
 
 /* Danh sách cách tiêu xu. Muốn thêm cách mới: thêm một mục vào đây. */
@@ -956,7 +972,22 @@ function tkStats(){
 }
 function tkStop(){
   tkOn=false; window.removeEventListener('message',tkMsg); $('tkStage').innerHTML='';
+  tkFull(false);
 }
+/* Toàn màn hình cho cả cửa sổ xem (không chỉ riêng video) để nút "Video tiếp (−5 xu)" vẫn còn */
+function tkFull(want){
+  if(want===undefined) want=!tkModal.classList.contains('full');
+  tkModal.classList.toggle('full',want);
+  $('tkFsBtn').textContent=want?'⤢ Thu nhỏ':'⛶ Toàn màn hình';
+  if(want){
+    if(tkModal.requestFullscreen && !document.fullscreenElement){ try{ tkModal.requestFullscreen().catch(()=>{}); }catch(e){} }
+  }else if(document.fullscreenElement && document.exitFullscreen){
+    try{ document.exitFullscreen().catch(()=>{}); }catch(e){}
+  }
+}
+document.addEventListener('fullscreenchange',()=>{
+  if(!document.fullscreenElement && tkModal.classList.contains('full')) tkFull(false);
+});
 function tkEnd(text){ tkStop(); closeM(tkModal); toast(text); }
 function tkLeave(){
   if(!tkOn) return;
@@ -983,7 +1014,7 @@ function tkNext(){
   if(!list.length){ tkEnd('Không còn video nào để xem. Hãy thêm link video khác.'); return; }
   tkCur=tkPick(list);
   spendCoin(TK_COST); tkSpent+=TK_COST; tkWatched++; tkEnded=false;
-  $('tkStage').innerHTML='<div class="tkwrap"><iframe id="tkFrame" title="TikTok" allow="autoplay; fullscreen; encrypted-media" allowfullscreen src="https://www.tiktok.com/player/v1/'+tkCur+'?autoplay=1&music_info=1&description=1"></iframe></div>';
+  $('tkStage').innerHTML='<div class="tkwrap"><iframe id="tkFrame" title="TikTok" allow="autoplay; fullscreen; encrypted-media" allowfullscreen src="https://www.tiktok.com/player/v1/'+tkCur+'?autoplay=1&music_info=1&description=1&fullscreen_button=0"></iframe></div>';
   tkStats();
   msg('tk_msg', coinOf()<TK_COST ? 'Đây là video cuối: xu của bạn không đủ cho video tiếp theo, sẽ tự thoát khi xem xong.' : '', 'ok');
 }
@@ -1020,6 +1051,8 @@ function parseTk(s){
 }
 $('tkNextBtn').onclick=()=>tkNext();
 $('tkExitBtn').onclick=()=>tkLeave();
+$('tkFsBtn').onclick=()=>tkFull();
+$('fabTk').onclick=()=>openTikTok();
 $('tkAdd').onclick=()=>{
   const id=parseTk($('tkLink').value);
   if(!id) return msg('tk_msg','Link không hợp lệ. Cần link đầy đủ dạng tiktok.com/@ten/video/số.');
