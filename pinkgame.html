@@ -877,7 +877,39 @@ const TK_COST=5;
    Mỗi video là một dãy số: lấy từ link tiktok.com/@ten/video/SỐ_NÀY.
    (Video mẫu bên dưới là video ví dụ trong tài liệu chính thức của TikTok.) */
 const TIKTOK_VIDEOS=[
-  '6718335390845095173'
+  '7674973383435783445',
+  '7674199172936994049',
+  '7676871073861881108',
+  '7649526846568205589',
+  '7678730525359623431',
+  '7676398384818752788',
+  '7640432959186586900',
+  '7658557621468712212',
+  '7390339940363537682',
+  '7676764486111481109',
+  '7684299801956994312',
+  '7670525695356996884',
+  '7673489972065766677',
+  '7671265483970170132',
+  '7680587567389003028',
+  '7677203637914864916',
+  '7676090330889882901',
+  '7674976772722642196',
+  '7674610927345339668',
+  '7673862235722091794',
+  '7672379607219621140',
+  '7572588903748734230',
+  '7678731478536031519',
+  '7651705196229250336',
+  '7575927887094729998',
+  '7674183618184482070',
+  '7660559176166280470',
+  '7657172566104231176',
+  '7657147955719179552',
+  '7670299563797892365',
+  '7681696157122268424',
+  '7644277914627869974',
+  '7613860201304722702'
 ];
 
 /* Danh sách cách tiêu xu. Muốn thêm cách mới: thêm một mục vào đây. */
@@ -912,7 +944,7 @@ function openTikTok(){
     return;
   }
   if(coinOf()<TK_COST){ toast('Bạn cần ít nhất '+TK_COST+' xu để xem TikTok. Chơi mini game để kiếm xu nhé!'); return; }
-  tkOn=true; tkCur=null; tkWatched=0; tkSpent=0; tkFail=0; tkBad.clear();
+  tkOn=true; tkCur=null; tkBag=[]; tkWatched=0; tkSpent=0; tkFail=0; tkBad.clear();
   msg('tk_msg','');
   openM(tkModal);
   window.addEventListener('message',tkMsg);
@@ -932,13 +964,24 @@ function tkLeave(){
   tkStop(); closeM(tkModal);
   if(w) toast('Đã thoát. Bạn xem '+w+' video, tốn '+x+' xu.');
 }
+/* Phát ngẫu nhiên kiểu "xáo bài": mỗi lượt xáo lại cả danh sách,
+   chưa xem hết thì không lặp lại video nào, và video đầu lượt mới khác video vừa xem. */
+let tkBag=[];
+function tkPick(list){
+  tkBag=tkBag.filter(id=>list.includes(id));
+  if(!tkBag.length){
+    tkBag=[...list];
+    for(let i=tkBag.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [tkBag[i],tkBag[j]]=[tkBag[j],tkBag[i]]; }
+    if(tkBag.length>1 && tkBag[tkBag.length-1]===tkCur){ const k=Math.floor(Math.random()*(tkBag.length-1)); [tkBag[tkBag.length-1],tkBag[k]]=[tkBag[k],tkBag[tkBag.length-1]]; }
+  }
+  return tkBag.pop();
+}
 function tkNext(){
   if(!tkOn) return;
   if(coinOf()<TK_COST){ tkEnd('Bạn đã hết xu nên đã tự động thoát TikTok. Chơi game để kiếm thêm nhé! 🎀'); return; }
   const list=tkList();
   if(!list.length){ tkEnd('Không còn video nào để xem. Hãy thêm link video khác.'); return; }
-  let pool=list.filter(id=>id!==tkCur); if(!pool.length) pool=list;
-  tkCur=pool[Math.floor(Math.random()*pool.length)];
+  tkCur=tkPick(list);
   spendCoin(TK_COST); tkSpent+=TK_COST; tkWatched++; tkEnded=false;
   $('tkStage').innerHTML='<div class="tkwrap"><iframe id="tkFrame" title="TikTok" allow="autoplay; fullscreen; encrypted-media" allowfullscreen src="https://www.tiktok.com/player/v1/'+tkCur+'?autoplay=1&music_info=1&description=1"></iframe></div>';
   tkStats();
