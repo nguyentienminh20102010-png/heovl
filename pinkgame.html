@@ -221,6 +221,32 @@ canvas{background:var(--surface-2);border:2px solid var(--line);border-radius:16
 .stat span{background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:13px;font-weight:700}
 .coin{background:var(--accent);color:#6b4a00;border-radius:999px;padding:4px 12px;font-weight:800;font-size:13px}
 .notice{background:var(--brand-soft);border:1px dashed var(--brand);border-radius:14px;padding:12px 14px;font-size:13px;color:var(--text);margin-top:16px}
+
+/* ---------- LỊCH SỬ KIẾM XU ---------- */
+.tabs.mini{margin-bottom:10px;padding:4px}
+.tabs.mini button{padding:7px;font-size:13px}
+.feed{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px dashed var(--line)}
+.feed:last-child{border-bottom:0}
+.fav{flex:0 0 32px;width:32px;height:32px;border-radius:50%;background:var(--brand-soft);color:var(--brand-strong);display:grid;place-items:center;font-weight:800;font-size:13px}
+.fb{flex:1;min-width:0;font-size:13.5px;overflow-wrap:anywhere}
+.fb .sc{color:var(--brand-strong);font-weight:800}
+.ft{font-size:12px;color:var(--muted)}
+.empty{color:var(--muted);font-size:13px;text-align:center;padding:12px 0}
+
+/* ---------- TIKTOK ---------- */
+.modal.tk{max-width:440px}
+.tkwrap{width:100%;max-width:340px;margin:0 auto;aspect-ratio:9/16;max-height:60vh;border-radius:16px;overflow:hidden;background:#000;border:2px solid var(--line)}
+.tkwrap iframe{width:100%;height:100%;border:0;display:block}
+
+/* ---------- TOAST ---------- */
+.toast{
+  position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));
+  transform:translate(-50%,20px);background:var(--text);color:var(--bg);
+  padding:11px 18px;border-radius:14px;font-weight:700;font-size:13.5px;box-shadow:var(--shadow);
+  opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:80;
+  max-width:calc(100% - 32px);text-align:center;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -229,8 +255,9 @@ canvas{background:var(--surface-2);border:2px solid var(--line);border-radius:16
   <div class="wrap">
     <nav class="nav">
       <a href="#home">Trang chủ</a>
-      <a href="#games">Kho mini game</a>
-      <a href="#top">Bảng xếp hạng</a>
+      <a href="#tieuxu">Tiêu xu</a>
+      <a href="#kho">Kho mini game</a>
+      <a href="#top">Lịch sử xu</a>
       <a href="#huongdan">Hướng dẫn</a>
       <a href="#lienhe">Liên hệ</a>
     </nav>
@@ -267,6 +294,7 @@ canvas{background:var(--surface-2);border:2px solid var(--line);border-radius:16
           <span class="badge">🪙 Tích xu miễn phí</span>
           <span class="badge">📱 Chơi trên điện thoại</span>
         </div>
+        <div style="margin-top:16px"><button class="btn" id="heroTk">📺 Xem TikTok · 5 xu / video</button></div>
       </div>
       <div class="hero-emoji">🕹️</div>
     </div>
@@ -283,8 +311,15 @@ canvas{background:var(--surface-2);border:2px solid var(--line);border-radius:16
   <div class="cols">
     <div>
       <div class="card" id="top">
-        <div class="card-h">🏆 TOP THỦ</div>
-        <div class="card-b" id="topList"></div>
+        <div class="card-h">🔥 KIẾM XU MỚI NHẤT</div>
+        <div class="card-b">
+          <div class="tabs mini">
+            <button id="tabFeed" aria-selected="true">Lịch sử</button>
+            <button id="tabRank" aria-selected="false">Xếp hạng</button>
+          </div>
+          <div id="feedList"></div>
+          <div id="rankList" style="display:none"></div>
+        </div>
       </div>
 
       <div class="card" style="margin-top:16px" id="huongdan">
@@ -293,13 +328,17 @@ canvas{background:var(--surface-2);border:2px solid var(--line);border-radius:16
           <p style="margin:0 0 8px">1. Bấm <b>Đăng ký / Đăng nhập</b> để tạo tài khoản.</p>
           <p style="margin:0 0 8px">2. Mật khẩu phải có <b>tối thiểu 8 ký tự</b>.</p>
           <p style="margin:0 0 8px">3. Chọn một mini game bất kỳ và bấm <b>CHƠI NGAY</b>.</p>
-          <p style="margin:0">4. Thắng game sẽ được cộng <b>xu</b> và leo bảng xếp hạng.</p>
+          <p style="margin:0 0 8px">4. Thắng game sẽ được cộng <b>xu</b> và hiện trong lịch sử kiếm xu.</p>
+          <p style="margin:0">5. Dùng xu để <b>xem TikTok</b>: mỗi video 5 xu.</p>
         </div>
       </div>
     </div>
 
     <div id="games">
-      <span class="section-title">🎮 KHO MINI GAME</span>
+      <span class="section-title" id="tieuxu">💸 TIÊU XU</span>
+      <div class="grid" id="spendGrid"></div>
+
+      <span class="section-title" id="kho" style="margin-top:28px">🎮 KIẾM XU · KHO MINI GAME</span>
       <div class="grid" id="gameGrid"></div>
     </div>
   </div>
@@ -370,32 +409,63 @@ canvas{background:var(--surface-2);border:2px solid var(--line);border-radius:16
   </div>
 </div>
 
+<!-- TIKTOK MODAL -->
+<div class="overlay" id="tkModal">
+  <div class="modal tk">
+    <div class="modal-h"><b>📺 Xem TikTok</b><button class="x" data-close>✕</button></div>
+    <div class="modal-b">
+      <div class="stat" style="margin:0 0 12px">
+        <span>Xu còn: <b id="tkCoin">0</b></span>
+        <span>Đã xem: <b id="tkWatched">0</b> video</span>
+        <span>Phí: <b>5 xu</b> / video</span>
+      </div>
+      <div id="tkStage"></div>
+      <div class="row">
+        <button class="btn" id="tkNextBtn">⏭ Video tiếp (−5 xu)</button>
+        <button class="btn ghost" id="tkExitBtn">Thoát</button>
+      </div>
+      <div class="msg" id="tk_msg"></div>
+      <div class="sep">thêm video vào danh sách</div>
+      <label for="tkLink">Dán link video TikTok</label>
+      <div style="display:flex;gap:8px">
+        <input id="tkLink" type="text" placeholder="https://www.tiktok.com/@ten/video/123...">
+        <button class="btn small" id="tkAdd">Thêm</button>
+      </div>
+      <div class="hint">Cần link đầy đủ có dạng .../video/số. Link rút gọn (vm.tiktok.com) không đọc được.</div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
 <script>
 /* ================= STORAGE ================= */
-const K_USERS='pg_users', K_SESS='pg_sess';
+const K_USERS='pg_users', K_SESS='pg_sess', K_LOG='pg_log', K_VIDS='pg_vids';
 function load(k,d){ try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;} }
 function save(k,v){ try{localStorage.setItem(k,JSON.stringify(v));}catch(e){} }
+function del(k){ try{localStorage.removeItem(k);}catch(e){} }
 function hash(s){let h=5381;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))>>>0;return 'h'+h.toString(36);}
 
-let users=load(K_USERS,null);
-if(!users){
-  users={
-    "anonymous":{p:null,coin:3920,google:false},
-    "linh_xinh":{p:null,coin:2750,google:false},
-    "hoangpro":{p:null,coin:1980,google:false},
-    "meomeo":{p:null,coin:1200,google:false},
-    "bin_gaming":{p:null,coin:860,google:false}
-  };
-  save(K_USERS,users);
-}
+/* Không còn người dùng có sẵn: chỉ có tài khoản thật do người dùng đăng ký.
+   Dòng dưới xóa luôn các tài khoản mẫu cũ (nếu trình duyệt còn lưu từ bản trước). */
+let users=load(K_USERS,{});
+Object.keys(users).forEach(k=>{ if(users[k].p===null && !users[k].google) delete users[k]; });
+save(K_USERS,users);
+let logs=load(K_LOG,[]);
 let sess=load(K_SESS,null);
+if(sess && !users[sess]){ sess=null; del(K_SESS); }
 
 /* ================= AUTH UI ================= */
 const $=id=>document.getElementById(id);
-const authModal=$('authModal'), gameModal=$('gameModal');
+const authModal=$('authModal'), gameModal=$('gameModal'), tkModal=$('tkModal');
 function openM(m){m.classList.add('open')} function closeM(m){m.classList.remove('open')}
-document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>closeM(b.closest('.overlay')));
-[authModal,gameModal].forEach(o=>o.addEventListener('click',e=>{if(e.target===o){closeM(o);stopGame();}}));
+function closeOverlay(o){
+  closeM(o);
+  if(o===gameModal) stopGame();
+  if(o===tkModal) tkLeave();
+}
+document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>closeOverlay(b.closest('.overlay')));
+[authModal,gameModal,tkModal].forEach(o=>o.addEventListener('click',e=>{if(e.target===o) closeOverlay(o);}));
 
 $('authBtn').onclick=()=>{ if(sess){ closeM(authModal); return; } openM(authModal); };
 $('tabLogin').onclick=()=>switchTab('login');
@@ -418,8 +488,9 @@ $('doReg').onclick=()=>{
   if(users[u.toLowerCase()]) return msg('rg_msg','Tên này đã tồn tại. Vui lòng chọn tên khác.');
   if(p.length<8) return msg('rg_msg','Mật khẩu phải có tối thiểu 8 ký tự.');
   if(p!==p2) return msg('rg_msg','Mật khẩu nhập lại không khớp.');
-  users[u.toLowerCase()]={p:hash(p),coin:0,google:false,name:u};
+  users[u.toLowerCase()]={p:hash(p),coin:0,earned:0,google:false,name:u};
   save(K_USERS,users);
+  logJoin(u);
   msg('rg_msg','Tạo tài khoản thành công! Đang đăng nhập...','ok');
   setTimeout(()=>{ login(u); },600);
 };
@@ -436,7 +507,7 @@ $('doLogin').onclick=()=>{
 $('googleBtn').onclick=()=>{
   let n='google_user', i=1;
   while(users[n] && !users[n].google){ n='google_user'+(++i); }
-  if(!users[n]) users[n]={p:null,coin:0,google:true,name:n};
+  if(!users[n]){ users[n]={p:null,coin:0,earned:0,google:true,name:n}; logJoin(n); }
   save(K_USERS,users);
   login(n);
 };
@@ -459,17 +530,76 @@ function renderMe(){
   $('coinBox').style.display=a?'':'none';
   if(a) $('coinBox').textContent=(a.coin||0).toLocaleString('vi-VN')+' xu';
 }
+let curGame='';
+function coinOf(){ return sess&&users[sess]?(users[sess].coin||0):0; }
 function addCoin(n){
   if(!sess) return;
-  users[sess].coin=(users[sess].coin||0)+n; save(K_USERS,users); renderMe(); renderTop();
+  const a=users[sess];
+  if(a.earned===undefined) a.earned=a.coin||0;
+  a.coin=(a.coin||0)+n; a.earned+=n;
+  save(K_USERS,users);
+  logEarn(a.name||sess,n,curGame||'Mini game');
+  renderMe(); renderTop();
 }
-function renderTop(){
-  const arr=Object.keys(users).map(k=>({k,n:users[k].name||k,c:users[k].coin||0}))
-    .sort((a,b)=>b.c-a.c).slice(0,8);
-  $('topList').innerHTML=arr.map((r,i)=>
+function spendCoin(n){
+  if(!sess) return false;
+  const a=users[sess];
+  if((a.coin||0)<n) return false;
+  a.coin-=n; save(K_USERS,users); renderMe(); renderTop(); return true;
+}
+function refundCoin(n){
+  if(!sess) return;
+  users[sess].coin=(users[sess].coin||0)+n; save(K_USERS,users); renderMe();
+}
+
+/* ---- lịch sử kiếm xu (chỉ ghi khi có người thật kiếm xu) ---- */
+function pushLog(e){ logs.unshift(e); logs=logs.slice(0,40); save(K_LOG,logs); }
+function logJoin(name){ pushLog({k:'join',u:name,t:Date.now()}); }
+function logEarn(name,n,game){
+  const now=Date.now(), l=logs[0];
+  if(l && l.k==='earn' && l.u===name && l.g===game && now-l.t<60000){ l.a+=n; l.t=now; save(K_LOG,logs); }
+  else pushLog({k:'earn',u:name,a:n,g:game,t:now});
+}
+function ago(t){
+  const s=Math.floor((Date.now()-t)/1000);
+  if(s<60) return 'vừa xong';
+  const m=Math.floor(s/60); if(m<60) return m+' phút trước';
+  const h=Math.floor(m/60); if(h<24) return h+' giờ trước';
+  return Math.floor(h/24)+' ngày trước';
+}
+function renderFeed(){
+  const el=$('feedList');
+  if(!logs.length){ el.innerHTML='<div class="empty">Chưa có ai kiếm xu.<br>Hãy là người đầu tiên! 🎀</div>'; return; }
+  el.innerHTML=logs.slice(0,12).map(l=>{
+    const av=esc((l.u||'?').charAt(0).toUpperCase());
+    return l.k==='join'
+      ? `<div class="feed"><div class="fav">${av}</div><div class="fb"><b>${esc(l.u)}</b> vừa tham gia 🎉<div class="ft">${ago(l.t)}</div></div></div>`
+      : `<div class="feed"><div class="fav">${av}</div><div class="fb"><b>${esc(l.u)}</b> kiếm được <span class="sc">+${l.a.toLocaleString('vi-VN')} xu</span><div class="ft">${esc(l.g)} · ${ago(l.t)}</div></div></div>`;
+  }).join('');
+}
+function renderRank(){
+  const el=$('rankList');
+  const arr=Object.keys(users)
+    .map(k=>({k,n:users[k].name||k,c:users[k].earned!==undefined?users[k].earned:(users[k].coin||0)}))
+    .filter(x=>x.c>0).sort((a,b)=>b.c-a.c).slice(0,8);
+  if(!arr.length){ el.innerHTML='<div class="empty">Chưa có ai trên bảng xếp hạng.</div>'; return; }
+  el.innerHTML=arr.map((r,i)=>
     `<div class="rank"><div class="n ${i<3?'g'+(i+1):''}">${i+1}</div>
      <div class="nm">${r.k===sess?'<b>'+esc(r.n)+' (bạn)</b>':esc(r.n)}</div>
      <div class="sc">${r.c.toLocaleString('vi-VN')} xu</div></div>`).join('');
+}
+function renderTop(){ renderFeed(); renderRank(); }
+function sideTab(t){
+  const F=t==='feed';
+  $('tabFeed').setAttribute('aria-selected',F); $('tabRank').setAttribute('aria-selected',!F);
+  $('feedList').style.display=F?'':'none'; $('rankList').style.display=F?'none':'';
+}
+
+/* ---- thông báo nhỏ ---- */
+let toastT;
+function toast(t){
+  const e=$('toast'); e.textContent=t; e.classList.add('show');
+  clearTimeout(toastT); toastT=setTimeout(()=>e.classList.remove('show'),4500);
 }
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 
@@ -509,6 +639,7 @@ let cleanup=null;
 function stopGame(){ if(cleanup){cleanup();cleanup=null;} }
 function openGame(id){
   const g=GAMES.find(x=>x.id===id); if(!g) return;
+  curGame=g.t;
   stopGame();
   $('gameTitle').textContent=g.e+' '+g.t;
   $('gameArea').innerHTML='';
@@ -739,8 +870,129 @@ function gDice(el){
   });
 }
 
+/* ================= TIÊU XU ================= */
+const TK_COST=5;
+
+/* >>> THÊM VIDEO TIKTOK CỦA BẠN VÀO ĐÂY <<<
+   Mỗi video là một dãy số: lấy từ link tiktok.com/@ten/video/SỐ_NÀY.
+   (Video mẫu bên dưới là video ví dụ trong tài liệu chính thức của TikTok.) */
+const TIKTOK_VIDEOS=[
+  '6718335390845095173'
+];
+
+/* Danh sách cách tiêu xu. Muốn thêm cách mới: thêm một mục vào đây. */
+const SPEND=[
+  {id:'tiktok',t:'Xem video TikTok',e:'📺',bg:'linear-gradient(135deg,#ffd0e6,#ffb9d8)',
+   d:'Xem video TikTok thỏa thích. Hết xu sẽ tự thoát, hoặc thoát bất cứ lúc nào.',
+   tag:'MỚI',cost:'5 xu / video',btn:'XEM NGAY',run:()=>openTikTok()}
+];
+function renderSpend(){
+  $('spendGrid').innerHTML=SPEND.map(x=>`
+    <article class="game">
+      <div class="thumb" style="background:${x.bg}">${x.tag?`<span class="tag">${x.tag}</span>`:''}${x.e}</div>
+      <h3>${x.t}</h3><p>${x.d}</p>
+      <div class="foot"><span class="price">${x.cost}</span>
+      <button class="btn small" data-s="${x.id}">${x.btn}</button></div>
+    </article>`).join('');
+  $('spendGrid').querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>SPEND.find(x=>x.id===b.dataset.s).run());
+}
+
+/* ---- Xem TikTok: mỗi video trừ 5 xu, hết xu tự thoát ---- */
+let tkOn=false,tkCur=null,tkWatched=0,tkSpent=0,tkFail=0,tkEnded=false;
+const tkBad=new Set();
+
+function tkList(){
+  const extra=load(K_VIDS,[]);
+  return [...new Set([...TIKTOK_VIDEOS,...extra])].filter(id=>!tkBad.has(id));
+}
+function openTikTok(){
+  if(!sess){
+    openM(authModal); switchTab('login');
+    msg('li_msg','Hãy đăng nhập để xem TikTok bằng xu.','ok');
+    return;
+  }
+  if(coinOf()<TK_COST){ toast('Bạn cần ít nhất '+TK_COST+' xu để xem TikTok. Chơi mini game để kiếm xu nhé!'); return; }
+  tkOn=true; tkCur=null; tkWatched=0; tkSpent=0; tkFail=0; tkBad.clear();
+  msg('tk_msg','');
+  openM(tkModal);
+  window.addEventListener('message',tkMsg);
+  tkNext();
+}
+function tkStats(){
+  $('tkCoin').textContent=coinOf().toLocaleString('vi-VN');
+  $('tkWatched').textContent=tkWatched;
+}
+function tkStop(){
+  tkOn=false; window.removeEventListener('message',tkMsg); $('tkStage').innerHTML='';
+}
+function tkEnd(text){ tkStop(); closeM(tkModal); toast(text); }
+function tkLeave(){
+  if(!tkOn) return;
+  const w=tkWatched, x=tkSpent;
+  tkStop(); closeM(tkModal);
+  if(w) toast('Đã thoát. Bạn xem '+w+' video, tốn '+x+' xu.');
+}
+function tkNext(){
+  if(!tkOn) return;
+  if(coinOf()<TK_COST){ tkEnd('Bạn đã hết xu nên đã tự động thoát TikTok. Chơi game để kiếm thêm nhé! 🎀'); return; }
+  const list=tkList();
+  if(!list.length){ tkEnd('Không còn video nào để xem. Hãy thêm link video khác.'); return; }
+  let pool=list.filter(id=>id!==tkCur); if(!pool.length) pool=list;
+  tkCur=pool[Math.floor(Math.random()*pool.length)];
+  spendCoin(TK_COST); tkSpent+=TK_COST; tkWatched++; tkEnded=false;
+  $('tkStage').innerHTML='<div class="tkwrap"><iframe id="tkFrame" title="TikTok" allow="autoplay; fullscreen; encrypted-media" allowfullscreen src="https://www.tiktok.com/player/v1/'+tkCur+'?autoplay=1&music_info=1&description=1"></iframe></div>';
+  tkStats();
+  msg('tk_msg', coinOf()<TK_COST ? 'Đây là video cuối: xu của bạn không đủ cho video tiếp theo, sẽ tự thoát khi xem xong.' : '', 'ok');
+}
+function tkMsg(e){
+  const f=$('tkFrame');
+  if(!tkOn||!f||e.source!==f.contentWindow) return;
+  let d=e.data;
+  if(typeof d==='string'){ try{d=JSON.parse(d);}catch(_){return;} }
+  if(!d||!d['x-tiktok-player']) return;
+
+  if(d.type==='onStateChange'){
+    if(d.value===1) tkFail=0;
+    if(d.value===0 && !tkEnded){ tkEnded=true; tkNext(); }   // xem hết video -> video kế (trừ 5 xu)
+  }
+  else if(d.type==='onPlayerError'){
+    const v=d.value, code=(v&&typeof v==='object')?v.errorCode:v, type=(v&&typeof v==='object')?v.errorType:'';
+    if(code===1001||type==='INVALID_VIDEO'){
+      refundCoin(TK_COST); tkSpent-=TK_COST; tkWatched--; tkBad.add(tkCur);
+      save(K_VIDS,load(K_VIDS,[]).filter(x=>x!==tkCur));
+      if(++tkFail>=3){ tkEnd('Không tải được video. Hãy thử thêm link video khác.'); return; }
+      tkNext();
+      msg('tk_msg','Video vừa rồi không xem được, đã hoàn lại 5 xu và chuyển video khác.','ok');
+    }else if(code===3002||type==='AUTOPLAY_ERROR'){
+      msg('tk_msg','Trình duyệt chặn tự phát, hãy bấm nút ▶ trong video.','ok');
+    }else{
+      msg('tk_msg','Video gặp lỗi khi phát. Bấm "Video tiếp" để đổi video.');
+    }
+  }
+}
+function parseTk(s){
+  s=String(s||'').trim();
+  const m=s.match(/tiktok\.com\/(?:@[\w.\-]+\/)?(?:video|photo)\/(\d{6,25})/i)||s.match(/^(\d{15,25})$/);
+  return m?m[1]:null;
+}
+$('tkNextBtn').onclick=()=>tkNext();
+$('tkExitBtn').onclick=()=>tkLeave();
+$('tkAdd').onclick=()=>{
+  const id=parseTk($('tkLink').value);
+  if(!id) return msg('tk_msg','Link không hợp lệ. Cần link đầy đủ dạng tiktok.com/@ten/video/số.');
+  const ex=load(K_VIDS,[]);
+  if(ex.includes(id)||TIKTOK_VIDEOS.includes(id)) return msg('tk_msg','Video này đã có trong danh sách.','ok');
+  ex.push(id); save(K_VIDS,ex.slice(-50)); tkBad.delete(id); $('tkLink').value='';
+  msg('tk_msg','Đã thêm video vào danh sách!','ok');
+};
+$('tkLink').onkeydown=e=>{ if(e.key==='Enter') $('tkAdd').click(); };
+$('heroTk').onclick=()=>openTikTok();
+$('tabFeed').onclick=()=>sideTab('feed');
+$('tabRank').onclick=()=>sideTab('rank');
+
 /* ================= INIT ================= */
-renderMe(); renderTop(); renderGames(); switchTab('login');
+renderMe(); renderTop(); renderSpend(); renderGames(); switchTab('login');
+setInterval(renderFeed,30000);
 </script>
 </body>
 </html>
