@@ -1,27 +1,27 @@
 <!DOCTYPE html>
-<html lang="vi" data-theme="light">
+<html lang="vi" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>PINKGAME.SHOP — Shop Mini Game</title>
+<title>HEOVL.SHOP — Shop Mini Game</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#fff7fa;
-  --surface:#ffffff;
-  --surface-2:#ffeef5;
-  --line:#ffd5e6;
-  --text:#4a2338;
-  --muted:#96708a;
-  --brand:#ff7ab2;
-  --brand-strong:#ff4d97;
-  --brand-soft:#ffe1ee;
+  --bg:#0a0510;
+  --surface:#160c20;
+  --surface-2:#1e1029;
+  --line:#3c2148;
+  --text:#ffe4f2;
+  --muted:#b48db2;
+  --brand:#ff2e93;
+  --brand-strong:#ff0f7b;
+  --brand-soft:#2a1332;
   --accent:#ffd166;
   --ok:#3fbf8f;
   --bad:#ff5d6c;
-  --shadow:0 10px 28px rgba(255,120,175,.18);
+  --shadow:0 10px 30px rgba(255,20,140,.28);
   --radius:18px;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);
@@ -29,23 +29,31 @@
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#2a1622; --surface:#381f2e; --surface-2:#452537; --line:#5a3147;
-    --text:#ffe9f2; --muted:#d2a8bf; --brand:#ff8cc0; --brand-strong:#ff69ad;
-    --brand-soft:#4d2a3c; --shadow:0 10px 28px rgba(0,0,0,.35);
+    --bg:#0a0510; --surface:#160c20; --surface-2:#1e1029; --line:#3c2148;
+    --text:#ffe4f2; --muted:#b48db2; --brand:#ff2e93; --brand-strong:#ff0f7b;
+    --brand-soft:#2a1332; --shadow:0 10px 30px rgba(255,20,140,.28);
   }
 }
 :root[data-theme="dark"]{
-  --bg:#2a1622; --surface:#381f2e; --surface-2:#452537; --line:#5a3147;
-  --text:#ffe9f2; --muted:#d2a8bf; --brand:#ff8cc0; --brand-strong:#ff69ad;
-  --brand-soft:#4d2a3c; --shadow:0 10px 28px rgba(0,0,0,.35);
+  --bg:#0a0510; --surface:#160c20; --surface-2:#1e1029; --line:#3c2148;
+  --text:#ffe4f2; --muted:#b48db2; --brand:#ff2e93; --brand-strong:#ff0f7b;
+  --brand-soft:#2a1332; --shadow:0 10px 30px rgba(255,20,140,.28);
 }
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px)}
+#bgFx{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.65}
 body{
-  margin:0; background:var(--bg); color:var(--text);
+  margin:0; color:var(--text); position:relative; min-height:100vh;
   font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
   font-size:15px; line-height:1.55;
+  background:
+    radial-gradient(ellipse 60% 40% at 18% 8%,rgba(255,60,150,.22),transparent 60%),
+    radial-gradient(ellipse 55% 45% at 85% 12%,rgba(150,40,200,.20),transparent 60%),
+    radial-gradient(ellipse 60% 50% at 60% 90%,rgba(255,20,120,.14),transparent 60%),
+    linear-gradient(165deg,#0a0510 0%,#170a20 45%,#0a0510 100%);
+  background-attachment:fixed;
 }
+body>*{position:relative;z-index:1}
 img{max-width:100%}
 button{font-family:inherit}
 .wrap{max-width:1180px;margin:0 auto;padding:0 16px}
@@ -53,7 +61,9 @@ button{font-family:inherit}
 /* ---------- HEADER ---------- */
 .topbar{
   position:sticky; top:env(safe-area-inset-top,0px); z-index:40;
-  background:linear-gradient(90deg,var(--brand),var(--brand-strong));
+  background:linear-gradient(90deg,rgba(28,10,36,.92),rgba(40,10,40,.92));
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
   box-shadow:var(--shadow);
 }
 .topbar .wrap{display:flex;align-items:center;gap:8px;min-height:58px;flex-wrap:wrap}
@@ -90,18 +100,18 @@ button{font-family:inherit}
 /* ---------- HERO ---------- */
 .hero{
   margin:18px 0; border-radius:24px; overflow:hidden; position:relative;
-  background:linear-gradient(120deg,#ffd7e9,#ffeaf3 45%,#ffe0c9);
+  background:linear-gradient(120deg,#1a0a28,#230c30 45%,#160a22);
   border:1px solid var(--line); box-shadow:var(--shadow);
 }
 .hero-in{padding:34px 24px;display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap}
 .hero h1{
   margin:0 0 6px;font-size:clamp(26px,5vw,44px);line-height:1.1;font-weight:800;
-  color:#c9256f; letter-spacing:.5px;
+  color:#ff62ad; letter-spacing:.5px; text-shadow:0 0 18px rgba(255,20,140,.45);
 }
-.hero p{margin:0;color:#8e3d69;font-weight:600;max-width:520px}
+.hero p{margin:0;color:#d9a9cc;font-weight:600;max-width:520px}
 .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-.badge{background:#fff;border:1px solid #ffc4dd;color:#c9256f;border-radius:999px;padding:6px 14px;font-size:12.5px;font-weight:700}
-.hero-emoji{font-size:clamp(56px,14vw,110px);filter:drop-shadow(0 8px 14px rgba(200,40,110,.25))}
+.badge{background:var(--surface-2);border:1px solid var(--line);color:#ff8cc0;border-radius:999px;padding:6px 14px;font-size:12.5px;font-weight:700}
+.hero-emoji{font-size:clamp(56px,14vw,110px);filter:drop-shadow(0 8px 14px rgba(255,20,140,.35))}
 
 /* ---------- CHIPS ---------- */
 .chips{display:flex;gap:10px;overflow-x:auto;padding:4px 0 14px;scrollbar-width:none}
@@ -140,6 +150,7 @@ button{font-family:inherit}
 .game:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(255,110,170,.26)}
 .thumb{height:130px;display:grid;place-items:center;font-size:54px;position:relative}
 .tag{position:absolute;top:10px;left:10px;background:var(--bad);color:#fff;font-size:11px;font-weight:800;padding:4px 10px;border-radius:8px;letter-spacing:.4px}
+.tag.gold{background:var(--accent);color:#4a2f00}
 .game h3{margin:0;padding:12px 14px 0;font-size:15.5px;font-weight:800}
 .game p{margin:4px 14px 0;color:var(--muted);font-size:13px;flex:1}
 .game .foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px}
@@ -270,11 +281,13 @@ canvas{background:var(--surface-2);border:2px solid var(--line);border-radius:16
 </style>
 </head>
 <body>
+<canvas id="bgFx"></canvas>
 
 <header class="topbar">
   <div class="wrap">
     <nav class="nav">
       <a href="#home">Trang chủ</a>
+      <a href="#game">Game</a>
       <a href="#tieuxu">Tiêu xu</a>
       <a href="#kho">Kho mini game</a>
       <a href="#top">Lịch sử xu</a>
@@ -306,7 +319,7 @@ canvas{background:var(--surface-2);border:2px solid var(--line);border-radius:16
   <section class="hero">
     <div class="hero-in">
       <div>
-        <h1>PINKGAME.SHOP</h1>
+        <h1>HEOVL.SHOP</h1>
         <p>Kho mini game chơi ngay trên web — không cần tải, không cần acc game, đăng nhập là chơi và tích xu.</p>
         <div class="badges">
           <span class="badge">🎀 Uy tín</span>
@@ -354,7 +367,10 @@ canvas{background:var(--surface-2);border:2px solid var(--line);border-radius:16
     </div>
 
     <div id="games">
-      <span class="section-title" id="tieuxu">💸 TIÊU XU</span>
+      <span class="section-title" id="game">🎮 GAME</span>
+      <div class="grid" id="premGrid"></div>
+
+      <span class="section-title" id="tieuxu" style="margin-top:28px">💸 TIÊU XU</span>
       <div class="grid" id="spendGrid"></div>
 
       <span class="section-title" id="kho" style="margin-top:28px">🎮 KIẾM XU · KHO MINI GAME</span>
@@ -366,7 +382,7 @@ canvas{background:var(--surface-2);border:2px solid var(--line);border-radius:16
 <footer id="lienhe">
   <div class="wrap">
     <div>
-      <h4>PINKGAME.SHOP</h4>
+      <h4>HEOVL.SHOP</h4>
       <p>Trang web mini game giải trí — toàn bộ trò chơi được viết bằng code và chạy trực tiếp trên trình duyệt của bạn.</p>
     </div>
     <div>
@@ -925,8 +941,97 @@ const TIKTOK_VIDEOS=[
   '7686844575595400466',
   '7679327128315366674',
   '7686809226169224469',
-  '7568862777465376008'
+  '7568862777465376008',
+  '7677914732782701844',
+  '7677593586229054728',
+  '7680169846583102728',
+  '7687580544678366480',
+  '7686826464943115538',
+  '7687048694717271312',
+  '7678936897586007317',
+  '7675392048555461908',
+  '7672756660082969876',
+  '7686084221928033544',
+  '7687455621934845205',
+  '7687604912645262612',
+  '7666497823944297736',
+  '7684142082864237844',
+  '7670932113545301269',
+  '7687410507707338005',
+  '7687969633718029600',
+  '7685722737028943124',
+  '7686712320533318930',
+  '7685266539561372929',
+  '7676467871836359944',
+  '7686003521723845895',
+  '7686554158689832210',
+  '7683930510904626450',
+  '7686731143340657938',
+  '7686485254546361607',
+  '7680027057367158024',
+  '7667099541690125588',
+  '7680948397175622930',
+  '7663818622934142228',
+  '7674960382468853009',
+  '7683352324080749856',
+  '7670923060320488712',
+  '7686063230686432533',
+  '7682441837189074194',
+  '7684671333065624852',
+  '7664854026269297941',
+  '7676158377113701648',
+  '7656119212934548757',
+  '7677744377275419912',
+  '7684633539735768341',
+  '7672553089337003286',
+  '7683329126958157069',
+  '7682017329785343246',
+  '7684994091884481806',
+  '7686683185668771086',
+  '7686100396128931085',
+  '7686044972436442381',
+  '7685721801640447246',
+  '7685212591383203085',
+  '7687441500203978004',
+  '7685374404506701063',
+  '7675925133361548565'
 ];
+
+/* ================= KHU VỰC GAME (chơi mất xu, không miễn phí) ================= */
+/* Muốn thêm game trả phí mới: thêm một mục vào PREM, kèm file game riêng ở "file". */
+const PREM=[
+  {id:'socbolo', t:'Bắt Sóc Bỏ Lọ', e:'🐿️',
+   bg:'linear-gradient(135deg,#2a1332,#4a1740 60%,#341049)',
+   d:'Điều khiển chú sóc nhảy trên chuyến xe buýt, né chướng ngại vật và bắt đồ bỏ vào lọ. Ghi điểm càng cao càng oách!',
+   tag:'PREMIUM', cost:'50 xu / lượt chơi', btn:'CHƠI NGAY (−50 xu)', file:'game-soc-xe-buyt.html', costN:50}
+];
+function renderPrem(){
+  $('premGrid').innerHTML=PREM.map(x=>`
+    <article class="game">
+      <div class="thumb" style="background:${x.bg}">${x.tag?`<span class="tag gold">${x.tag}</span>`:''}${x.e}</div>
+      <h3>${x.t}</h3><p>${x.d}</p>
+      <div class="foot"><span class="price">${x.cost}</span>
+      <button class="btn small" data-p="${x.id}">${x.btn}</button></div>
+    </article>`).join('');
+  $('premGrid').querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>openPrem(b.dataset.p));
+}
+/* Mỗi lần bấm CHƠI NGAY sẽ trừ xu ngay lập tức — không có lượt chơi miễn phí,
+   kể cả khi vào chơi lại từ đầu vẫn bị trừ đủ costN xu mỗi lần. */
+function openPrem(id){
+  const g=PREM.find(x=>x.id===id); if(!g) return;
+  if(!sess){
+    openM(authModal); switchTab('login');
+    msg('li_msg','Hãy đăng nhập để chơi '+g.t+'.','ok');
+    return;
+  }
+  if(coinOf()<g.costN){ toast('Bạn cần ít nhất '+g.costN+' xu để chơi '+g.t+'. Vào Kho mini game để kiếm thêm xu nhé!'); return; }
+  spendCoin(g.costN);
+  curGame=g.t;
+  stopGame();
+  $('gameTitle').textContent=g.e+' '+g.t+' · đã trừ '+g.costN+' xu';
+  $('gameArea').innerHTML=`<iframe src="${g.file}" title="${g.t}" style="width:100%;aspect-ratio:16/9;border:0;border-radius:14px;display:block;background:#000" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+  openM(gameModal);
+}
 
 /* Danh sách cách tiêu xu. Muốn thêm cách mới: thêm một mục vào đây. */
 const SPEND=[
@@ -1067,8 +1172,67 @@ $('tabFeed').onclick=()=>sideTab('feed');
 $('tabRank').onclick=()=>sideTab('rank');
 
 /* ================= INIT ================= */
-renderMe(); renderTop(); renderSpend(); renderGames(); switchTab('login');
+renderMe(); renderTop(); renderPrem(); renderSpend(); renderGames(); switchTab('login');
 setInterval(renderFeed,30000);
+
+/* ================= NỀN CÔNG NGHỆ (particle + sóng) ================= */
+(function(){
+  const cv=document.getElementById('bgFx'); if(!cv) return;
+  const ctx=cv.getContext('2d');
+  let W,H,dpr=Math.min(window.devicePixelRatio||1,2),pts=[],raf;
+  function size(){
+    W=cv.width=Math.floor(innerWidth*dpr); H=cv.height=Math.floor(innerHeight*dpr);
+    cv.style.width=innerWidth+'px'; cv.style.height=innerHeight+'px';
+  }
+  function initPts(){
+    const n=Math.min(70,Math.floor((innerWidth*innerHeight)/22000));
+    pts=Array.from({length:n},()=>({
+      x:Math.random()*W, y:Math.random()*H,
+      vx:(Math.random()-.5)*.25*dpr, vy:(Math.random()-.5)*.25*dpr,
+      r:(Math.random()*1.6+.6)*dpr
+    }));
+  }
+  let t=0;
+  function draw(){
+    t+=.004;
+    ctx.clearRect(0,0,W,H);
+    /* sóng mềm phía dưới nền */
+    for(let w=0; w<2; w++){
+      ctx.beginPath();
+      const amp=(28+w*16)*dpr, base=H*(0.62+w*0.14);
+      for(let x=0;x<=W;x+=12*dpr){
+        const y=base+Math.sin(x*0.006+t*(1+w*0.4)+w*2)*amp;
+        x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+      }
+      ctx.strokeStyle=w===0?'rgba(255,46,147,.22)':'rgba(255,15,123,.14)';
+      ctx.lineWidth=1.4*dpr; ctx.stroke();
+    }
+    /* liên kết giữa các hạt gần nhau */
+    for(let i=0;i<pts.length;i++){
+      for(let j=i+1;j<pts.length;j++){
+        const a=pts[i],b=pts[j],dx=a.x-b.x,dy=a.y-b.y,d=Math.hypot(dx,dy),max=120*dpr;
+        if(d<max){
+          ctx.strokeStyle='rgba(255,60,160,'+(0.16*(1-d/max))+')';
+          ctx.lineWidth=1*dpr;
+          ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+        }
+      }
+    }
+    /* các hạt phát sáng */
+    pts.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1;
+      const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*4);
+      g.addColorStop(0,'rgba(255,140,200,.9)'); g.addColorStop(1,'rgba(255,20,140,0)');
+      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(p.x,p.y,p.r*4,0,7); ctx.fill();
+      ctx.fillStyle='#ffd7ec'; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,7); ctx.fill();
+    });
+    raf=requestAnimationFrame(draw);
+  }
+  function start(){ size(); initPts(); cancelAnimationFrame(raf); draw(); }
+  window.addEventListener('resize',start);
+  start();
+})();
 </script>
 </body>
 </html>
