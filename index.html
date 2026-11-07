@@ -1,9 +1,251 @@
+
+
+T-Fighter_UPD4_2(1).html
+HTML
+Tôi thấy game đã hoàn hảo rồi bay giờ bạn hãy update theo tôi một chút:
+
+***Update tổng thể game
+
+**Thay tên game Từ "T-Fighter UPD4.1" thành "T-Fighter UPD4.2"
+
+**Menu game
+
+*Tên game
+
+-Hãy thay đổi dòng chữ "T-Fighter UPD4.2" thành kiểu chữ neon màu trắng phát sáng, có đường viền màu đen với độ dày vừa phải, hơi đậm để tạo độ tương phản rõ nét. Giữ nguyên nội dung chữ, căn chỉnh và vị trí hiện tại. Hiệu ứng phát sáng cần nổi bật, sắc nét, mang phong cách công nghệ hiện đại và phù hợp với tổng thể giao diện game.
+
+*Sửa giao diện chế độ "2 người chơi" khi nhấn vào thanh tác vụ "2 người chơi"
+
+-Hãy thiết kế lại toàn bộ giao diện chọn nhân vật trong chế độ "2 người chơi" khi người chơi nhấn vào thanh tác vụ "2 người chơi". Thay vì sử dụng giao diện chọn nhân vật riêng biệt cho từng người chơi như hiện tại, hãy chuyển sang một giao diện chung được chia thành 3 khu vực riêng biệt theo chiều ngang, bao gồm khu vực bên trái dành cho P1, khu vực ở giữa dùng để hiển thị nhân vật mà hai người chơi đã lựa chọn và khu vực bên phải dành cho P2. Hai khu vực bên trái và bên phải phải có chiều rộng bằng nhau, tương đương chiều rộng của một ô nhân vật; phía trên danh sách nhân vật lần lượt hiển thị chữ "P1" và "P2". Các ô nhân vật được sắp xếp theo chiều dọc, nếu số lượng nhân vật vượt quá chiều cao hiển thị thì cho phép người chơi sử dụng con lăn chuột giữa (Mouse Wheel) để cuộn danh sách lên xuống và tìm kiếm những nhân vật khác. Việc cuộn danh sách ở hai bên phải hoạt động độc lập, chỉ cuộn khu vực mà con trỏ chuột đang nằm bên trong và không làm ảnh hưởng đến các khu vực còn lại. Khu vực trung tâm phải có chiều rộng tương đương hai ô nhân vật đặt cạnh nhau, được phân chia thành hai vị trí hiển thị nhân vật riêng biệt với kích thước bằng nhau, trong đó vị trí bên trái dành cho nhân vật P1 và vị trí bên phải dành cho nhân vật P2. Khi chưa có người chơi nào lựa chọn, cả hai vị trí này đều để trống. Về cách hoạt động, hãy giữ nguyên hệ thống nhân vật, dữ liệu, hình ảnh và cơ chế lựa chọn hiện có, chỉ thay đổi cách bố trí giao diện và quy trình chọn nhân vật. Ban đầu, khi giao diện xuất hiện, P1 sẽ được quyền lựa chọn nhân vật trước, còn P2 tạm thời chưa được phép thao tác. Khi P1 nhấn vào một ô nhân vật ở khu vực bên trái, nhân vật tương ứng sẽ xuất hiện trong vị trí bên trái của khu vực trung tâm. Sau khi P1 chọn nhân vật, ở phía dưới cùng của khu vực trung tâm sẽ xuất hiện hai nút "Quay lại" và "Sẵn sàng". Trong thời gian chưa nhấn "Sẵn sàng", P1 vẫn có thể thay đổi nhân vật đã chọn. Khi P1 nhấn nút "Sẵn sàng", hệ thống sẽ khóa lựa chọn của P1, giữ nguyên nhân vật đã chọn ở khu vực trung tâm và chuyển quyền lựa chọn sang P2. Lúc này, P2 mới được phép tương tác với danh sách nhân vật ở khu vực bên phải. Khi P2 nhấn chọn một nhân vật, nhân vật đó sẽ xuất hiện trong vị trí bên phải của khu vực trung tâm, đồng thời nhân vật của P1 vẫn được giữ nguyên ở vị trí bên trái, không bị thay đổi hoặc biến mất. Trong giai đoạn này, P2 vẫn có thể thay đổi nhân vật trước khi nhấn nút "Sẵn sàng". Sau khi P2 xác nhận sẵn sàng, hệ thống sẽ khóa lựa chọn của cả hai người chơi và chuyển giao diện sang trạng thái hoàn tất. Lúc này, giữ nguyên hai nhân vật đã chọn ở khu vực trung tâm, thay thế nút "Sẵn sàng" bằng nút "Bắt đầu game", đồng thời giữ nguyên nút "Quay lại" ở bên trái. Hai nút phải được đặt cạnh nhau ở phía dưới cùng của khu vực trung tâm, căn chỉnh cân đối và đẹp mắt theo hình ảnh tham chiếu thứ tư. Khi người chơi nhấn "Bắt đầu game", hệ thống sẽ khởi chạy trận đấu 2 người chơi với chính xác hai nhân vật mà P1 và P2 đã lựa chọn. Về mặt giao diện, hãy bám sát bố cục của 4 hình ảnh tham chiếu: hình thứ nhất thể hiện trạng thái ban đầu khi cả hai chưa chọn nhân vật; hình thứ hai thể hiện trạng thái P1 đã chọn nhân vật và P2 chưa đến lượt; hình thứ ba thể hiện trạng thái cả hai đã chọn nhân vật nhưng chưa hoàn tất xác nhận; hình thứ tư thể hiện trạng thái cả hai đã nhấn "Sẵn sàng" và nút "Bắt đầu game" xuất hiện. Các khu vực phải được phân chia bằng những đường kẻ dọc rõ ràng, thẳng và đồng nhất; hai khu vực chọn nhân vật ở hai bên phải có kích thước bằng nhau, còn khu vực trung tâm phải đủ rộng để hiển thị hai ô nhân vật cạnh nhau mà không bị chồng lấn hoặc cắt mất nội dung. Hai nút chức năng luôn phải nằm cố định ở phía dưới khu vực trung tâm, không bị di chuyển khi danh sách nhân vật được cuộn. Có thể bổ sung hiệu ứng viền hoặc ánh sáng nhẹ để làm nổi bật nhân vật đang được chọn, đồng thời hiển thị trạng thái trực quan giúp người chơi nhận biết ai đang có quyền lựa chọn và ai đã xác nhận sẵn sàng. Đặc biệt, phải đảm bảo P2 không thể chọn nhân vật trước khi P1 nhấn "Sẵn sàng", không thể bắt đầu trận đấu khi một trong hai người chơi chưa hoàn tất lựa chọn, không để hai người chơi vô tình thay đổi nhân vật của nhau và phải lưu chính xác nhân vật đã chọn để truyền vào trận đấu. Nút "Quay lại" vẫn phải hoạt động đúng chức năng hiện tại. Tuyệt đối không tạo lại hệ thống nhân vật từ đầu, không xóa bỏ dữ liệu, không thay đổi cơ chế chiến đấu và không làm ảnh hưởng đến các chế độ chơi hoặc những chức năng khác của game. Mục tiêu là tạo ra một giao diện chọn nhân vật chung cho hai người chơi hiện đại, trực quan, cân đối, dễ sử dụng và có quy trình chuyển lượt chính xác theo các hình ảnh tham chiếu đã cung cấp.
+
+**Nhân vật
+
+*Chỉnh sửa nhân vật
+
+-Nhân vật energy:
+
+Chiêu O (Chiêu thứ 3): Spirit Bomb: Thay từ "Khi người chơi kích hoạt chiêu O, nhân vật Energy sẽ nhanh chóng nhảy vọt lên không trung với animation nhảy tương ứng. Sau khi đạt đến độ cao thích hợp, nhân vật đứng thẳng giữa không trung và giữ nguyên tư thế trong 0,5 giây. Tiếp đó, nhân vật giơ cả hai tay lên trời để bắt đầu tạo ra một quả cầu năng lượng Spirit Bomb. Quả cầu cần xuất hiện dần dần, từ mờ đến rõ nét, đồng thời phát sáng và có hiệu ứng năng lượng tích tụ. Kích thước quả cầu phải cực lớn, khoảng gấp 3 lần kích thước cơ thể nhân vật. Sau khi quá trình tích tụ hoàn tất, nhân vật thực hiện animation ném quả cầu về phía vị trí của đối thủ. Khi quả cầu chạm mục tiêu hoặc đến vị trí đối thủ, nó phát nổ tạo thành một vụ nổ năng lượng lớn với hiệu ứng hình ảnh nổi bật, gây sát thương bằng 30% lượng máu tối đa của đối thủ và hất văng đối thủ ra xa khoảng 1/4 chiều dài bản đồ, tính từ vị trí đối thủ đứng tại thời điểm bị trúng chiêu." thành "Khi người chơi kích hoạt chiêu O, nhân vật Energy nhanh chóng nhảy vọt lên không trung bằng animation nhảy tương ứng. Sau khi đạt đến độ cao thích hợp, nhân vật đứng thẳng giữa không trung và giữ nguyên tư thế trong 0,5 giây. Tiếp đó, nhân vật giơ cả hai tay lên trời để bắt đầu tạo ra một quả cầu năng lượng Spirit Bomb. Quả cầu xuất hiện dần từ trạng thái mờ đến rõ nét, kết hợp hiệu ứng phát sáng mạnh mẽ và các luồng năng lượng liên tục hội tụ xung quanh để thể hiện quá trình tích tụ sức mạnh. Kích thước quả cầu phải cực lớn, khoảng gấp 3 lần kích thước cơ thể nhân vật. Sau khi quá trình tích tụ hoàn tất, nhân vật thực hiện animation ném quả cầu về phía đối thủ. Về cơ chế nhắm mục tiêu (Aim): Quả cầu có khả năng tự động định hướng về phía đối thủ trong phạm vi tối đa bằng 1/3 chiều dài bản đồ, nhưng chỉ được phép khóa mục tiêu khi đối thủ đang ở phía trước mặt nhân vật Energy. Nếu đối thủ nằm phía sau lưng, quả cầu tuyệt đối không được tự động xoay hướng hoặc khóa mục tiêu để đuổi theo đối thủ mà chỉ được ném theo hướng mà nhân vật đang quay mặt. Về animation ném: Khi thực hiện động tác ném quả cầu, hai cánh tay của nhân vật phải giữ nguyên kích thước, chiều dài và tỷ lệ hình thể ban đầu, tuyệt đối không được kéo dài, phóng to hoặc làm biến dạng cánh tay trong quá trình animation. Chuyển động ném phải tự nhiên, mượt mà và phù hợp với tư thế của nhân vật. Khi quả cầu chạm mục tiêu hoặc đến vị trí đối thủ được nhắm tới, nó lập tức phát nổ, tạo thành một vụ nổ năng lượng cực lớn với hiệu ứng ánh sáng, sóng xung kích và các luồng năng lượng lan tỏa nổi bật. Vụ nổ gây sát thương bằng 30% lượng máu tối đa của đối thủ và hất văng đối thủ ra xa khoảng 1/4 chiều dài bản đồ, tính từ vị trí đối thủ đứng tại thời điểm bị trúng chiêu."
+-Nhân vật strength:
+
+Chiêu O (Chiêu thứ ba): Thay từ "Biểu Liên Hoa: Khi kích hoạt chiêu O, nhân vật Strength lập tức lao nhanh về phía đối thủ với tốc độ rất cao. Khi tiếp cận mục tiêu, nhân vật sử dụng chân phải tung một cú đá mạnh khiến đối thủ bị hất văng thẳng lên không trung với độ cao khoảng gấp 3 lần chiều cao nhân vật Strength. Đòn đá đầu tiên gây sát thương bằng 5% lượng máu tối đa của đối thủ. Sau khi bị đá lên trời, đối thủ rơi vào trạng thái stun và bất động hoàn toàn, không thể di chuyển hay thực hiện bất kỳ hành động nào. Tiếp theo, nhân vật Strength nhảy lên không trung, di chuyển đến vị trí đối diện với đối thủ, sau đó sử dụng cả hai tay ôm chặt đối thủ để thực hiện động tác lao thẳng cả hai xuống mặt đất. Trong suốt quá trình lao xuống, hãy tạo hiệu ứng lốc xoáy lớn bao quanh hai nhân vật, có kích thước khoảng gấp đôi cơ thể Strength. Khi cả hai va chạm với mặt đất, tạo ra một vụ nổ mạnh với hiệu ứng hình ảnh ấn tượng, gây thêm sát thương bằng 25% lượng máu tối đa của đối thủ. Ngay sau vụ nổ, cả hai nhân vật phải bị hất văng ra xa theo hai hướng ngược nhau. Cần đảm bảo toàn bộ chuỗi animation được thực hiện liên tục, đúng trình tự và không bị ngắt quãng giữa các giai đoạn." Thành "Khi người chơi kích hoạt chiêu O, nhân vật Strength lập tức lao nhanh về phía đối thủ với tốc độ rất cao. Trong giai đoạn tiếp cận, phải hiển thị rõ ràng toàn bộ animation nhân vật Strength chạy lao đến đối thủ, không được dịch chuyển tức thời (teleport), ẩn nhân vật hoặc bỏ qua động tác chạy. Khi tiếp cận mục tiêu, nhân vật Strength sử dụng chân phải tung một cú đá mạnh khiến đối thủ bị hất văng thẳng lên không trung với độ cao khoảng gấp 3 lần chiều cao của nhân vật Strength. Đòn đá đầu tiên gây sát thương bằng 5% lượng máu tối đa của đối thủ. Sau khi bị đá lên trời, đối thủ lập tức rơi vào trạng thái stun và bất động hoàn toàn, không thể di chuyển hoặc thực hiện bất kỳ hành động nào. Tiếp theo, nhân vật Strength nhảy lên không trung, di chuyển đến vị trí đối diện với đối thủ, sau đó sử dụng cả hai tay ôm chặt đối thủ để thực hiện động tác lao thẳng cả hai xuống mặt đất. Đặc biệt, ở giai đoạn lao xuống, không được để hai nhân vật rơi xuống đất quá nhanh hoặc ngay lập tức. Kể từ thời điểm Strength ôm chặt đối thủ trên không trung và bắt đầu lao xuống, toàn bộ quá trình di chuyển từ độ cao trên trời xuống mặt đất phải kéo dài chính xác khoảng 2 giây. Trong khoảng thời gian này, cần hiển thị đầy đủ animation hai nhân vật lao xuống liên tục, kết hợp hiệu ứng lốc xoáy lớn bao quanh cả hai với kích thước khoảng gấp đôi cơ thể nhân vật Strength, tạo cảm giác hai nhân vật đang xoay và lao xuống với tốc độ cao nhưng vẫn đủ thời gian để người chơi quan sát rõ chuyển động. Khi cả hai va chạm với mặt đất, tạo ra một vụ nổ năng lượng mạnh với hiệu ứng hình ảnh ấn tượng, sóng xung kích và hiệu ứng mặt đất rung chuyển, gây thêm sát thương bằng 25% lượng máu tối đa của đối thủ. Ngay sau vụ nổ, cả hai nhân vật phải bị hất văng ra xa theo hai hướng ngược nhau. Đảm bảo toàn bộ chuỗi animation được thực hiện liên tục, đúng trình tự và không bị ngắt quãng giữa các giai đoạn; đặc biệt phải giữ nguyên thời lượng 2 giây cho animation lao xuống, không được rút ngắn hoặc bỏ qua giai đoạn này."
+-Nhân vật space:
+
+Đánh thường "J" hoặc "number 1": Thay từ "Thay vì sử dụng động tác đấm thông thường giống các nhân vật khác, Space sẽ luôn cầm một quyển sách phép thuật màu tím ở tay trái. Khi người chơi nhấn nút đánh thường, nhân vật đưa tay phải ra phía trước, chỉ về hướng đối thủ và bắn ra một tia phép thuật màu tím từ tay. Hiệu ứng tia phép thuật phải xuất hiện rõ ràng, có chuyển động bay về phía trước và giữ được phong cách chiến đấu bằng ma thuật đặc trưng của Space. Đòn đánh thường này có tầm đánh xa gấp 4 lần tầm đánh thường của các nhân vật khác. Tuy nhiên, chỉ thay đổi tầm đánh; sát thương, tốc độ đánh và hiệu ứng khống chế vẫn phải giữ nguyên hoàn toàn giống đòn đánh thường thông thường. Không được tự ý tăng sát thương, tăng tốc độ đánh hoặc thay đổi thời gian khống chế của Space." thành "Thay vì sử dụng động tác đấm thông thường giống các nhân vật khác, Space sẽ luôn cầm một quyển sách phép thuật màu tím ở tay trái. Khi người chơi nhấn nút đánh thường, nhân vật đưa tay phải ra phía trước, hướng về phía đối thủ và bắn ra một tia phép thuật màu tím từ bàn tay. Hiệu ứng tia phép thuật phải xuất hiện rõ ràng, có chuyển động bay về phía trước và mang phong cách chiến đấu bằng ma thuật đặc trưng của Space. Đòn đánh thường này có tầm đánh xa gấp 4 lần tầm đánh thường của các nhân vật khác. Về sát thương và hiệu ứng khống chế: Sát thương của mỗi đòn đánh thường Space phải giảm 30% so với sát thương đánh thường ban đầu. Đồng thời, đòn đánh thường của Space hoàn toàn không có khả năng gây stun đối thủ, tức là khi bị trúng đòn, đối thủ vẫn có thể di chuyển và thực hiện các hành động bình thường, không bị bất động hay gián đoạn hành động do hiệu ứng choáng. Tốc độ đánh phải giữ nguyên như ban đầu, không được tự ý tăng hoặc giảm. Chỉ thay đổi tầm đánh, sát thương và hiệu ứng stun theo đúng các yêu cầu trên; không chỉnh sửa bất kỳ cơ chế hoặc chỉ số nào khác của nhân vật Space."
+Đọc file game T-Fighter_UPD4_2(1).html ở trên và sửa lại game theo tất cả các yêu cầu bên trên của tôi.
+***Chỉ cải thiện chứ không thay đổi hay xóa code cũ, nếu xóa cấu trúc cũ tôi sẽ khóc***
+
+Đã tạo bản UPD4.2
+Tải game tại đây:
+
+T-Fighter UPD4.2.html
+
+4,9 MB
+
+Tải xuống file game
+
+Những nội dung đã cập nhật
+Logo: Đổi thành T-Fighter UPD4.2, neon trắng phát sáng, viền đen.
+
+Chế độ 2 người: Giao diện ba cột P1 – khu vực hiển thị nhân vật – P2; danh sách cuộn độc lập; P1 xác nhận trước rồi mới đến lượt P2. Chỉ hiện nút bắt đầu khi cả hai đã sẵn sàng.
+
+Energy: Spirit Bomb có thời gian giữ tư thế 0,5 giây, quả cầu lớn, chỉ khóa đối thủ phía trước trong phạm vi 1/3 bản đồ, gây 30% máu tối đa và hất văng.
+
+Strength: Hiển thị rõ động tác chạy tiếp cận; pha ôm đối thủ lao xuống được giữ 120 khung hình, tương đương 2 giây ở 60 FPS.
+
+Space: Tầm đánh thường tăng lên 4 lần, sát thương giảm 30%, đòn đánh không gây stun.
+
+Về code cũ
+Mình giữ lại cấu trúc và dữ liệu nhân vật hiện có. Các thay đổi chủ yếu được bổ sung dưới dạng lớp CSS/JavaScript mới và ghi đè những hàm cần thiết; giao diện chọn 2P cũ được ẩn thay vì xóa.
+
+Kiểm tra: Cú pháp JavaScript đã vượt qua kiểm tra node --check. Tuy nhiên, mình chưa xác nhận được toàn bộ tương tác trực tiếp trong trình duyệt, nên bạn nên thử lần lượt chế độ 2P và ba chiêu sau khi mở file.
+
+
+T-Fighter_UPD4.2.html
+HTML
+Tệp đính kèm của người dùng
+Tôi thấy game đã hoàn hảo rồi bay giờ bạn hãy update theo tôi một chút:
+
+***Update tổng thể game
+
+**Giao diện game
+
+*Giao diện trong game
+
+-Thanh máu của 2 nhân vật
+
+Hãy chỉnh sửa lại giao diện thanh máu (HUD) của cả hai nhân vật dựa trên hình ảnh tham chiếu: Đầu tiên, giảm chiều cao tổng thể của hai khung thanh máu xuống gần 50% so với kích thước hiện tại, giúp chúng trở nên thon gọn, mảnh mai và tinh tế hơn, không còn cảm giác quá dày và cồng kềnh. Tiếp theo, thay đổi màu nền chủ đạo của toàn bộ khung thanh máu từ màu trắng kem hiện tại sang màu xám khói (Smoke Gray), đồng thời áp dụng hiệu ứng trong suốt khoảng 50% (Opacity 50%) để tạo cảm giác giao diện kính mờ (Glassmorphism), giúp khung HUD trông hiện đại và có chiều sâu hơn. Áp dụng đồng bộ thiết kế mới cho cả thanh máu của người chơi và BOT, bao gồm phần khung chứa, khu vực hiển thị tên nhân vật, và các thông tin liên quan. Giữ nguyên vị trí, cách bố trí, nội dung chữ, biểu tượng, tỷ lệ chiều dài và màu sắc riêng của phần thanh năng lượng bên trong (đỏ, cam, xanh dương...), chỉ thay đổi độ dày và phong cách thiết kế của khung giao diện. Các đường viền đen cũng cần được tinh chỉnh mảnh hơn, hài hòa với kích thước mới. Lưu ý: Không thay đổi cơ chế hoạt động, giá trị máu, năng lượng hoặc logic chiến đấu; chỉ chỉnh sửa phần giao diện HUD theo phong cách xám khói trong suốt, tối giản, gọn gàng và hiện đại.
+
+**Nhân vật
+
+-Nhân vật strength:
+
+Chiêu O (Chiêu thứ 3): Sửa từ "Khi người chơi kích hoạt chiêu O, nhân vật Strength lập tức lao nhanh về phía đối thủ với tốc độ rất cao. Trong giai đoạn tiếp cận, phải hiển thị rõ ràng toàn bộ animation nhân vật Strength chạy lao đến đối thủ, không được dịch chuyển tức thời (teleport), ẩn nhân vật hoặc bỏ qua động tác chạy. Khi tiếp cận mục tiêu, nhân vật Strength sử dụng chân phải tung một cú đá mạnh khiến đối thủ bị hất văng thẳng lên không trung với độ cao khoảng gấp 3 lần chiều cao của nhân vật Strength. Đòn đá đầu tiên gây sát thương bằng 5% lượng máu tối đa của đối thủ. Sau khi bị đá lên trời, đối thủ lập tức rơi vào trạng thái stun và bất động hoàn toàn, không thể di chuyển hoặc thực hiện bất kỳ hành động nào. Tiếp theo, nhân vật Strength nhảy lên không trung, di chuyển đến vị trí đối diện với đối thủ, sau đó sử dụng cả hai tay ôm chặt đối thủ để thực hiện động tác lao thẳng cả hai xuống mặt đất. Đặc biệt, ở giai đoạn lao xuống, không được để hai nhân vật rơi xuống đất quá nhanh hoặc ngay lập tức. Kể từ thời điểm Strength ôm chặt đối thủ trên không trung và bắt đầu lao xuống, toàn bộ quá trình di chuyển từ độ cao trên trời xuống mặt đất phải kéo dài chính xác khoảng 2 giây. Trong khoảng thời gian này, cần hiển thị đầy đủ animation hai nhân vật lao xuống liên tục, kết hợp hiệu ứng lốc xoáy lớn bao quanh cả hai với kích thước khoảng gấp đôi cơ thể nhân vật Strength, tạo cảm giác hai nhân vật đang xoay và lao xuống với tốc độ cao nhưng vẫn đủ thời gian để người chơi quan sát rõ chuyển động. Khi cả hai va chạm với mặt đất, tạo ra một vụ nổ năng lượng mạnh với hiệu ứng hình ảnh ấn tượng, sóng xung kích và hiệu ứng mặt đất rung chuyển, gây thêm sát thương bằng 25% lượng máu tối đa của đối thủ. Ngay sau vụ nổ, cả hai nhân vật phải bị hất văng ra xa theo hai hướng ngược nhau. Đảm bảo toàn bộ chuỗi animation được thực hiện liên tục, đúng trình tự và không bị ngắt quãng giữa các giai đoạn; đặc biệt phải giữ nguyên thời lượng 2 giây cho animation lao xuống, không được rút ngắn hoặc bỏ qua giai đoạn này." thành "Khi người chơi kích hoạt kỹ năng, nhân vật lập tức tự động khóa mục tiêu (Auto Aim) vào đối thủ nằm trong phạm vi bằng 1/3 chiều dài bản đồ tính từ vị trí hiện tại. Tuy nhiên, kỹ năng chỉ được phép khóa những đối thủ đang đứng cùng một tầng với nhân vật. Ví dụ: nếu nhân vật đang đứng ở tầng dưới cùng thì chỉ được khóa đối thủ ở tầng dưới cùng; nếu nhân vật đang đứng ở tầng thứ hai thì chỉ được khóa đối thủ ở tầng thứ hai. Sau khi khóa mục tiêu thành công, đối thủ lập tức bị rơi vào trạng thái Stun, không thể di chuyển, nhảy, tấn công hoặc sử dụng kỹ năng trong suốt chuỗi combo. Ngay sau đó, nhân vật nhanh chóng lao đến vị trí đối thủ bằng animation chạy tốc độ cao. Phải hiển thị rõ animation chạy trong suốt quá trình di chuyển, tuyệt đối không được sử dụng Teleport hoặc dịch chuyển tức thời. Khi tiếp cận đối thủ, nhân vật tung một cú đấm mạnh bằng tay phải, gây sát thương bằng 5% lượng máu tối đa của đối thủ và khiến đối thủ bị hất văng ra xa một khoảng bằng 1/4 chiều dài bản đồ tính từ vị trí bị đánh trúng. Hướng bay phải luôn là hướng phía trước, tức hướng ngược lại với vị trí nhân vật đang đứng và hướng nhân vật đang tấn công. Ví dụ: nếu nhân vật đứng bên phải và đối thủ đứng bên trái thì đối thủ bị đấm bay tiếp về bên trái; ngược lại, nếu nhân vật đứng bên trái và đối thủ đứng bên phải thì đối thủ bị đấm bay về bên phải. Ngay khi đối thủ bắt đầu bị hất văng, nhân vật lập tức chạy tốc độ cao đuổi theo và di chuyển đến phía sau đối thủ tại vị trí mà đối thủ đang bay tới. Trong quá trình truy đuổi vẫn phải hiển thị animation chạy rõ ràng, không được Teleport. Khi tiếp cận thành công, nhân vật tiếp tục tung một cú đấm mạnh bằng tay phải vào đối thủ, gây thêm 5% lượng máu tối đa và hất đối thủ bay ra xa một khoảng bằng 1/4 chiều dài bản đồ. Đặc biệt, hướng bay của cú đấm thứ hai phải ngược hoàn toàn với hướng bay của cú đấm thứ nhất. Ngay khi đối thủ bắt đầu bị cú đấm thứ hai hất văng, nhân vật tiếp tục chạy tốc độ cao đến phía sau đối thủ tại vị trí đối thủ đang bay tới, vẫn phải hiển thị animation chạy xuyên suốt quá trình di chuyển. Khi tiếp cận, nhân vật tung một cú đá mạnh bằng chân phải, gây thêm 5% lượng máu tối đa và khiến đối thủ bay thẳng lên không trung. Sau khi bị đá lên trời, đối thủ lập tức rơi vào trạng thái Air Stun, bị giữ cố định trên không và không thể thực hiện bất kỳ hành động nào. Tiếp đó, nhân vật lập tức nhảy vút lên trời và bay đến vị trí cao hơn đối thủ đang bị giữ trên không một khoảng tương đương chiều cao của một nhân vật. Khi đạt đến độ cao thích hợp, nhân vật dừng lại giữa không trung và bắt đầu xoay tròn tại chỗ như chong chóng, hoàn thành chính xác 10 vòng xoay trong vòng 1 giây mà không di chuyển sang trái hoặc phải. LƯU Ý QUAN TRỌNG: Trong suốt quá trình xoay, nhân vật tuyệt đối không được tung cú đá xuống đối thủ. Phải hoàn thành đầy đủ 10 vòng xoay trong 1 giây, kết thúc hoàn toàn animation xoay, sau đó mới chuyển sang hành động tiếp theo. Sau khi xoay đủ 10 vòng, nhân vật dừng hẳn chuyển động xoay, chuyển sang tư thế chuẩn bị tấn công bằng cách duỗi chân phải ra phía trước theo phong cách đá Taekwondo, rồi mới tung một cú đạp cực mạnh theo phương thẳng đứng xuống dưới, khiến đối thủ đang bị giữ trên không lao thẳng xuống mặt đất. Cú đạp cuối cùng gây sát thương bằng 15% lượng máu tối đa của đối thủ, nhưng sát thương chỉ được tính tại thời điểm đối thủ thực sự chạm đất, không được gây sát thương ngay khi vừa thực hiện cú đạp hoặc khi đối thủ vẫn đang ở trên không. Trong lúc đối thủ lao thẳng xuống đất, nhân vật phải từ từ hạ độ cao bằng animation rơi chậm, không được rơi nhanh theo đối thủ. Khi đối thủ chạm đất, lập tức tạo hiệu ứng bụi khói bùng lên tại vị trí va chạm, lan tỏa xung quanh để nhấn mạnh sức mạnh của cú đạp, đồng thời khiến đối thủ bị hất văng ra xa thêm một khoảng bằng 1/4 chiều dài bản đồ tính từ vị trí tiếp đất. Đảm bảo toàn bộ kỹ năng diễn ra tuần tự và chính xác với 4 giai đoạn tấn công: 2 cú đấm bằng tay phải, 1 cú đá bằng chân phải hất đối thủ lên trời và 1 cú đạp từ trên không xuống đất. Tổng sát thương của kỹ năng là 30% lượng máu tối đa của đối thủ (5% + 5% + 5% + 15%). Đối thủ phải luôn duy trì trạng thái Stun trong toàn bộ chuỗi combo và chỉ được giải phóng khỏi trạng thái này sau khi toàn bộ kỹ năng, hiệu ứng va chạm và chuyển động cuối cùng hoàn tất.."
+
+-Nhân vật energy:
+
+Chiêu O (Chiêu thứ 3): Sửa từ "Khi người chơi kích hoạt chiêu O, nhân vật Energy nhanh chóng nhảy vọt lên không trung bằng animation nhảy tương ứng. Sau khi đạt đến độ cao thích hợp, nhân vật đứng thẳng giữa không trung và giữ nguyên tư thế trong 0,5 giây. Tiếp đó, nhân vật giơ cả hai tay lên trời để bắt đầu tạo ra một quả cầu năng lượng Spirit Bomb. Quả cầu xuất hiện dần từ trạng thái mờ đến rõ nét, kết hợp hiệu ứng phát sáng mạnh mẽ và các luồng năng lượng liên tục hội tụ xung quanh để thể hiện quá trình tích tụ sức mạnh. Kích thước quả cầu phải cực lớn, khoảng gấp 3 lần kích thước cơ thể nhân vật. Sau khi quá trình tích tụ hoàn tất, nhân vật thực hiện animation ném quả cầu về phía đối thủ. Về cơ chế nhắm mục tiêu (Aim): Quả cầu có khả năng tự động định hướng về phía đối thủ trong phạm vi tối đa bằng 1/3 chiều dài bản đồ, nhưng chỉ được phép khóa mục tiêu khi đối thủ đang ở phía trước mặt nhân vật Energy. Nếu đối thủ nằm phía sau lưng, quả cầu tuyệt đối không được tự động xoay hướng hoặc khóa mục tiêu để đuổi theo đối thủ mà chỉ được ném theo hướng mà nhân vật đang quay mặt. Về animation ném: Khi thực hiện động tác ném quả cầu, hai cánh tay của nhân vật phải giữ nguyên kích thước, chiều dài và tỷ lệ hình thể ban đầu, tuyệt đối không được kéo dài, phóng to hoặc làm biến dạng cánh tay trong quá trình animation. Chuyển động ném phải tự nhiên, mượt mà và phù hợp với tư thế của nhân vật. Khi quả cầu chạm mục tiêu hoặc đến vị trí đối thủ được nhắm tới, nó lập tức phát nổ, tạo thành một vụ nổ năng lượng cực lớn với hiệu ứng ánh sáng, sóng xung kích và các luồng năng lượng lan tỏa nổi bật. Vụ nổ gây sát thương bằng 30% lượng máu tối đa của đối thủ và hất văng đối thủ ra xa khoảng 1/4 chiều dài bản đồ, tính từ vị trí đối thủ đứng tại thời điểm bị trúng chiêu." thành "Khi người chơi kích hoạt chiêu O, nhân vật Energy nhanh chóng nhảy vọt lên không trung bằng animation nhảy tương ứng. Sau khi đạt đến độ cao thích hợp, nhân vật phải giữ tư thế đứng thẳng giữa không trung và bất động hoàn toàn trong đúng 0,5 giây. Trong khoảng thời gian này, nhân vật không được thực hiện bất kỳ chuyển động nào khác, không giơ tay, không tạo hiệu ứng tích tụ năng lượng và đặc biệt là tuyệt đối chưa được xuất hiện quả cầu Spirit Bomb. Chỉ sau khi kết thúc 0,5 giây bất động, nhân vật mới bắt đầu từ từ giơ cả hai tay lên trời bằng animation tương ứng. Ngay khi hai tay bắt đầu được giơ lên, quá trình triệu hồi Spirit Bomb mới chính thức bắt đầu. Quả cầu năng lượng phải xuất hiện từ kích thước cực nhỏ, sau đó liên tục phóng to dần theo thời gian cho đến khi đạt kích thước hoàn chỉnh, khoảng gấp 3 lần kích thước cơ thể nhân vật Energy. Quá trình quả cầu lớn dần cần được thể hiện rõ ràng, mượt mà, kết hợp hiệu ứng phát sáng neon mạnh mẽ và các luồng năng lượng liên tục hội tụ xung quanh để tạo cảm giác sức mạnh đang được tích tụ. Không được để quả cầu xuất hiện ngay lập tức ở kích thước tối đa hoặc xuất hiện trong giai đoạn nhân vật đang bất động trên không trung. Sau khi quá trình tích tụ hoàn tất, nhân vật thực hiện animation ném quả cầu về phía đối thủ. Về cơ chế nhắm mục tiêu (Aim): Quả cầu có khả năng tự động định hướng về phía đối thủ trong phạm vi tối đa bằng 1/3 chiều dài bản đồ, nhưng chỉ được phép khóa mục tiêu khi đối thủ đang ở phía trước mặt nhân vật Energy. Nếu đối thủ nằm phía sau lưng, quả cầu tuyệt đối không được tự động xoay hướng hoặc khóa mục tiêu để đuổi theo đối thủ mà chỉ được ném theo hướng mà nhân vật đang quay mặt. Về animation ném: Khi thực hiện động tác ném quả cầu, hai cánh tay của nhân vật phải giữ nguyên kích thước, chiều dài và tỷ lệ hình thể ban đầu, tuyệt đối không được kéo dài, phóng to hoặc làm biến dạng cánh tay trong quá trình animation. Chuyển động ném phải tự nhiên, mượt mà và phù hợp với tư thế của nhân vật. Khi quả cầu chạm mục tiêu hoặc đến vị trí đối thủ được nhắm tới, nó lập tức phát nổ, tạo thành một vụ nổ năng lượng cực lớn với hiệu ứng ánh sáng, sóng xung kích và các luồng năng lượng lan tỏa nổi bật. Vụ nổ gây sát thương bằng 30% lượng máu tối đa của đối thủ và hất văng đối thủ ra xa khoảng 1/4 chiều dài bản đồ, tính từ vị trí đối thủ đứng tại thời điểm bị trúng chiêu. Yêu cầu quan trọng: Phải đảm bảo toàn bộ chuỗi animation diễn ra chính xác theo trình tự: Nhảy lên không trung → Đứng thẳng và bất động 0,5 giây → Giơ cả hai tay lên trời → Quả cầu xuất hiện từ kích thước cực nhỏ và lớn dần → Hoàn tất tích tụ năng lượng → Ném quả cầu → Phát nổ khi đến mục tiêu. Không được bỏ qua, đảo lộn hoặc gộp các giai đoạn này vào nhau."
+
+Đọc file game T-Fighter_UPD4.2(1).html ở trên và sửa lại game theo tất cả các yêu cầu bên trên của tôi.
+***Chỉ cải thiện chứ không thay đổi hay xóa code cũ, nếu xóa cấu trúc cũ tôi sẽ khóc***
+
+Đã cập nhật UPD4.2.1
+Mình đã chỉnh sửa trực tiếp trên file T-Fighter_UPD4.2(1).html và xuất ra phiên bản mới.
+
+T-Fighter UPD4.2.1.html
+
+HTML · Khoảng 5 MB
+
+Hoàn tất
+Mở file HTML
+
+Những thay đổi đã thực hiện
+1. HUD thanh máu
+
+Thu nhỏ chiều cao khung xuống khoảng một nửa.
+
+Chuyển nền sang Smoke Gray với độ trong suốt 50%.
+
+Thêm hiệu ứng kính mờ.
+
+Viền đen mảnh hơn.
+
+Giữ nguyên màu sắc, tỷ lệ và cơ chế thanh máu bên trong.
+
+2. Strength – Biểu Liên Hoa
+
+Khóa mục tiêu cùng tầng, trong phạm vi 1/3 bản đồ.
+
+Đối thủ bị stun ngay khi khóa mục tiêu.
+
+Chạy đến đấm lần thứ nhất: 5%.
+
+Chạy đuổi theo và đấm lần thứ hai: 5%.
+
+Chạy tiếp và đá đối thủ bay lên: 5%.
+
+Nhảy lên cao hơn đối thủ, xoay chính xác 10 vòng trong 1 giây.
+
+Lao xuống bằng cú đạp kết liễu: 15%.
+
+Tổng sát thương: 30% máu tối đa.
+
+3. Energy – Spirit Bomb
+
+Nhảy lên không trung.
+
+Đứng thẳng, bất động đúng 0,5 giây.
+
+Sau đó mới bắt đầu giơ hai tay.
+
+Quả cầu xuất hiện từ kích thước cực nhỏ và lớn dần.
+
+Chỉ khóa mục tiêu phía trước trong phạm vi 1/3 bản đồ.
+
+Giữ nguyên tỷ lệ cánh tay trong animation ném.
+
+Gây 30% sát thương khi phát nổ.
+
+Về cấu trúc code cũ
+Mình giữ lại code nền, dữ liệu nhân vật, hệ thống chiến đấu và những chức năng khác. Các thay đổi được nối thêm dưới dạng lớp cập nhật và ghi đè những hàm cần thiết, không chủ động xóa cấu trúc cũ.
+
+Kiểm tra kỹ thuật: Cả 3 khối JavaScript đều vượt qua kiểm tra cú pháp. Tuy nhiên, mình chưa xác nhận đầy đủ mọi tình huống gameplay bằng thử nghiệm trực tiếp trong trình duyệt.
+
+Chúc bạn hoàn thiện T-Fighter UPD4.2.1 thật tốt!
+
+
+T-Fighter_UPD4.2.1.html
+HTML
+Tệp đính kèm của người dùng
+Tôi thấy game đã hoàn hảo rồi bay giờ bạn hãy update theo tôi một chút:
+***Update tổng thể game
+
+**Giao diện game
+*Giao diện trong game
+-Thanh máu của 2 nhân vật
++ Hãy chỉnh sửa lại giao diện thanh máu (HUD) của cả hai nhân vật dựa trên hình ảnh tham chiếu: Đầu tiên, giảm chiều cao tổng thể của hai khung thanh máu xuống gần 50% so với kích thước hiện tại, giúp chúng trở nên thon gọn, mảnh mai và tinh tế hơn, không còn cảm giác quá dày và cồng kềnh. Tiếp theo, thay đổi màu nền chủ đạo của toàn bộ khung thanh máu từ màu trắng kem hiện tại sang **màu xám khói (Smoke Gray)**, đồng thời áp dụng hiệu ứng trong suốt khoảng **50% (Opacity 50%)** để tạo cảm giác giao diện kính mờ (Glassmorphism), giúp khung HUD trông hiện đại và có chiều sâu hơn. Áp dụng đồng bộ thiết kế mới cho cả thanh máu của người chơi và BOT, bao gồm phần khung chứa, khu vực hiển thị tên nhân vật, và các thông tin liên quan. Giữ nguyên vị trí, cách bố trí, nội dung chữ, biểu tượng, tỷ lệ chiều dài và màu sắc riêng của phần thanh năng lượng bên trong (đỏ, cam, xanh dương...), chỉ thay đổi độ dày và phong cách thiết kế của khung giao diện. Các đường viền đen cũng cần được tinh chỉnh mảnh hơn, hài hòa với kích thước mới. **Lưu ý:** Không thay đổi cơ chế hoạt động, giá trị máu, năng lượng hoặc logic chiến đấu; chỉ chỉnh sửa phần giao diện HUD theo phong cách xám khói trong suốt, tối giản, gọn gàng và hiện đại.
+
+**Nhân vật
+-Nhân vật strength:
++ Chiêu O (Chiêu thứ 3): Sửa từ "Khi người chơi kích hoạt chiêu O, nhân vật Strength lập tức lao nhanh về phía đối thủ với tốc độ rất cao. Trong giai đoạn tiếp cận, phải hiển thị rõ ràng toàn bộ animation nhân vật Strength chạy lao đến đối thủ, không được dịch chuyển tức thời (teleport), ẩn nhân vật hoặc bỏ qua động tác chạy. Khi tiếp cận mục tiêu, nhân vật Strength sử dụng chân phải tung một cú đá mạnh khiến đối thủ bị hất văng thẳng lên không trung với độ cao khoảng gấp 3 lần chiều cao của nhân vật Strength. Đòn đá đầu tiên gây sát thương bằng 5% lượng máu tối đa của đối thủ. Sau khi bị đá lên trời, đối thủ lập tức rơi vào trạng thái stun và bất động hoàn toàn, không thể di chuyển hoặc thực hiện bất kỳ hành động nào. Tiếp theo, nhân vật Strength nhảy lên không trung, di chuyển đến vị trí đối diện với đối thủ, sau đó sử dụng cả hai tay ôm chặt đối thủ để thực hiện động tác lao thẳng cả hai xuống mặt đất. Đặc biệt, ở giai đoạn lao xuống, không được để hai nhân vật rơi xuống đất quá nhanh hoặc ngay lập tức. Kể từ thời điểm Strength ôm chặt đối thủ trên không trung và bắt đầu lao xuống, toàn bộ quá trình di chuyển từ độ cao trên trời xuống mặt đất phải kéo dài chính xác khoảng 2 giây. Trong khoảng thời gian này, cần hiển thị đầy đủ animation hai nhân vật lao xuống liên tục, kết hợp hiệu ứng lốc xoáy lớn bao quanh cả hai với kích thước khoảng gấp đôi cơ thể nhân vật Strength, tạo cảm giác hai nhân vật đang xoay và lao xuống với tốc độ cao nhưng vẫn đủ thời gian để người chơi quan sát rõ chuyển động. Khi cả hai va chạm với mặt đất, tạo ra một vụ nổ năng lượng mạnh với hiệu ứng hình ảnh ấn tượng, sóng xung kích và hiệu ứng mặt đất rung chuyển, gây thêm sát thương bằng 25% lượng máu tối đa của đối thủ. Ngay sau vụ nổ, cả hai nhân vật phải bị hất văng ra xa theo hai hướng ngược nhau. Đảm bảo toàn bộ chuỗi animation được thực hiện liên tục, đúng trình tự và không bị ngắt quãng giữa các giai đoạn; đặc biệt phải giữ nguyên thời lượng 2 giây cho animation lao xuống, không được rút ngắn hoặc bỏ qua giai đoạn này." thành "Khi người chơi kích hoạt kỹ năng, nhân vật lập tức tự động khóa mục tiêu (Auto Aim) vào đối thủ nằm trong phạm vi bằng 1/3 chiều dài bản đồ tính từ vị trí hiện tại. Tuy nhiên, kỹ năng chỉ được phép khóa những đối thủ đang đứng cùng một tầng với nhân vật. Ví dụ: nếu nhân vật đang đứng ở tầng dưới cùng thì chỉ được khóa đối thủ ở tầng dưới cùng; nếu nhân vật đang đứng ở tầng thứ hai thì chỉ được khóa đối thủ ở tầng thứ hai. Sau khi khóa mục tiêu thành công, đối thủ lập tức bị rơi vào trạng thái Stun, không thể di chuyển, nhảy, tấn công hoặc sử dụng kỹ năng trong suốt chuỗi combo. Ngay sau đó, nhân vật nhanh chóng lao đến vị trí đối thủ bằng animation chạy tốc độ cao. Phải hiển thị rõ animation chạy trong suốt quá trình di chuyển, tuyệt đối không được sử dụng Teleport hoặc dịch chuyển tức thời. Khi tiếp cận đối thủ, nhân vật tung một cú đấm mạnh bằng tay phải, gây sát thương bằng 5% lượng máu tối đa của đối thủ và khiến đối thủ bị hất văng ra xa một khoảng bằng 1/4 chiều dài bản đồ tính từ vị trí bị đánh trúng. Hướng bay phải luôn là hướng phía trước, tức hướng ngược lại với vị trí nhân vật đang đứng và hướng nhân vật đang tấn công. Ví dụ: nếu nhân vật đứng bên phải và đối thủ đứng bên trái thì đối thủ bị đấm bay tiếp về bên trái; ngược lại, nếu nhân vật đứng bên trái và đối thủ đứng bên phải thì đối thủ bị đấm bay về bên phải. Ngay khi đối thủ bắt đầu bị hất văng, nhân vật lập tức chạy tốc độ cao đuổi theo và di chuyển đến phía sau đối thủ tại vị trí mà đối thủ đang bay tới. Trong quá trình truy đuổi vẫn phải hiển thị animation chạy rõ ràng, không được Teleport. Khi tiếp cận thành công, nhân vật tiếp tục tung một cú đấm mạnh bằng tay phải vào đối thủ, gây thêm 5% lượng máu tối đa và hất đối thủ bay ra xa một khoảng bằng 1/4 chiều dài bản đồ. Đặc biệt, hướng bay của cú đấm thứ hai phải ngược hoàn toàn với hướng bay của cú đấm thứ nhất. Ngay khi đối thủ bắt đầu bị cú đấm thứ hai hất văng, nhân vật tiếp tục chạy tốc độ cao đến phía sau đối thủ tại vị trí đối thủ đang bay tới, vẫn phải hiển thị animation chạy xuyên suốt quá trình di chuyển. Khi tiếp cận, nhân vật tung một cú đá mạnh bằng chân phải, gây thêm 5% lượng máu tối đa và khiến đối thủ bay thẳng lên không trung. Sau khi bị đá lên trời, đối thủ lập tức rơi vào trạng thái Air Stun, bị giữ cố định trên không và không thể thực hiện bất kỳ hành động nào. Tiếp đó, nhân vật lập tức nhảy vút lên trời và bay đến vị trí cao hơn đối thủ đang bị giữ trên không một khoảng tương đương chiều cao của một nhân vật. Khi đạt đến độ cao thích hợp, nhân vật dừng lại giữa không trung và bắt đầu xoay tròn tại chỗ như chong chóng, hoàn thành chính xác 10 vòng xoay trong vòng 1 giây mà không di chuyển sang trái hoặc phải. **LƯU Ý QUAN TRỌNG: Trong suốt quá trình xoay, nhân vật tuyệt đối không được tung cú đá xuống đối thủ. Phải hoàn thành đầy đủ 10 vòng xoay trong 1 giây, kết thúc hoàn toàn animation xoay, sau đó mới chuyển sang hành động tiếp theo.** Sau khi xoay đủ 10 vòng, nhân vật dừng hẳn chuyển động xoay, chuyển sang tư thế chuẩn bị tấn công bằng cách duỗi chân phải ra phía trước theo phong cách đá Taekwondo, rồi mới tung một cú đạp cực mạnh theo phương thẳng đứng xuống dưới, khiến đối thủ đang bị giữ trên không lao thẳng xuống mặt đất. Cú đạp cuối cùng gây sát thương bằng 15% lượng máu tối đa của đối thủ, nhưng sát thương chỉ được tính tại thời điểm đối thủ thực sự chạm đất, không được gây sát thương ngay khi vừa thực hiện cú đạp hoặc khi đối thủ vẫn đang ở trên không. Trong lúc đối thủ lao thẳng xuống đất, nhân vật phải từ từ hạ độ cao bằng animation rơi chậm, không được rơi nhanh theo đối thủ. Khi đối thủ chạm đất, lập tức tạo hiệu ứng bụi khói bùng lên tại vị trí va chạm, lan tỏa xung quanh để nhấn mạnh sức mạnh của cú đạp, đồng thời khiến đối thủ bị hất văng ra xa thêm một khoảng bằng 1/4 chiều dài bản đồ tính từ vị trí tiếp đất. Đảm bảo toàn bộ kỹ năng diễn ra tuần tự và chính xác với 4 giai đoạn tấn công: 2 cú đấm bằng tay phải, 1 cú đá bằng chân phải hất đối thủ lên trời và 1 cú đạp từ trên không xuống đất. Tổng sát thương của kỹ năng là 30% lượng máu tối đa của đối thủ (5% + 5% + 5% + 15%). Đối thủ phải luôn duy trì trạng thái Stun trong toàn bộ chuỗi combo và chỉ được giải phóng khỏi trạng thái này sau khi toàn bộ kỹ năng, hiệu ứng va chạm và chuyển động cuối cùng hoàn tất.."
+
+-Nhân vật energy:
++ Chiêu O (Chiêu thứ 3): Sửa từ "Khi người chơi kích hoạt chiêu O, nhân vật Energy nhanh chóng nhảy vọt lên không trung bằng animation nhảy tương ứng. Sau khi đạt đến độ cao thích hợp, nhân vật đứng thẳng giữa không trung và giữ nguyên tư thế trong 0,5 giây. Tiếp đó, nhân vật giơ cả hai tay lên trời để bắt đầu tạo ra một quả cầu năng lượng Spirit Bomb. Quả cầu xuất hiện dần từ trạng thái mờ đến rõ nét, kết hợp hiệu ứng phát sáng mạnh mẽ và các luồng năng lượng liên tục hội tụ xung quanh để thể hiện quá trình tích tụ sức mạnh. Kích thước quả cầu phải cực lớn, khoảng gấp 3 lần kích thước cơ thể nhân vật. Sau khi quá trình tích tụ hoàn tất, nhân vật thực hiện animation ném quả cầu về phía đối thủ. Về cơ chế nhắm mục tiêu (Aim): Quả cầu có khả năng tự động định hướng về phía đối thủ trong phạm vi tối đa bằng 1/3 chiều dài bản đồ, nhưng chỉ được phép khóa mục tiêu khi đối thủ đang ở phía trước mặt nhân vật Energy. Nếu đối thủ nằm phía sau lưng, quả cầu tuyệt đối không được tự động xoay hướng hoặc khóa mục tiêu để đuổi theo đối thủ mà chỉ được ném theo hướng mà nhân vật đang quay mặt. Về animation ném: Khi thực hiện động tác ném quả cầu, hai cánh tay của nhân vật phải giữ nguyên kích thước, chiều dài và tỷ lệ hình thể ban đầu, tuyệt đối không được kéo dài, phóng to hoặc làm biến dạng cánh tay trong quá trình animation. Chuyển động ném phải tự nhiên, mượt mà và phù hợp với tư thế của nhân vật. Khi quả cầu chạm mục tiêu hoặc đến vị trí đối thủ được nhắm tới, nó lập tức phát nổ, tạo thành một vụ nổ năng lượng cực lớn với hiệu ứng ánh sáng, sóng xung kích và các luồng năng lượng lan tỏa nổi bật. Vụ nổ gây sát thương bằng 30% lượng máu tối đa của đối thủ và hất văng đối thủ ra xa khoảng 1/4 chiều dài bản đồ, tính từ vị trí đối thủ đứng tại thời điểm bị trúng chiêu." thành "Khi người chơi kích hoạt chiêu O, nhân vật Energy nhanh chóng nhảy vọt lên không trung bằng animation nhảy tương ứng. Sau khi đạt đến độ cao thích hợp, nhân vật phải giữ tư thế đứng thẳng giữa không trung và **bất động hoàn toàn trong đúng 0,5 giây**. Trong khoảng thời gian này, nhân vật không được thực hiện bất kỳ chuyển động nào khác, không giơ tay, không tạo hiệu ứng tích tụ năng lượng và đặc biệt là tuyệt đối chưa được xuất hiện quả cầu Spirit Bomb. **Chỉ sau khi kết thúc 0,5 giây bất động**, nhân vật mới bắt đầu từ từ giơ cả hai tay lên trời bằng animation tương ứng. Ngay khi hai tay bắt đầu được giơ lên, quá trình triệu hồi Spirit Bomb mới chính thức bắt đầu. Quả cầu năng lượng phải xuất hiện từ kích thước cực nhỏ, sau đó liên tục phóng to dần theo thời gian cho đến khi đạt kích thước hoàn chỉnh, khoảng gấp 3 lần kích thước cơ thể nhân vật Energy. Quá trình quả cầu lớn dần cần được thể hiện rõ ràng, mượt mà, kết hợp hiệu ứng phát sáng neon mạnh mẽ và các luồng năng lượng liên tục hội tụ xung quanh để tạo cảm giác sức mạnh đang được tích tụ. Không được để quả cầu xuất hiện ngay lập tức ở kích thước tối đa hoặc xuất hiện trong giai đoạn nhân vật đang bất động trên không trung. Sau khi quá trình tích tụ hoàn tất, nhân vật thực hiện animation ném quả cầu về phía đối thủ. **Về cơ chế nhắm mục tiêu (Aim):** Quả cầu có khả năng tự động định hướng về phía đối thủ trong phạm vi tối đa bằng 1/3 chiều dài bản đồ, nhưng chỉ được phép khóa mục tiêu khi đối thủ đang ở phía trước mặt nhân vật Energy. Nếu đối thủ nằm phía sau lưng, quả cầu tuyệt đối không được tự động xoay hướng hoặc khóa mục tiêu để đuổi theo đối thủ mà chỉ được ném theo hướng mà nhân vật đang quay mặt. **Về animation ném:** Khi thực hiện động tác ném quả cầu, hai cánh tay của nhân vật phải giữ nguyên kích thước, chiều dài và tỷ lệ hình thể ban đầu, tuyệt đối không được kéo dài, phóng to hoặc làm biến dạng cánh tay trong quá trình animation. Chuyển động ném phải tự nhiên, mượt mà và phù hợp với tư thế của nhân vật. Khi quả cầu chạm mục tiêu hoặc đến vị trí đối thủ được nhắm tới, nó lập tức phát nổ, tạo thành một vụ nổ năng lượng cực lớn với hiệu ứng ánh sáng, sóng xung kích và các luồng năng lượng lan tỏa nổi bật. Vụ nổ gây sát thương bằng 30% lượng máu tối đa của đối thủ và hất văng đối thủ ra xa khoảng 1/4 chiều dài bản đồ, tính từ vị trí đối thủ đứng tại thời điểm bị trúng chiêu. **Yêu cầu quan trọng:** Phải đảm bảo toàn bộ chuỗi animation diễn ra chính xác theo trình tự: Nhảy lên không trung → Đứng thẳng và bất động 0,5 giây → Giơ cả hai tay lên trời → Quả cầu xuất hiện từ kích thước cực nhỏ và lớn dần → Hoàn tất tích tụ năng lượng → Ném quả cầu → Phát nổ khi đến mục tiêu. Không được bỏ qua, đảo lộn hoặc gộp các giai đoạn này vào nhau."
+
+Đọc file game T-Fighter_UPD4.2(2).html ở trên và sửa lại game theo tất cả các yêu cầu bên trên của tôi.
+*****Chỉ cải thiện chứ không thay đổi hay xóa code cũ, nếu xóa cấu trúc cũ tôi sẽ khóc******
+
+Đã xử lý trong 16m 31s
+Đã hoàn thành bản cập nhật UPD4.2.2
+Mình đã chỉnh sửa trực tiếp trên file T-Fighter_UPD4.2(2).html, giữ lại code nền và bổ sung lớp cập nhật mới.
+
+T-Fighter_UPD4.2.2.html
+
+HTML · 5,16 MB
+
+Sẵn sàng
+ Tải game UPD4.2.2
+
+Các thay đổi đã thực hiện
+1. HUD thanh máu
+
+Thu nhỏ chiều cao gần 50%.
+
+Nền Smoke Gray trong suốt 50%.
+
+Hiệu ứng Glassmorphism.
+
+Viền đen mảnh hơn.
+
+Giữ màu và cơ chế thanh máu cũ.
+
+2. Strength – Biểu Liên Hoa
+
+Auto Aim đối thủ cùng tầng, phạm vi 1/3 bản đồ.
+
+Hai cú đấm liên tiếp, mỗi cú 5%, hướng bay ngược nhau.
+
+Cú đá thứ ba gây 5%, hất đối thủ lên trời.
+
+Nhảy lên cao và xoay đủ 10 vòng trong 1 giây.
+
+Kết thúc xoay mới thực hiện cú đạp xuống.
+
+Chỉ gây 15% sát thương cuối khi đối thủ chạm đất.
+
+Giữ stun đến hết chuyển động hất văng cuối cùng.
+
+3. Energy – Spirit Bomb
+
+Nhảy lên không trung.
+
+Đứng yên chính xác 0,5 giây.
+
+Từ từ giơ hai tay.
+
+Quả cầu xuất hiện cực nhỏ rồi lớn dần.
+
+Chỉ ném sau khi tích tụ hoàn tất.
+
+Giữ nguyên quy tắc Aim phía trước trong phạm vi 1/3 bản đồ.
+
+Giữ nguyên tỷ lệ cánh tay.
+
+Kiểm tra code
+Đã kiểm tra cú pháp thành công cho cả 3 khối JavaScript.
+
+Mình chưa xác nhận toàn bộ gameplay bằng một lượt chơi thực tế trong trình duyệt.
+
+Đặc biệt: Code cũ vẫn được giữ lại trong file; những thay đổi mới được bổ sung ở cuối và ghi đè các xử lý cần thiết khi game chạy. Không viết lại toàn bộ hệ thống nhân vật hay chiến đấu.
+
+
+T-Fighter_UPD4.2.2.html
+HTML
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>T-Fighter UPD4.1</title>
+    <title>T-Fighter UPD4.2</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,700&family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
     <style>
@@ -514,7 +756,7 @@
 
     <!-- ===== MENU GAME: TEA FIGHTER ===== -->
     <div id="menuScreen" class="menu-screen">
-        <div class="menu-title"><span class="lg-top">T-Fighter</span><span class="lg-bot">UPD4.1</span></div>
+        <div class="menu-title"><span class="lg-top">T-Fighter</span><span class="lg-bot">UPD4.2</span></div>
 
         <svg viewBox="0 0 640 240" style="width:min(640px,90vw);max-height:34vh" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -6176,6 +6418,1838 @@
             const _updateSkillUI31 = updateSkillUI;
             updateSkillUI = function () { _updateSkillUI31(); SFX.frame(); };
         }
+/* ===================== [UPD4.2] APPEND-ONLY QUALITY PATCH =====================
+   Giữ nguyên toàn bộ hệ thống cũ; chỉ bọc/mở rộng các hàm hiện có. */
+(function installUPD42Patch() {
+    'use strict';
+
+    // ------------------------------------------------------------------
+    // A. GIAO DIỆN KHO NHÂN VẬT: hai ngăn, cuộn trái, preview chạy tại chỗ
+    // ------------------------------------------------------------------
+    const patchStyle = document.createElement('style');
+    patchStyle.id = 'upd42-append-only-style';
+    patchStyle.textContent = `
+      /* Logo: chỉ bỏ hình thang, giữ nguyên hai dòng chữ neon trắng */
+      #menuScreen .menu-title::before, #menuScreen .menu-title::after { content:none !important; display:none !important; }
+      #menuScreen .menu-title { padding:0 !important; margin-bottom:1.4vh; }
+      #menuScreen { gap:7vh !important; }
+      #menuScreen .menu-title .lg-top, #menuScreen .menu-title .lg-bot { position:relative; z-index:1; }
+
+      /* Kho nhân vật */
+      #characterScreen.upd42-character-screen {
+        justify-content:flex-start !important; align-items:center !important;
+        gap:clamp(10px, 2vh, 20px) !important; padding:2.4vh 2.4vw 2.8vh !important;
+      }
+      #characterScreen .upd42-char-layout {
+        display:flex; flex:1 1 auto; min-height:0; width:min(1500px,96vw);
+        max-height:100%; border:2px solid rgba(30,27,24,.9); border-radius:18px;
+        overflow:hidden; background:rgba(245,235,214,.68); box-shadow:5px 5px 0 rgba(30,27,24,.8);
+      }
+      #characterScreen .upd42-char-list {
+        flex:0 0 43%; width:43%; min-width:0; min-height:0; overflow-y:auto; overflow-x:hidden;
+        padding:clamp(8px,1.5vw,18px); background:rgba(245,235,214,.92);
+        overscroll-behavior:contain; scrollbar-gutter:stable;
+      }
+      #characterScreen .upd42-char-list::-webkit-scrollbar { width:10px; }
+      #characterScreen .upd42-char-list::-webkit-scrollbar-thumb { background:#8b7355; border:2px solid #f5ebd6; border-radius:9px; }
+      #characterScreen .upd42-char-divider { width:2px; flex:0 0 2px; background:linear-gradient(180deg,transparent,#1e1b18 8%,#1e1b18 92%,transparent); }
+      #characterScreen #characterGrid {
+        display:grid !important; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(8px,1.1vw,14px) !important;
+        justify-content:stretch !important; align-content:start; width:100%; min-height:100%;
+      }
+      #characterScreen #characterGrid .char-card {
+        width:auto !important; min-width:0; padding:7px 5px !important; border-width:2px !important;
+        border-radius:12px !important; box-shadow:3px 3px 0 #1e1b18 !important;
+      }
+      #characterScreen #characterGrid .char-card svg { width:min(100%,92px) !important; height:82px !important; display:block; margin:0 auto; }
+      #characterScreen #characterGrid .char-name { font-size:clamp(15px,1.5vw,20px) !important; line-height:1.05; overflow-wrap:anywhere; }
+      #characterScreen #characterGrid .char-skills { font-size:clamp(8px,.8vw,10px) !important; line-height:1.35 !important; margin:4px 0 !important; max-height:54px; overflow:hidden; }
+      #characterScreen #characterGrid .char-tag { font-size:9px !important; padding:2px 8px !important; }
+      #characterScreen .upd42-char-preview {
+        position:relative; flex:1 1 auto; min-width:0; min-height:0; display:flex; flex-direction:column;
+        align-items:center; justify-content:center; padding:14px 18px 8px; overflow:hidden;
+        background:radial-gradient(ellipse at 50% 44%,rgba(255,255,255,.8),rgba(210,194,163,.32) 62%,rgba(80,63,42,.08));
+      }
+      #characterScreen .upd42-preview-inner { display:none; width:100%; min-height:0; flex:1; flex-direction:column; align-items:center; justify-content:center; }
+      #characterScreen .upd42-preview-inner.active { display:flex; }
+      #characterScreen .upd42-preview-name { font-family:'Courier Prime',monospace; font-weight:900; font-size:clamp(23px,3vw,42px); color:#1e1b18; text-shadow:0 1px #fff; text-transform:uppercase; margin-bottom:5px; }
+      #characterScreen .upd42-preview-skills { max-width:92%; color:#3f3428; text-align:center; font-size:clamp(10px,1vw,13px); font-weight:800; line-height:1.5; }
+      #characterScreen .upd42-preview-canvas-wrap { width:min(100%,560px); height:min(58vh,510px); min-height:210px; flex:1 1 auto; display:flex; align-items:center; justify-content:center; }
+      #characterScreen .upd42-preview-canvas { width:100%; height:100%; display:block; }
+      #characterScreen #charBackBtn { flex:0 0 auto; align-self:center; margin-top:10px; width:min(300px,72%) !important; }
+      @media(max-width:700px) {
+        #characterScreen.upd42-character-screen { padding:1.2vh 1.2vw 1.5vh !important; }
+        #characterScreen .upd42-char-list { flex-basis:44%; width:44%; padding:7px 5px; }
+        #characterScreen .upd42-preview-canvas-wrap { height:48vh; min-height:180px; }
+        #characterScreen #characterGrid .char-card svg { height:62px !important; }
+        #characterScreen #characterGrid .char-skills { display:none; }
+        #characterScreen .upd42-char-preview { padding:8px 6px 6px; }
+      }
+    `;
+    document.head.appendChild(patchStyle);
+
+    const charScreen = $('characterScreen');
+    const charGrid = $('characterGrid');
+    const backBtn = $('charBackBtn');
+    let previewCanvas = null, previewCtx = null, previewActor = null;
+    let previewRaf = 0, previewLast = 0, previewSelectedId = null;
+
+    if (charScreen && charGrid && backBtn && !charScreen.querySelector('.upd42-char-layout')) {
+        charScreen.classList.add('upd42-character-screen');
+        const title = charScreen.querySelector('.menu-title');
+        const layout = document.createElement('div'); layout.className = 'upd42-char-layout';
+        const left = document.createElement('div'); left.className = 'upd42-char-list';
+        const divider = document.createElement('div'); divider.className = 'upd42-char-divider';
+        const right = document.createElement('div'); right.className = 'upd42-char-preview';
+        const inner = document.createElement('div'); inner.className = 'upd42-preview-inner';
+        const name = document.createElement('div'); name.className = 'upd42-preview-name';
+        const canvasWrap = document.createElement('div'); canvasWrap.className = 'upd42-preview-canvas-wrap';
+        previewCanvas = document.createElement('canvas'); previewCanvas.className = 'upd42-preview-canvas';
+        previewCanvas.width = 720; previewCanvas.height = 560;
+        previewCanvas.setAttribute('aria-label', 'Hoạt ảnh chạy xem trước nhân vật');
+        previewCtx = previewCanvas.getContext('2d');
+        const info = document.createElement('div'); info.className = 'upd42-preview-skills';
+        canvasWrap.appendChild(previewCanvas); inner.append(name, canvasWrap, info);
+        right.append(inner, backBtn);
+        left.appendChild(charGrid);
+        layout.append(left, divider, right);
+        if (title && title.nextSibling) charScreen.insertBefore(layout, title.nextSibling);
+        else charScreen.appendChild(layout);
+    }
+
+    function stopCharacterPreview() {
+        if (previewRaf) cancelAnimationFrame(previewRaf);
+        previewRaf = 0; previewActor = null; previewSelectedId = null; previewLast = 0;
+        const inner = charScreen && charScreen.querySelector('.upd42-preview-inner');
+        if (inner) inner.classList.remove('active');
+        if (previewCtx && previewCanvas) previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+    }
+
+    function startCharacterPreview(charId) {
+        stopCharacterPreview();
+        const ch = CHARACTERS[charId];
+        if (!ch || !previewCanvas || !previewCtx) return;
+        const sideStyle = (CHAR_STYLE[charId] && CHAR_STYLE[charId].p1) || { color:'#991b1b', accent:'#fef08a' };
+        previewActor = new Stickman({ name: ch.name, x: 0, facing: 1, color: sideStyle.color, accentColor: sideStyle.accent, isBot:false });
+        setupFighter(previewActor, charId, 'p1');
+        previewActor.state = 'run'; previewActor.grounded = true; previewActor.vx = previewActor.speed;
+        previewActor.vy = 0; previewActor.x = 0; previewActor.y = 0; previewActor.animTime = 0;
+        previewSelectedId = charId;
+        const inner = charScreen.querySelector('.upd42-preview-inner');
+        const name = inner.querySelector('.upd42-preview-name');
+        const info = inner.querySelector('.upd42-preview-skills');
+        name.textContent = ch.name;
+        info.innerHTML = (ch.skillText || []).map(t => String(t).replace(/[<>]/g, '')).join(' · ');
+        inner.classList.add('active');
+        const render = (now) => {
+            if (!previewActor || previewSelectedId !== charId || charScreen.classList.contains('is-hidden')) { previewRaf = 0; return; }
+            const dt = previewLast ? Math.min(50, now - previewLast) : 16.67; previewLast = now;
+            const dpr = Math.min(2, window.devicePixelRatio || 1);
+            const w = Math.max(220, Math.floor(previewCanvas.clientWidth * dpr));
+            const h = Math.max(200, Math.floor(previewCanvas.clientHeight * dpr));
+            if (previewCanvas.width !== w || previewCanvas.height !== h) { previewCanvas.width = w; previewCanvas.height = h; }
+            const c = previewCtx; c.setTransform(1,0,0,1,0,0); c.clearRect(0,0,w,h);
+            const cx = w * 0.5, baseY = h * 0.82;
+            const scale = Math.max(0.9, Math.min(1.9, Math.min(w / 300, h / 365) * 1.15));
+            c.save();
+            const glow = c.createRadialGradient(cx, baseY - h*.36, 2, cx, baseY - h*.36, Math.min(w,h)*.46);
+            glow.addColorStop(0,'rgba(255,255,255,.5)'); glow.addColorStop(1,'rgba(255,255,255,0)');
+            c.fillStyle = glow; c.fillRect(0,0,w,h);
+            c.fillStyle='rgba(30,27,24,.18)'; c.beginPath(); c.ellipse(cx,baseY+2,48*scale,8*scale,0,0,TAU); c.fill();
+            previewActor.animTime += dt / 16.6667;
+            previewActor.state = 'run'; previewActor.grounded = true; previewActor.vx = previewActor.speed; previewActor.vy = 0;
+            previewActor.computeSkeletonPose();
+            previewActor.drawPoseSkeleton(c, cx, baseY, 1, scale, scale, previewActor.currentPose, false);
+            c.restore();
+            previewRaf = requestAnimationFrame(render);
+        };
+        previewRaf = requestAnimationFrame(render);
+    }
+
+    // Giữ nguyên tên hàm và luồng nút cũ, chỉ thay nội dung render card.
+    window.renderCharacterCards = function () {
+        if (!charGrid) return;
+        charGrid.innerHTML = '';
+        Object.values(CHARACTERS).forEach(ch => {
+            const card = document.createElement('div');
+            card.className = 'char-card' + (ch.id === selectedCharacter ? ' selected' : '');
+            card.innerHTML = `${ch.preview || ''}<div class="char-name">${String(ch.name || ch.id)}</div><div class="char-skills">${(ch.skillText || []).join('<br>')}</div><div class="char-tag">${ch.id === selectedCharacter ? 'ĐANG CHỌN' : 'XEM NHÂN VẬT'}</div>`;
+            card.addEventListener('click', () => {
+                selectedCharacter = ch.id;
+                applyCharacter();
+                window.renderCharacterCards();
+                startCharacterPreview(ch.id);
+            });
+            charGrid.appendChild(card);
+        });
+    };
+    const _showMenu42 = showMenu;
+    showMenu = function () { stopCharacterPreview(); return _showMenu42.apply(this, arguments); };
+    if ($('charactersBtn')) $('charactersBtn').addEventListener('click', () => stopCharacterPreview(), true);
+    if (backBtn) backBtn.addEventListener('click', stopCharacterPreview);
+
+    // ------------------------------------------------------------------
+    // B. KHÓA CHIÊU O 10 GIÂY KỂ TỪ ĐẦU MỖI ROUND (cả hai người chơi)
+    // ------------------------------------------------------------------
+    const _beginRound42 = beginRound;
+    beginRound = function () {
+        _beginRound42.apply(this, arguments);
+        const until = nowMs() + 10000;
+        [player, bot].forEach(s => {
+            if (s && s.cdAt) { s.cdAt.KeyO = until; s._oCdDuration42 = 10000; }
+        });
+        updateSkillUI();
+        if (typeof refreshP2Hud === 'function') refreshP2Hud();
+    };
+    const _resetSkills42 = resetSkills;
+    resetSkills = function () {
+        _resetSkills42.apply(this, arguments);
+        [player, bot].forEach(s => { s._oCdDuration42 = 10000; });
+    };
+    const _triggerSkill42 = SP.triggerSkill;
+    SP.triggerSkill = function (id) {
+        const before = this.cdAt && this.cdAt[id];
+        const result = _triggerSkill42.apply(this, arguments);
+        if (id === 'KeyO' && this.cdAt && this.cdAt[id] > (before || 0)) {
+            const def = (CHAR_SKILLS[this.charId] || {})[id];
+            this._oCdDuration42 = def ? def.cd : 10000;
+        }
+        return result;
+    };
+    const _updateSkillUI42 = updateSkillUI;
+    updateSkillUI = function () {
+        _updateSkillUI42.apply(this, arguments);
+        const e = skillEls && skillEls.KeyO;
+        if (!e || !player || !player.cdAt) return;
+        const remain = Math.max(0, player.cdAt.KeyO - nowMs());
+        const span = Math.max(1, player._oCdDuration42 || 10000);
+        if (remain > 0) {
+            e.el.classList.remove('ready'); e.cd.textContent = (remain / 1000).toFixed(1) + 's';
+            e.fill.style.height = clamp((1 - remain / span) * 100, 0, 100) + '%';
+        }
+    };
+
+    // ------------------------------------------------------------------
+    // C. ENERGY O: Spirit Bomb mới, tận dụng cast/pose của Stickman
+    // ------------------------------------------------------------------
+    const spiritBombs42 = [];
+    let spiritExplosion42 = null;
+    CASTS.bomb = function (s, opp) {
+        s.castTimer++; const t = s.castTimer;
+        s.vx = 0;
+        const B = s._spiritBomb42 || (s._spiritBomb42 = { baseY:s.y, baseX:s.x, targetX:opp.x, targetY:opp.y - 70, radius:0, thrown:false });
+        if (t === 1) {
+            B.baseY = s.y; B.baseX = s.x; B.targetX = opp.x; B.targetY = opp.y - 70;
+            s.grounded = false; spawnDust(s.x, s.y, 10, 0); camera.triggerShake(5);
+        }
+        if (t <= 20) {
+            const p = t / 20; s.y = B.baseY - 225 * (p*p*(3-2*p)); s.vy = -s.gravity; s.grounded = false;
+        } else if (t <= 50) {
+            s.y = B.baseY - 225; s.vy = -s.gravity; s.grounded = false;
+        } else if (t <= 112) {
+            s.y = B.baseY - 225; s.vy = -s.gravity; s.grounded = false;
+            B.radius = 7 + 188 * clamp((t - 50) / 62, 0, 1);
+            if (t % 4 === 0) {
+                const a = Math.random() * TAU, r = B.radius + rr(28, 95);
+                particles.push({ type:'spark', x:s.x + Math.cos(a)*r, y:s.y - 270 + Math.sin(a)*r,
+                    vx:-Math.cos(a)*rr(2,6), vy:-Math.sin(a)*rr(2,6), length:12, color:'#93c5fd', alpha:1, decay:.045 });
+            }
+        } else if (t === 113 && !B.thrown) {
+            const x0 = s.x, y0 = s.y - 270, dx = B.targetX - x0, dy = B.targetY - y0, d = Math.hypot(dx,dy) || 1;
+            spiritBombs42.push({ owner:s, target:opp, x:x0, y:y0, vx:dx/d*19, vy:dy/d*19, targetX:B.targetX, targetY:B.targetY, radius:188, age:0, exploded:false });
+            B.thrown = true; setPrincipleBadge('SPIRIT BOMB — NÉM CẦU NĂNG LƯỢNG!', 100);
+            if (window.SFX && window.SFX.castFrame) { /* hiệu ứng âm thanh cũ vẫn được giữ */ }
+            camera.triggerShake(8);
+        }
+        if (t >= 134) {
+            s.y = B.baseY; s.vy = 0; s.grounded = true; s._spiritBomb42 = null; s.endCast();
+        }
+    };
+
+    function updateSpiritBombs42() {
+        for (let i = spiritBombs42.length - 1; i >= 0; i--) {
+            const b = spiritBombs42[i]; b.age++;
+            const o = b.target, s = b.owner;
+            if (b.exploded) {
+                if (b.age - b.explosionAge > 22) spiritBombs42.splice(i,1);
+                continue;
+            }
+            b.x += b.vx; b.y += b.vy;
+            if (b.age % 2 === 0) particles.push({ type:'spark', x:b.x+rr(-70,70), y:b.y+rr(-70,70), vx:rr(-2,2), vy:rr(-2,2), length:11, color:'#bfdbfe', alpha:1, decay:.06 });
+            const hit = o && o.hp > 0 && Math.hypot(o.x-b.x, (o.y-65)-b.y) < 112;
+            const arrived = Math.hypot(b.targetX-b.x, b.targetY-b.y) < 26 || b.age > 100;
+            if (hit || arrived || b.x < leftWall-250 || b.x > rightWall+250) {
+                b.exploded = true; b.explosionAge = b.age;
+                const hx = hit ? o.x : b.targetX, hy = hit ? o.y-70 : b.targetY;
+                blastRings.push({ x:hx, y:hy, r:24, max:360, life:30, maxLife:30 });
+                spiritExplosion42 = { x:hx, y:hy, age:0, life:30 };
+                if (hit) {
+                    const dir = o.x >= s.x ? 1 : -1;
+                    const dmg = o.maxHp * .30 * (s.skillMult || 1);
+                    o.takeHit(dmg, dir * ((WORLD_S()/4)/12.5), -17, true, s, true);
+                    o.state='knockdown'; o.stateTimer=55; o.grounded=false;
+                    o.vx=dir*((WORLD_S()/4)/12.5); o.vy=-17;
+                    spawnFloatingText(o.x, o.y-170, `SPIRIT BOMB!! -${Math.round(dmg)}`, '#2563eb', 1.65);
+                    spawnHitSparks(o.x, o.y-75, '#bfdbfe', true);
+                }
+                for (let k=0;k<24;k++) { const a=k*TAU/24; particles.push({type:'spark',x:hx,y:hy,vx:Math.cos(a)*rr(5,15),vy:Math.sin(a)*rr(5,15),length:15,color:k%2?'#60a5fa':'#fff',alpha:1,decay:.045}); }
+                hitstopFrames=10; impactFlashFrames=6; camera.triggerShake(30); updateHealthUI();
+            }
+        }
+        if (spiritExplosion42) { spiritExplosion42.age++; if (spiritExplosion42.age > spiritExplosion42.life) spiritExplosion42=null; }
+    }
+
+    // ------------------------------------------------------------------
+    // D. STRENGTH O: BIỂU LIÊN HOA — chuỗi lao tới/đá/ôm/lao xuống/nổ
+    // ------------------------------------------------------------------
+    let lotusFx42 = null;
+    if (CHAR_SKILLS.strength && CHAR_SKILLS.strength.KeyO) {
+        CHAR_SKILLS.strength.KeyO.name = 'Biểu Liên Hoa';
+        CHAR_SKILLS.strength.KeyO.short = 'Biểu Liên Hoa';
+    }
+    if (CHARACTERS.strength) {
+        CHARACTERS.strength.skillText = (CHARACTERS.strength.skillText || []).map(t => t.startsWith('O ·') ? 'O · Biểu Liên Hoa (5% + 25% máu tối đa)' : t);
+    }
+    if (CHARACTERS.energy) CHARACTERS.energy.skillText = (CHARACTERS.energy.skillText || []).map(t => t.startsWith('O ·') ? 'O · Spirit Bomb (30% máu tối đa)' : t);
+    if (CHARACTERS.time) CHARACTERS.time.skillText = (CHARACTERS.time.skillText || []).map(t => t.startsWith('U ·') ? 'U · Vùng TG (+50% tốc độ đánh / đối thủ -50%, 3s)' : t.startsWith('I ·') ? 'I · Nhảy TG (dịch chuyển + stun 0,5s)' : t.startsWith('O ·') ? 'O · Ngưng đọng (stun toàn bản đồ 3s)' : t);
+    if (CHARACTERS.space) CHARACTERS.space.skillText = (CHARACTERS.space.skillText || []).map(t => t.startsWith('U ·') ? 'U · Vết nứt không gian (3%/giây trong 2s + nổ 5%)' : t.startsWith('O ·') ? 'O · Tuyệt diệt (nổ cuối đồng nhất O / Number 6)' : t);
+    SKILL_IMPL.chop = { can: groundIdle, start(s) { s.beginCast('chop'); s._lotus42 = null; setPrincipleBadge('BIỂU LIÊN HOA!', 120); } };
+    CASTS.chop = function (s, opp) {
+        s.castTimer++; const t=s.castTimer;
+        const L=s._lotus42 || (s._lotus42={startX:s.x, floorY:s.y, dir:(opp.x>=s.x?1:-1), targetX:opp.x, targetFloor:opp.y, hit1:false, hit2:false});
+        s.vx=0; s.facing=L.dir;
+        if (t===1) { L.startX=s.x; L.floorY=floorAtFor(s); L.targetX=opp.x; L.targetFloor=floorAtFor(opp); L.dir=opp.x>=s.x?1:-1; s.facing=L.dir; }
+        if (t<=14) {
+            const p=t/14; s.x=clamp(L.startX+(L.targetX-L.startX-L.dir*78)*p,leftWall,rightWall); s.y=L.floorY; s.vy=0; s.grounded=true;
+        }
+        if (t===15) {
+            if (opp.hp<=0 || opp.frozen || opp.state==='knockdown') { s._lotus42=null; s.endCast(); return; }
+            const dmg=opp.maxHp*.05*(s.skillMult||1);
+            opp.takeHit(dmg,L.dir*5,-7,false,s,true);
+            L.targetX=opp.x; L.targetFloor=floorAtFor(opp); L.airY=L.targetFloor-390;
+            opp.state='jump'; opp.stateTimer=0; opp.grounded=false; opp.vx=0; opp.vy=0; opp.x=L.targetX; opp.y=L.airY;
+            if (typeof opp.computeSkeletonPose==='function') opp.computeSkeletonPose();
+            opp.freezeFor(92,'lotus',s); opp.x=L.targetX; opp.y=L.airY; opp.grounded=false;
+            L.hit1=true; spawnFloatingText(opp.x,opp.y-145,'BIỂU LIÊN HOA!', '#6b7280',1.25);
+            spawnHitSparks(opp.x,opp.y-70,'#f3f4f6',true); camera.triggerShake(13);
+        }
+        if (t>15 && t<=30) { opp.x=L.targetX; opp.y=L.airY; opp.vx=0; opp.vy=0; s.x=clamp(L.targetX-L.dir*70,leftWall,rightWall); s.y=L.floorY; s.grounded=true; }
+        if (t>=31 && t<=44) {
+            const p=(t-31)/13; s.x=clamp(L.targetX+L.dir*75,leftWall,rightWall); s.y=L.floorY-220*(p*p*(3-2*p)); s.grounded=false; s.vy=-s.gravity;
+            opp.x=L.targetX; opp.y=L.airY; opp.vx=0; opp.vy=0;
+        }
+        if (t>=45 && t<=52) {
+            s.x=clamp(L.targetX+L.dir*24,leftWall,rightWall); s.y=L.airY+65; s.grounded=false; s.vy=-s.gravity;
+            opp.x=L.targetX; opp.y=L.airY; opp.vx=0; opp.vy=0;
+            lotusFx42={x:(s.x+opp.x)/2,y:opp.y+5,age:0,dir:L.dir};
+        }
+        if (t>=53 && t<=76) {
+            const p=(t-53)/23; const y=L.airY+(L.targetFloor-L.airY)*(p*p*(3-2*p));
+            s.x=clamp(L.targetX+L.dir*(24*(1-p)),leftWall,rightWall); s.y=y+60; s.vy=-s.gravity; s.grounded=false;
+            opp.x=L.targetX; opp.y=y; opp.vx=0; opp.vy=0;
+            lotusFx42={x:(s.x+opp.x)/2,y:y+12,age:t-53,dir:L.dir};
+        }
+        if (t===77 && !L.hit2) {
+            if (opp.frozen && opp.frozen.kind==='lotus') opp.frozen=null;
+            opp.x=L.targetX; opp.y=L.targetFloor; opp.grounded=true; opp.vx=0; opp.vy=0;
+            const dmg=opp.maxHp*.25*(s.skillMult||1);
+            opp.takeHit(dmg,L.dir*((WORLD_S()/5)/12.5),-15,true,s,true);
+            opp.state='knockdown'; opp.stateTimer=52; opp.grounded=false; opp.vx=L.dir*((WORLD_S()/5)/12.5); opp.vy=-15;
+            s.state='knockdown'; s.stateTimer=48; s.castType=null; s.beam=null; s.grounded=false; s.vx=-L.dir*((WORLD_S()/6)/12.5); s.vy=-13;
+            L.hit2=true; lotusFx42=null;
+            blastRings.push({x:opp.x,y:opp.y-35,r:20,max:250,life:25,maxLife:25});
+            spawnHitSparks(opp.x,opp.y-65,'#ffffff',true); spawnFloatingText(opp.x,opp.y-170,`BIỂU LIÊN HOA!! -${Math.round(dmg)}`,'#4b5563',1.55);
+            hitstopFrames=12; impactFlashFrames=5; camera.triggerShake(30); updateHealthUI();
+        }
+        if (t>80) { s._lotus42=null; lotusFx42=null; }
+    };
+
+    // ------------------------------------------------------------------
+    // E. TIME: vùng theo nhân vật, +50/-50% tốc độ đánh, I stun 0,5s, O stun 3s
+    // ------------------------------------------------------------------
+    CASTS.timezone = function (s) {
+        s.castTimer++; const t=s.castTimer; s.vx*=.6;
+        if (t===6) {
+            timeZone={owner:s,left:180,total:180,x:s.x,R:WORLD_S()/8};
+            ripples.push({x:s.x,y:groundY,r:20,max:WORLD_S()/4,life:30,maxLife:30,col:'#065f46',flat:true});
+            spawnFloatingText(s.x,s.y-150,'VÙNG THỜI GIAN!', '#064e3b',1.3); camera.triggerShake(5);
+        }
+        if(t>=16)s.endCast();
+    };
+    const _updateAttackState42 = SP.updateAttackState;
+    SP.updateAttackState = function (opponent) {
+        if (timeZone && timeZone.owner===this && inZone(this)) this.attackTimer += .2; // +30% đã được lớp cũ cộng; tổng +50%
+        if (this.charId !== 'space' || this.isClone) return _updateAttackState42.call(this,opponent);
+        const ox=opponent.x, oy=opponent.y;
+        const activeBefore=this.attackPhase;
+        if (this.attackPhase==='active') opponent.x=this.x+this.facing*100000;
+        try { _updateAttackState42.call(this,opponent); } finally { opponent.x=ox; opponent.y=oy; }
+        if (this.state==='attack' && this.attackPhase==='active' && this._spaceShotSerial42!==this.atkSerial) {
+            const cfg={1:{dmg:8,range:95,kbX:7,kbY:-3,heavy:false},2:{dmg:12,range:110,kbX:10,kbY:-6,heavy:false},3:{dmg:22,range:125,kbX:18,kbY:-12,heavy:true}}[this.comboStep] || {dmg:8,range:95,kbX:7,kbY:-3,heavy:false};
+            spaceShots42.push({owner:this,target:opponent,x:this.x+this.facing*36,y:this.y-78,dir:this.facing,speed:25,travel:0,max:cfg.range*3,cfg,age:0});
+            this._spaceShotSerial42=this.atkSerial; this.hasHitCurrentAttack=true;
+        }
+    };
+    const spaceShots42=[];
+    function updateSpaceShots42() {
+        for(let i=spaceShots42.length-1;i>=0;i--){
+            const p=spaceShots42[i],o=p.target,s=p.owner; p.age++;
+            p.x+=p.dir*p.speed; p.travel+=p.speed;
+            if(p.age%2===0) particles.push({type:'spark',x:p.x-p.dir*rr(2,16),y:p.y+rr(-7,7),vx:-p.dir*2,vy:rr(-1,1),length:10,color:'#a78bfa',alpha:1,decay:.08});
+            const hit=o&&o.hp>0&&((o.x-p.x)*p.dir>=-24)&&Math.abs(o.x-p.x)<40&&Math.abs((o.y-74)-p.y)<74&&o.state!=='knockdown';
+            if(hit){
+                if(!o.tryBlockNormal(s)){
+                    const cfg=p.cfg;
+                    const dmg=(s.isBot&&!s.isClone)?Math.max(1,Math.round(cfg.dmg*BOT_NERF)):Math.round(cfg.dmg*NORMAL_ATK_MULT*(typeof s.atkMult==='function'?s.atkMult():1)*10)/10;
+                    o.takeHit(dmg,p.dir*cfg.kbX,cfg.kbY,cfg.heavy,s);
+                    spawnHitSparks((p.x+o.x)/2,p.y,'#a78bfa',cfg.heavy);
+                    spawnFloatingText(o.x,o.y-112,(cfg.heavy?'MAGIC SMASH ':'MAGIC -')+dmg,'#6d28d9',1.0);
+                    if(cfg.heavy){hitstopFrames=7;impactFlashFrames=3;camera.triggerShake(16);}else{hitstopFrames=3;camera.triggerShake(7);}
+                    if(!s.isBot&&!s.isClone&&!s.isP2)registerPlayerCombo(s.comboStep);
+                }
+                spaceShots42.splice(i,1); continue;
+            }
+            if(p.travel>=p.max||p.age>90||p.x<leftWall-100||p.x>rightWall+100)spaceShots42.splice(i,1);
+        }
+    }
+
+    castTimeleap = function (s) {
+        const en=enemyOf(s);
+        ripples.push({x:s.x,y:s.y-62,r:10,max:90,life:16,maxLife:16,col:'#166534'});
+        let bx=en.x-en.facing*70;
+        if(bx<leftWall+10||bx>rightWall-10)bx=en.x+en.facing*70;
+        s.x=clamp(bx,leftWall,rightWall); s.y=Math.min(groundY,en.y); s.vx=0; s.vy=0;
+        s.grounded=floorAtFor(s)<=s.y+1.5; s.facing=en.x>=s.x?1:-1;
+        s.state='idle'; s.attackPhase='none'; s.comboStep=0; s.queuedNextCombo=false;
+        ripples.push({x:s.x,y:s.y-62,r:10,max:120,life:20,maxLife:20,col:'#22c55e'});
+        spawnHitSparks(s.x,s.y-60,'#22c55e',false); spawnFloatingText(s.x,s.y-150,'NHẢY THỜI GIAN!','#14532d',1.15);
+        if(!en.frozen)en.freezeFor(30,'stun',s);
+        spawnFloatingText(en.x,en.y-175,'STUN 0,5s','#166534',1.0); camera.triggerShake(5);
+        if (window.SFX && typeof window.SFX.timeLeap === 'function') window.SFX.timeLeap();
+    };
+    CASTS.timestop = function (s,opp) {
+        s.castTimer++; const t=s.castTimer; s.vx*=.6;
+        if(t===10){
+            if(opp.frozen)opp.releaseFreeze();
+            opp.freezeFor(180,'time',s); timeStop={owner:s,enemy:opp,total:180};
+            ripples.push({x:s.x,y:s.y-70,r:20,max:Math.max(width,height)*1.5,life:48,maxLife:48,col:'#166534'});
+            spawnFloatingText(s.x,s.y-160,'NGƯNG ĐỌNG THỜI GIAN!','#064e3b',1.45);
+            impactFlashFrames=5; camera.triggerShake(14);
+        }
+        if(t>=24)s.endCast();
+    };
+    const _drawTimeZone42 = drawTimeZoneDecal;
+    drawTimeZoneDecal = function(c){
+        if(!timeZone){_drawTimeZone42(c);return;}
+        const z=timeZone,tt=nowMs()/1000,age=z.total-z.left,a=Math.min(1,age/12)*Math.min(1,z.left/18),R=z.R||WORLD_S()/8;
+        c.save();c.translate(z.x,groundY+7);c.scale(1,.28);c.globalAlpha=a;
+        const g=c.createRadialGradient(0,0,R*.08,0,0,R);g.addColorStop(0,'rgba(6,78,59,.52)');g.addColorStop(.72,'rgba(20,83,45,.28)');g.addColorStop(1,'rgba(6,78,59,.02)');
+        c.fillStyle=g;c.beginPath();c.arc(0,0,R,0,TAU);c.fill();
+        c.strokeStyle='#064e3b';c.lineWidth=13;c.beginPath();c.arc(0,0,R*.94,0,TAU);c.stroke();
+        c.strokeStyle='#166534';c.lineWidth=5;c.beginPath();c.arc(0,0,R*.82,0,TAU);c.stroke();
+        c.strokeStyle='#86efac';c.lineWidth=7;
+        for(let k=0;k<12;k++){const an=k*TAU/12,r1=R*(k%3===0?.67:.73);c.beginPath();c.moveTo(Math.cos(an)*r1,Math.sin(an)*r1);c.lineTo(Math.cos(an)*R*.8,Math.sin(an)*R*.8);c.stroke();}
+        c.lineCap='round';c.strokeStyle='#bbf7d0';c.lineWidth=14;c.beginPath();c.moveTo(0,0);c.lineTo(Math.cos(tt*.6)*R*.42,Math.sin(tt*.6)*R*.42);c.stroke();
+        c.lineWidth=8;c.beginPath();c.moveTo(0,0);c.lineTo(Math.cos(tt*3)*R*.65,Math.sin(tt*3)*R*.65);c.stroke();c.restore();
+    };
+
+    // ------------------------------------------------------------------
+    // F. SPACE: U vết nứt 3%/giây trong 2s + nổ 5%; O Tuyệt diệt thống nhất
+    // ------------------------------------------------------------------
+    CASTS.rift = function(s,opp){
+        s.castTimer++;const t=s.castTimer;s.vx*=.6;
+        if(t===10){
+            const near=((opp.x-s.x)*s.facing>-40)&&Math.abs(opp.x-s.x)<=WORLD_S()/5;
+            const x=near?opp.x:clamp(leftWall+150+Math.random()*(rightWall-leftWall-300),leftWall,rightWall);
+            spRifts.push({owner:s,opp,x,y:near?opp.y:groundY,life:near?120:300,act:near,actT:0,age:0,seed:Math.random()*99,damageTick:0,exploded:false,near});
+            spSfx('rift');camera.triggerShake(8);spawnFloatingText(s.x,s.y-150,'VẾT NỨT KHÔNG GIAN!','#5b21b6',1.3);
+        }
+        if(t>=22)s.endCast();
+    };
+    CASTS.void = function(s,opp){
+        s.castTimer++;const t=s.castTimer;s.vx*=.6;
+        if(t===10){
+            const R=WORLD_S()*1.02, f={owner:s,opp,x:s.x,y:s.y,R,t:0,caught:true,damageApplied:false};
+            if(opp.frozen)opp.releaseFreeze();
+            opp.freezeFor(180,'void',s);
+            spFields.push(f);s.voidUntil=nowMs()+3000;
+            spSfx('void');camera.triggerShake(14);impactFlashFrames=3;
+            spawnFloatingText(s.x,s.y-160,'TUYỆT DIỆT!','#4f46e5',1.5);
+        }
+        if(t>=18)s.endCast();
+    };
+    updateSpaceFx = function(){
+        for(let i=spRifts.length-1;i>=0;i--){
+            const r=spRifts[i],o=r.opp,s=r.owner;r.age++;r.life--;
+            if(!o||o.hp<=0||!s||s.hp<=0){spRifts.splice(i,1);continue;}
+            if(!r.act&&!o.frozen&&Math.abs(o.x-r.x)<145&&Math.abs(o.y-r.y)<180){r.act=true;r.actT=0;r.damageTick=0;}
+            if(r.act){
+                r.actT++;
+                const dx=r.x-o.x,dy=(r.y-62)-(o.y-62);
+                o.x+=dx*.13;o.y+=dy*.10;o.vx*=.25;
+                // giữ trong vùng hút nhưng không đặt trạng thái stun: animation di chuyển vẫn chạy
+                if(Math.abs(o.x-r.x)>88)o.x=r.x-Math.sign(dx||1)*88;
+                if(r.actT===60||r.actT===120){
+                    if(o.hp>0){const dmg=o.maxHp*.03*(s.skillMult||1);o.hp=Math.max(0,o.hp-dmg);updateHealthUI();spawnFloatingText(o.x,o.y-138,`-${Math.round(dmg)} (KHÔNG GIAN)`,'#6d28d9',.95);}
+                }
+            }
+            if(r.life<=0){
+                if(r.act&&!r.exploded){r.exploded=true;const dir=o.x>=r.x?1:-1,dmg=o.maxHp*.05*(s.skillMult||1);
+                    o.takeHit(dmg,dir*8,-7,false,s,true);o.vx=dir*10;o.vy=-7;
+                    blastRings.push({x:r.x,y:r.y-65,r:12,max:150,life:20,maxLife:20});
+                    spawnHitSparks(r.x,r.y-65,'#a78bfa',true);spawnFloatingText(o.x,o.y-160,`NỨT KHÔNG GIAN -${Math.round(dmg)}`,'#6d28d9',1.1);
+                    camera.triggerShake(13);hitstopFrames=5;
+                }
+                spRifts.splice(i,1);
+            }
+        }
+        for(let i=spFields.length-1;i>=0;i--){
+            const f=spFields[i],o=f.opp,s=f.owner;f.t++;
+            if(f.t>=180&&!f.damageApplied){
+                f.damageApplied=true;
+                // Không phụ thuộc trạng thái frozen còn tồn tại hay không: hai bàn phím nhận cùng một vụ nổ.
+                if(f.caught&&o&&o.hp>0){
+                    if(o.frozen&&o.frozen.kind==='void')o.releaseFreeze();
+                    const dmg=o.maxHp*.20*(s.skillMult||1);
+                    o.takeHit(dmg,(o.x>=f.x?1:-1)*(WORLD_S()/4)/12.5,-14,true,s,true);
+                    spawnFloatingText(o.x,o.y-160,`TUYỆT DIỆT!! -${Math.round(dmg)}`,'#4f46e5',1.6);
+                    hitstopFrames=10;impactFlashFrames=5;camera.triggerShake(30);updateHealthUI();
+                }
+                spSfx('collapse');
+            }
+            if(f.t>215||!s||s.hp<=0)spFields.splice(i,1);
+        }
+    };
+
+    // ------------------------------------------------------------------
+    // G. HOẠT ẢNH/TƯ THẾ & HIỆU ỨNG BỔ SUNG; giữ lại renderer gốc
+    // ------------------------------------------------------------------
+    const _getCastPose42=SP.getCastPose;
+    SP.getCastPose=function(){
+        const t=this.castTimer||0, P=o=>Object.assign(this.getDefaultPose(),o);
+        if(this.charId==='energy'&&this.castType==='bomb'){
+            if(t<=20)return P({hipY:-58,neckY:-108,headY:-128,lElbowX:-25,lElbowY:-105,lHandX:-36,lHandY:-145,rElbowX:25,rElbowY:-105,rHandX:36,rHandY:-145,lKneeX:-12,lFootX:-24,rKneeX:18,rFootX:28});
+            if(t<=50)return P({hipY:-46,neckY:-94,headY:-114,lElbowX:-12,lElbowY:-120,lHandX:-8,lHandY:-155,rElbowX:12,rElbowY:-120,rHandX:8,rHandY:-155,lKneeX:-18,lFootX:-26,rKneeX:20,rFootX:28});
+            if(t<=112)return P({hipX:3,hipY:-46,neckY:-94,headY:-114,lElbowX:-42,lElbowY:-142,lHandX:-72,lHandY:-178,rElbowX:42,rElbowY:-142,rHandX:72,rHandY:-178,lKneeX:-18,lFootX:-26,rKneeX:20,rFootX:28});
+            return P({hipX:10,hipY:-42,neckX:22,neckY:-84,headX:28,headY:-104,lElbowX:48,lElbowY:-90,lHandX:88,lHandY:-90,rElbowX:34,rElbowY:-100,rHandX:64,rHandY:-110,lKneeX:-10,lFootX:-24,rKneeX:26,rFootX:36});
+        }
+        if(this.charId==='strength'&&this.castType==='chop'){
+            if(t<=14)return P({hipX:-10,neckX:-16,headX:-18,lElbowX:-15,lElbowY:-75,lHandX:-28,lHandY:-82,rElbowX:28,rElbowY:-82,rHandX:55,rHandY:-88,lKneeX:-24,lFootX:-42,rKneeX:38,rKneeY:-42,rFootX:76,rFootY:-40});
+            if(t<=30)return P({hipY:-38,neckY:-94,headY:-115,lElbowX:-18,lElbowY:-118,lHandX:-25,lHandY:-150,rElbowX:24,rElbowY:-120,rHandX:40,rHandY:-156,lKneeX:-22,lFootX:-30,rKneeX:50,rKneeY:-80,rFootX:90,rFootY:-110});
+            if(t<=52)return P({hipX:8,hipY:-54,neckX:12,neckY:-112,headX:18,headY:-132,lElbowX:-38,lElbowY:-122,lHandX:-55,lHandY:-132,rElbowX:38,rElbowY:-122,rHandX:55,rHandY:-132,lKneeX:-48,lKneeY:-45,lFootX:-72,lFootY:-70,rKneeX:46,rKneeY:-42,rFootX:72,rFootY:-66});
+            return P({hipX:20,hipY:-18,neckX:18,neckY:-72,headX:20,headY:-90,lElbowX:-42,lElbowY:-58,lHandX:-64,lHandY:-54,rElbowX:42,rElbowY:-58,rHandX:64,rHandY:-54,lKneeX:-50,lKneeY:-4,lFootX:-80,rKneeX:50,rKneeY:-4,rFootX:80});
+        }
+        return _getCastPose42.call(this);
+    };
+
+    const _getAttackPose42 = SP.getAttackPose;
+    SP.getAttackPose = function () {
+        const pose = _getAttackPose42.call(this);
+        if (this.charId !== 'space') return pose;
+        const pointing = this.attackPhase === 'active' || this.attackPhase === 'recovery';
+        return Object.assign({}, pose, pointing ? {
+            rShoulderX:18, rShoulderY:-84, rElbowX:55, rElbowY:-83, rHandX:105, rHandY:-87,
+            lShoulderX:-8, lShoulderY:-84, lElbowX:-25, lElbowY:-72, lHandX:-38, lHandY:-63
+        } : {
+            rShoulderX:8, rShoulderY:-85, rElbowX:32, rElbowY:-72, rHandX:50, rHandY:-70
+        });
+    };
+
+    const _drawPose42=SP.drawPoseSkeleton;
+    SP.drawPoseSkeleton=function(c,x,y,facing,sx,sy,pose,isGhost,ga){
+        _drawPose42.apply(this,arguments);
+        if(isGhost||this.charId!=='space')return;
+        c.save();c.translate(x,y);c.scale(facing*sx,sy);
+        const bx=pose.lHandX,by=pose.lHandY;
+        c.translate(bx-3,by-3);c.rotate(-.12);
+        c.shadowColor='#a855f7';c.shadowBlur=10;
+        c.fillStyle='#2e1065';c.strokeStyle='#c4b5fd';c.lineWidth=2.2;
+        c.beginPath();c.moveTo(-17,-12);c.lineTo(-2,-15);c.lineTo(0,12);c.lineTo(-17,10);c.closePath();c.fill();c.stroke();
+        c.beginPath();c.moveTo(0,-15);c.lineTo(17,-12);c.lineTo(17,10);c.lineTo(0,12);c.closePath();c.fill();c.stroke();
+        c.shadowBlur=0;c.strokeStyle='#ddd6fe';c.lineWidth=1;
+        for(let k=0;k<3;k++){c.beginPath();c.moveTo(-13,-7+k*6);c.lineTo(-4,-8+k*6);c.moveTo(4,-8+k*6);c.lineTo(13,-7+k*6);c.stroke();}
+        c.fillStyle='#c4b5fd';c.beginPath();c.arc(0,0,2.4,0,TAU);c.fill();c.restore();
+    };
+
+    function drawPatchFx42(c){
+        const now=nowMs()/1000;
+        spiritBombs42.forEach(b=>{
+            if(b.exploded){const p=clamp((b.age-b.explosionAge)/22,0,1),r=30+p*230;c.save();c.globalAlpha=1-p;c.strokeStyle='#93c5fd';c.lineWidth=12*(1-p)+2;c.shadowColor='#60a5fa';c.shadowBlur=30;c.beginPath();c.arc(b.x,b.y,r,0,TAU);c.stroke();c.restore();return;}
+            const g=c.createRadialGradient(b.x-b.radius*.2,b.y-b.radius*.25,4,b.x,b.y,b.radius);
+            g.addColorStop(0,'rgba(255,255,255,.98)');g.addColorStop(.28,'rgba(191,219,254,.98)');g.addColorStop(.68,'rgba(59,130,246,.94)');g.addColorStop(1,'rgba(29,78,216,.08)');
+            c.save();c.shadowColor='#60a5fa';c.shadowBlur=44;c.fillStyle=g;c.beginPath();c.arc(b.x,b.y,b.radius,0,TAU);c.fill();
+            c.strokeStyle='rgba(255,255,255,.88)';c.lineWidth=5;c.beginPath();c.arc(b.x,b.y,b.radius*.86,now*1.4,now*1.4+Math.PI*1.65);c.stroke();
+            c.strokeStyle='rgba(147,197,253,.9)';c.lineWidth=3;c.beginPath();c.arc(b.x,b.y,b.radius*.68,-now*1.8,-now*1.8+Math.PI*1.5);c.stroke();c.restore();
+        });
+        if(spiritExplosion42){const p=spiritExplosion42.age/spiritExplosion42.life,r=24+p*280;c.save();c.globalAlpha=1-p;c.shadowColor='#60a5fa';c.shadowBlur=34;c.strokeStyle='#bfdbfe';c.lineWidth=20*(1-p)+1;c.beginPath();c.arc(spiritExplosion42.x,spiritExplosion42.y,r,0,TAU);c.stroke();c.restore();}
+        if(lotusFx42){const f=lotusFx42,p=clamp(f.age/24,0,1);c.save();c.translate(f.x,f.y);c.globalAlpha=.88;
+            for(let j=0;j<5;j++){c.beginPath();c.ellipse(0,0,48+j*12,95+j*18,now*2.6+j*TAU/5,0,TAU);c.strokeStyle=j%2?'rgba(156,163,175,.85)':'rgba(255,255,255,.9)';c.lineWidth=5-j*.5;c.stroke();}
+            for(let j=0;j<7;j++){const a=now*5+j*TAU/7;c.strokeStyle='rgba(229,231,235,.8)';c.lineWidth=4;c.beginPath();c.moveTo(Math.cos(a)*25,-110);c.quadraticCurveTo(Math.cos(a+1)*95,0,Math.cos(a+2)*28,130);c.stroke();}
+            c.restore();}
+        spaceShots42.forEach(p=>{c.save();c.lineCap='round';c.shadowColor='#a855f7';c.shadowBlur=18;c.strokeStyle='rgba(216,180,254,.95)';c.lineWidth=8;c.beginPath();c.moveTo(p.x-p.dir*42,p.y);c.lineTo(p.x+p.dir*8,p.y);c.stroke();c.strokeStyle='#fff';c.lineWidth=2.5;c.beginPath();c.moveTo(p.x-p.dir*30,p.y);c.lineTo(p.x+p.dir*7,p.y);c.stroke();c.restore();});
+    }
+
+    const _updateProjectiles42=updateProjectiles;
+    updateProjectiles=function(){
+        _updateProjectiles42.apply(this,arguments);
+        if(timeZone&&timeZone.owner&&timeZone.owner.hp>0)timeZone.x=timeZone.owner.x;
+        updateSpiritBombs42();updateSpaceShots42();
+    };
+    const _drawSkillEffects42=drawSkillEffects;
+    drawSkillEffects=function(c){_drawSkillEffects42.apply(this,arguments);drawPatchFx42(c);};
+
+    // ------------------------------------------------------------------
+    // H. RESET CÁC HIỆU ỨNG RIÊNG ĐÚNG LÚC, KHÔNG ĐỤNG DỮ LIỆU NHÂN VẬT
+    // ------------------------------------------------------------------
+    const _clearSpecials42=clearSpecials;
+    clearSpecials=function(){
+        _clearSpecials42.apply(this,arguments);
+        spiritBombs42.length=0;spiritExplosion42=null;lotusFx42=null;spaceShots42.length=0;
+        [player,bot].forEach(s=>{s._spiritBomb42=null;s._lotus42=null;s._spaceShotSerial42=null;});
+    };
+
+    console.info('[UPD4.2] Append-only patch loaded.');
+
+
+    // =====================================================================
+    // [UPD4.2 HOTFIX] Giao diện chọn 2P + tinh chỉnh Energy / Strength / Space
+    // Chỉ nối thêm và ghi đè các điểm xử lý cần thiết; không xóa dữ liệu cũ.
+    // =====================================================================
+    (() => {
+        // --------------------------- LOGO NEON ----------------------------
+        const upd42Style = document.createElement('style');
+        upd42Style.id = 'upd42-final-polish-style';
+        upd42Style.textContent = `
+          #menuScreen .menu-title {
+            color:#fff !important;
+            -webkit-text-stroke:2.5px #090b10 !important;
+            paint-order:stroke fill !important;
+            text-shadow:0 0 2px #050505, 0 0 5px #fff, 0 0 12px #fff,
+                        0 0 25px rgba(255,255,255,.95), 0 0 42px rgba(220,235,255,.75) !important;
+            filter:drop-shadow(0 0 5px rgba(255,255,255,.95))
+                   drop-shadow(0 0 15px rgba(220,235,255,.65)) !important;
+          }
+          #menuScreen .menu-title .lg-top,
+          #menuScreen .menu-title .lg-bot {
+            -webkit-text-stroke:2.5px #090b10 !important;
+            paint-order:stroke fill !important;
+          }
+
+          /* Màn hình chọn 2 người: ba cột cố định, hai danh sách cuộn riêng. */
+          #twoPlayerScreen.upd42-two-player-screen {
+            justify-content:center !important;
+            align-items:center !important;
+            padding:2vh 1vw !important;
+            gap:0 !important;
+          }
+          #twoPlayerScreen.upd42-two-player-screen > div:not(.tp42-layout) {
+            display:none !important;
+          }
+          #twoPlayerScreen .tp42-layout {
+            width:min(1600px,98vw);
+            height:min(84vh,900px);
+            min-height:360px;
+            display:grid;
+            grid-template-columns:minmax(0,1fr) minmax(0,2fr) minmax(0,1fr);
+            overflow:hidden;
+            border:2px solid rgba(226,232,240,.9);
+            border-radius:18px;
+            background:linear-gradient(135deg,rgba(12,16,25,.96),rgba(25,31,45,.94));
+            box-shadow:0 0 0 3px rgba(0,0,0,.72),0 0 28px rgba(255,255,255,.12),0 22px 60px rgba(0,0,0,.55);
+            color:#f8fafc;
+          }
+          #twoPlayerScreen .tp42-panel {
+            min-width:0; min-height:0; display:flex; flex-direction:column; padding:12px;
+          }
+          #twoPlayerScreen .tp42-side { overflow:hidden; }
+          #twoPlayerScreen .tp42-side-left { border-right:2px solid rgba(203,213,225,.72); }
+          #twoPlayerScreen .tp42-side-right { border-left:2px solid rgba(203,213,225,.72); }
+          #twoPlayerScreen .tp42-side-head {
+            flex:0 0 auto; display:flex; flex-direction:column; align-items:center; gap:5px;
+            padding:2px 2px 10px; border-bottom:1px solid rgba(203,213,225,.32); margin-bottom:10px;
+          }
+          #twoPlayerScreen .tp42-player-name {
+            font:900 clamp(22px,2.1vw,34px)/1 'Courier Prime',monospace;
+            letter-spacing:2px; color:#fff; text-shadow:0 0 8px rgba(255,255,255,.55);
+          }
+          #twoPlayerScreen .tp42-status {
+            display:inline-flex; align-items:center; justify-content:center; min-height:24px;
+            padding:3px 9px; border:1px solid rgba(203,213,225,.55); border-radius:999px;
+            background:rgba(148,163,184,.14); color:#cbd5e1;
+            font:800 clamp(9px,.9vw,12px)/1.2 Inter,sans-serif; text-align:center;
+          }
+          #twoPlayerScreen .tp42-status.active { color:#fde68a; border-color:#fbbf24; background:rgba(120,53,15,.34); box-shadow:0 0 12px rgba(251,191,36,.18); }
+          #twoPlayerScreen .tp42-status.ready { color:#bbf7d0; border-color:#4ade80; background:rgba(20,83,45,.38); }
+          #twoPlayerScreen .tp42-list {
+            flex:1 1 auto; min-height:0; overflow-y:auto; overflow-x:hidden;
+            display:flex; flex-direction:column; align-items:stretch; gap:10px;
+            padding:3px 7px 10px 3px; overscroll-behavior:contain; scrollbar-gutter:stable;
+            touch-action:pan-y; 
+          }
+          #twoPlayerScreen .tp42-list::-webkit-scrollbar { width:8px; }
+          #twoPlayerScreen .tp42-list::-webkit-scrollbar-thumb { background:#64748b; border:2px solid #172033; border-radius:9px; }
+          #twoPlayerScreen .tp42-list.is-locked { opacity:.48; filter:saturate(.55); }
+          #twoPlayerScreen .tp42-char-card {
+            flex:0 0 auto; width:100%; min-width:0; min-height:142px; padding:8px 5px;
+            display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
+            border:2px solid #64748b; border-radius:12px; background:linear-gradient(180deg,#f8fafc,#cbd5e1);
+            color:#0f172a; box-shadow:3px 3px 0 rgba(0,0,0,.65); text-align:center;
+            transition:border-color .12s,box-shadow .12s,transform .12s,opacity .12s;
+          }
+          #twoPlayerScreen .tp42-char-card.selectable { cursor:pointer; }
+          #twoPlayerScreen .tp42-char-card.selectable:hover { transform:translateY(-2px); border-color:#fff; box-shadow:0 0 0 2px rgba(255,255,255,.3),0 0 16px rgba(255,255,255,.24); }
+          #twoPlayerScreen .tp42-char-card.selected-p1 { border:3px solid #f87171; box-shadow:0 0 0 2px rgba(248,113,113,.2),0 0 16px rgba(248,113,113,.35); }
+          #twoPlayerScreen .tp42-char-card.selected-p2 { border:3px solid #60a5fa; box-shadow:0 0 0 2px rgba(96,165,250,.2),0 0 16px rgba(96,165,250,.35); }
+          #twoPlayerScreen .tp42-char-card svg { width:min(100%,92px) !important; height:88px !important; flex:0 0 auto; }
+          #twoPlayerScreen .tp42-char-name { font:900 clamp(13px,1.15vw,18px)/1.1 'Courier Prime',monospace; text-transform:uppercase; overflow-wrap:anywhere; }
+          #twoPlayerScreen .tp42-char-skills { max-width:100%; margin-top:3px; font:700 clamp(8px,.68vw,10px)/1.25 Inter,sans-serif; color:#334155; }
+          #twoPlayerScreen .tp42-card-badge { margin-top:4px; padding:2px 8px; border-radius:999px; background:#334155; color:#fff; font:900 9px/1.2 Inter,sans-serif; }
+          #twoPlayerScreen .tp42-char-card.selected-p1 .tp42-card-badge { background:#991b1b; }
+          #twoPlayerScreen .tp42-char-card.selected-p2 .tp42-card-badge { background:#1d4ed8; }
+          #twoPlayerScreen .tp42-center {
+            min-width:0; min-height:0; display:flex; flex-direction:column; align-items:stretch;
+            padding:14px 12px 12px; background:radial-gradient(ellipse at 50% 35%,rgba(148,163,184,.13),transparent 68%);
+          }
+          #twoPlayerScreen .tp42-center-head { flex:0 0 auto; text-align:center; padding:0 2px 10px; }
+          #twoPlayerScreen .tp42-center-title { font:900 clamp(17px,1.8vw,27px)/1.1 'Courier Prime',monospace; letter-spacing:1.5px; color:#fff; }
+          #twoPlayerScreen .tp42-center-sub { margin-top:5px; color:#cbd5e1; font:700 clamp(9px,.9vw,12px)/1.3 Inter,sans-serif; }
+          #twoPlayerScreen .tp42-slots {
+            flex:1 1 auto; min-height:0; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px;
+          }
+          #twoPlayerScreen .tp42-slot {
+            min-width:0; min-height:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+            padding:10px 6px; overflow:hidden; border:2px dashed rgba(203,213,225,.55); border-radius:15px;
+            background:rgba(15,23,42,.55); text-align:center;
+          }
+          #twoPlayerScreen .tp42-slot.has-character { border-style:solid; background:linear-gradient(180deg,rgba(248,250,252,.12),rgba(30,41,59,.72)); }
+          #twoPlayerScreen .tp42-slot.p1-slot.has-character { border-color:rgba(248,113,113,.9); box-shadow:inset 0 0 24px rgba(248,113,113,.09); }
+          #twoPlayerScreen .tp42-slot.p2-slot.has-character { border-color:rgba(96,165,250,.9); box-shadow:inset 0 0 24px rgba(96,165,250,.09); }
+          #twoPlayerScreen .tp42-slot-label { flex:0 0 auto; font:900 12px/1 'Courier Prime',monospace; letter-spacing:1px; color:#cbd5e1; }
+          #twoPlayerScreen .tp42-slot svg { width:min(100%,190px) !important; height:min(31vh,230px) !important; max-height:230px; margin:5px auto; }
+          #twoPlayerScreen .tp42-slot-name { font:900 clamp(16px,1.8vw,26px)/1.05 'Courier Prime',monospace; color:#fff; text-transform:uppercase; overflow-wrap:anywhere; }
+          #twoPlayerScreen .tp42-slot-detail { margin-top:5px; color:#cbd5e1; font:700 clamp(8px,.75vw,10px)/1.3 Inter,sans-serif; }
+          #twoPlayerScreen .tp42-empty { margin:auto; color:#94a3b8; font:800 clamp(10px,1vw,14px)/1.45 Inter,sans-serif; letter-spacing:.5px; }
+          #twoPlayerScreen .tp42-center-status { flex:0 0 auto; min-height:30px; padding:8px 2px 3px; text-align:center; color:#e2e8f0; font:800 clamp(9px,.9vw,12px)/1.3 Inter,sans-serif; }
+          #twoPlayerScreen .tp42-actions {
+            flex:0 0 auto; display:flex; justify-content:center; align-items:center; gap:12px;
+            padding-top:9px; border-top:1px solid rgba(203,213,225,.3); margin-top:6px;
+          }
+          #twoPlayerScreen .tp42-action-btn {
+            width:min(210px,46%); min-width:0; padding:10px 12px; border:2px solid #e2e8f0; border-radius:11px;
+            background:linear-gradient(180deg,#f8fafc,#94a3b8); color:#0f172a; cursor:pointer;
+            font:900 clamp(11px,1.05vw,16px)/1.1 'Courier Prime',monospace;
+            box-shadow:0 4px 0 #475569,0 0 12px rgba(255,255,255,.12);
+          }
+          #twoPlayerScreen .tp42-action-btn:disabled { opacity:.38; cursor:not-allowed; filter:grayscale(1); }
+          #twoPlayerScreen .tp42-action-btn.primary { background:linear-gradient(180deg,#fff,#cbd5e1); box-shadow:0 4px 0 #64748b,0 0 15px rgba(255,255,255,.25); }
+          @media(max-width:760px) {
+            #twoPlayerScreen .tp42-layout { width:99vw; height:88vh; grid-template-columns:minmax(0,1fr) minmax(0,1.65fr) minmax(0,1fr); }
+            #twoPlayerScreen .tp42-panel { padding:7px 5px; }
+            #twoPlayerScreen .tp42-char-card { min-height:118px; }
+            #twoPlayerScreen .tp42-char-card svg { height:68px !important; }
+            #twoPlayerScreen .tp42-center { padding:9px 6px 8px; }
+            #twoPlayerScreen .tp42-slots { gap:5px; }
+            #twoPlayerScreen .tp42-slot { padding:6px 3px; }
+            #twoPlayerScreen .tp42-slot svg { height:min(27vh,170px) !important; }
+            #twoPlayerScreen .tp42-action-btn { padding:8px 4px; }
+          }
+        `;
+        if (!document.getElementById('upd42-final-polish-style')) document.head.appendChild(upd42Style);
+
+        // Build a replacement presentation layer inside the existing 2P screen.
+        // The original tpGrid/buttons and their handlers remain in the document,
+        // hidden from the new flow rather than deleted or rebuilt.
+        const tpScreen42 = $('twoPlayerScreen');
+        if (tpScreen42 && !tpScreen42.querySelector('.tp42-layout')) {
+            tpScreen42.classList.add('upd42-two-player-screen');
+            const layout = document.createElement('div');
+            layout.className = 'tp42-layout';
+            layout.innerHTML = `
+              <section class="tp42-panel tp42-side tp42-side-left">
+                <header class="tp42-side-head"><div class="tp42-player-name">P1</div><div class="tp42-status active" id="tp42P1Status">ĐANG CHỜ LỰA CHỌN</div></header>
+                <div class="tp42-list" id="tp42P1List" aria-label="Danh sách nhân vật P1"></div>
+              </section>
+              <section class="tp42-panel tp42-center">
+                <header class="tp42-center-head"><div class="tp42-center-title">CHỌN NHÂN VẬT · 2 PLAYERS</div><div class="tp42-center-sub" id="tp42CenterSub">P1 chọn trước · P2 đang chờ</div></header>
+                <div class="tp42-slots">
+                  <div class="tp42-slot p1-slot" id="tp42P1Slot"><div class="tp42-slot-label">PLAYER 1</div><div class="tp42-empty">P1 CHƯA CHỌN<br>NHÂN VẬT</div></div>
+                  <div class="tp42-slot p2-slot" id="tp42P2Slot"><div class="tp42-slot-label">PLAYER 2</div><div class="tp42-empty">P2 CHƯA ĐẾN LƯỢT<br>LỰA CHỌN</div></div>
+                </div>
+                <div class="tp42-center-status" id="tp42CenterStatus">Vui lòng chọn nhân vật cho P1.</div>
+                <footer class="tp42-actions">
+                  <button type="button" class="tp42-action-btn" id="tp42BackBtn">← Quay lại</button>
+                  <button type="button" class="tp42-action-btn primary" id="tp42ReadyBtn" hidden disabled>✔ Sẵn sàng</button>
+                  <button type="button" class="tp42-action-btn primary" id="tp42StartBtn" hidden>▶ Bắt đầu game</button>
+                </footer>
+              </section>
+              <section class="tp42-panel tp42-side tp42-side-right">
+                <header class="tp42-side-head"><div class="tp42-player-name">P2</div><div class="tp42-status" id="tp42P2Status">ĐANG CHỜ P1</div></header>
+                <div class="tp42-list is-locked" id="tp42P2List" aria-label="Danh sách nhân vật P2"></div>
+              </section>`;
+            tpScreen42.appendChild(layout);
+        }
+
+        const tp42 = { p1: null, p2: null, p1Ready: false, p2Ready: false, complete: false };
+        const p1List42 = $('tp42P1List'), p2List42 = $('tp42P2List');
+        const p1Slot42 = $('tp42P1Slot'), p2Slot42 = $('tp42P2Slot');
+        const ready42 = $('tp42ReadyBtn'), start42 = $('tp42StartBtn'), back42 = $('tp42BackBtn');
+
+        function tp42CharacterCard(ch, playerId, active) {
+            const card = document.createElement('button');
+            card.type = 'button';
+            card.className = 'tp42-char-card' + (active ? ' selectable' : '');
+            const chosen = tp42[playerId] === ch.id;
+            if (chosen) card.classList.add(playerId === 'p1' ? 'selected-p1' : 'selected-p2');
+            card.disabled = !active;
+            card.innerHTML = `${ch.preview}<div class="tp42-char-name">${ch.name}</div>
+              <div class="tp42-char-skills">${(ch.skillText || []).slice(0,3).join('<br>')}</div>
+              <div class="tp42-card-badge">${chosen ? 'ĐANG ĐƯỢC CHỌN' : (active ? 'CHỌN NHÂN VẬT' : 'ĐANG KHÓA')}</div>`;
+            if (active) card.addEventListener('click', () => {
+                if (playerId === 'p1' && !tp42.p1Ready && !tp42.complete) tp42.p1 = ch.id;
+                if (playerId === 'p2' && tp42.p1Ready && !tp42.p2Ready && !tp42.complete) tp42.p2 = ch.id;
+                tp.p1 = tp42.p1; tp.p2 = tp42.p2;
+                tp42Render();
+            });
+            return card;
+        }
+
+        function tp42RenderSlot(slot, id, playerId) {
+            const ch = id && CHARACTERS[id];
+            slot.classList.toggle('has-character', !!ch);
+            if (!ch) {
+                const msg = playerId === 'p1' ? 'P1 CHƯA CHỌN<br>NHÂN VẬT' : (tp42.p1Ready ? 'P2 CHƯA CHỌN<br>NHÂN VẬT' : 'P2 CHƯA ĐẾN LƯỢT<br>LỰA CHỌN');
+                slot.innerHTML = `<div class="tp42-slot-label">PLAYER ${playerId === 'p1' ? '1' : '2'}</div><div class="tp42-empty">${msg}</div>`;
+                return;
+            }
+            slot.innerHTML = `<div class="tp42-slot-label">PLAYER ${playerId === 'p1' ? '1' : '2'}${(playerId === 'p1' ? tp42.p1Ready : tp42.p2Ready) ? ' · READY ✔' : ''}</div>
+              ${ch.preview}<div class="tp42-slot-name">${ch.name}</div>
+              <div class="tp42-slot-detail">${(ch.skillText || []).slice(0,3).map(x => x.replace(/</g,'&lt;')).join(' · ')}</div>`;
+        }
+
+        function tp42Render() {
+            if (!tpScreen42) return;
+            const p1Active = !tp42.p1Ready && !tp42.complete;
+            const p2Active = tp42.p1Ready && !tp42.p2Ready && !tp42.complete;
+            const p1Top = p1List42 ? p1List42.scrollTop : 0;
+            const p2Top = p2List42 ? p2List42.scrollTop : 0;
+            p1List42.innerHTML = ''; p2List42.innerHTML = '';
+            Object.values(CHARACTERS).forEach(ch => {
+                p1List42.appendChild(tp42CharacterCard(ch, 'p1', p1Active));
+                p2List42.appendChild(tp42CharacterCard(ch, 'p2', p2Active));
+            });
+            p1List42.scrollTop = p1Top; p2List42.scrollTop = p2Top;
+            p1List42.classList.toggle('is-locked', !p1Active);
+            p2List42.classList.toggle('is-locked', !p2Active);
+            tp42RenderSlot(p1Slot42, tp42.p1, 'p1');
+            tp42RenderSlot(p2Slot42, tp42.p2, 'p2');
+
+            const p1Status = $('tp42P1Status'), p2Status = $('tp42P2Status');
+            p1Status.textContent = tp42.p1Ready ? 'ĐÃ SẴN SÀNG ✔' : (p1Active ? 'ĐANG LỰA CHỌN' : 'ĐÃ CHỌN · CHƯA XÁC NHẬN');
+            p1Status.className = 'tp42-status' + (tp42.p1Ready ? ' ready' : (p1Active ? ' active' : ''));
+            p2Status.textContent = tp42.p2Ready ? 'ĐÃ SẴN SÀNG ✔' : (p2Active ? 'ĐANG LỰA CHỌN' : 'ĐANG CHỜ P1');
+            p2Status.className = 'tp42-status' + (tp42.p2Ready ? ' ready' : (p2Active ? ' active' : ''));
+
+            const sub = $('tp42CenterSub'), msg = $('tp42CenterStatus');
+            if (tp42.complete) {
+                sub.textContent = 'CẢ HAI NGƯỜI CHƠI ĐÃ SẴN SÀNG';
+                msg.textContent = `P1: ${tp42.p1}  ·  P2: ${tp42.p2}  ·  Có thể bắt đầu trận đấu.`;
+            } else if (tp42.p1Ready) {
+                sub.textContent = 'P1 ĐÃ KHÓA LỰA CHỌN · ĐẾN LƯỢT P2';
+                msg.textContent = tp42.p2 ? 'P2 có thể thay đổi lựa chọn trước khi nhấn Sẵn sàng.' : 'P2 hãy chọn nhân vật ở danh sách bên phải.';
+            } else {
+                sub.textContent = 'P1 CHỌN TRƯỚC · P2 ĐANG CHỜ';
+                msg.textContent = tp42.p1 ? 'P1 có thể thay đổi nhân vật hoặc xác nhận Sẵn sàng.' : 'Vui lòng chọn nhân vật cho P1.';
+            }
+            back42.hidden = false;
+            ready42.hidden = tp42.complete || !(p1Active ? !!tp42.p1 : (p2Active && !!tp42.p2));
+            ready42.disabled = ready42.hidden;
+            start42.hidden = !tp42.complete;
+        }
+
+        function tp42ResetAndShow() {
+            tp42.p1 = null; tp42.p2 = null; tp42.p1Ready = false; tp42.p2Ready = false; tp42.complete = false;
+            tp.step = 1; tp.p1 = null; tp.p2 = null;
+            p1List42.scrollTop = 0; p2List42.scrollTop = 0;
+            tp42Render();
+            tpScreen42.classList.remove('is-hidden');
+            menuScreen.classList.add('is-hidden');
+        }
+
+        if ($('twoPlayerBtn')) $('twoPlayerBtn').addEventListener('click', e => {
+            e.preventDefault(); e.stopImmediatePropagation(); tp42ResetAndShow();
+        }, true);
+
+        if (p1List42) p1List42.addEventListener('wheel', e => e.stopPropagation(), { passive:true });
+        if (p2List42) p2List42.addEventListener('wheel', e => e.stopPropagation(), { passive:true });
+
+        ready42.addEventListener('click', () => {
+            if (!tp42.p1Ready) {
+                if (!tp42.p1) return;
+                tp42.p1Ready = true;
+            } else if (!tp42.p2Ready) {
+                if (!tp42.p2) return;
+                tp42.p2Ready = true;
+                tp42.complete = true;
+            }
+            tp.p1 = tp42.p1; tp.p2 = tp42.p2;
+            tp.step = tp42.complete ? 3 : 2;
+            tp42Render();
+        });
+
+        back42.addEventListener('click', () => {
+            if (tp42.complete) {
+                tp42.complete = false; tp42.p2Ready = false;
+            } else if (tp42.p1Ready) {
+                // Quay lại lượt P1 như quy trình cũ; P2 phải xác nhận lại sau đó.
+                tp42.p1Ready = false; tp42.p2 = null; tp42.p2Ready = false;
+            } else {
+                tpScreen42.classList.add('is-hidden');
+                menuScreen.classList.remove('is-hidden');
+                return;
+            }
+            tp.p1 = tp42.p1; tp.p2 = tp42.p2;
+            tp.step = tp42.p1Ready ? 2 : 1;
+            tp42Render();
+        });
+
+        start42.addEventListener('click', () => {
+            if (!tp42.complete || !tp42.p1Ready || !tp42.p2Ready || !CHARACTERS[tp42.p1] || !CHARACTERS[tp42.p2]) return;
+            tp.p1 = tp42.p1; tp.p2 = tp42.p2;
+            start2P(tp42.p1, tp42.p2);
+        });
+
+        // ---------------------- ENERGY: SPIRIT BOMB -----------------------
+        // Giữ pha nhảy hiện có, thêm đúng 30 frame đứng yên trên không trước khi
+        // giơ tay tích tụ; khóa mục tiêu chỉ khi đối thủ ở phía trước và <= 1/3 map.
+        CASTS.bomb = function (s, opp) {
+            s.castTimer++;
+            const t = s.castTimer;
+            s.vx = 0;
+            const B = s._spiritBomb42 || (s._spiritBomb42 = {
+                baseY:s.y, baseX:s.x, facing:s.facing || 1, radius:0, thrown:false,
+                aimRange:WORLD_S()/3, aimTarget:null
+            });
+            if (t === 1) {
+                B.baseY = s.y; B.baseX = s.x; B.facing = s.facing || 1;
+                B.aimRange = WORLD_S()/3; B.aimTarget = null; B.thrown = false;
+                s.grounded = false; s.vy = -s.gravity;
+                spawnDust(s.x, s.y, 10, 0); camera.triggerShake(5);
+            }
+            if (t <= 20) {
+                const p = t / 20;
+                s.y = B.baseY - 225 * (p*p*(3-2*p)); s.vy = -s.gravity; s.grounded = false;
+            } else if (t <= 50) {
+                // Đứng thẳng trên không đúng 0,5 giây (30 frame ở 60 FPS).
+                s.y = B.baseY - 225; s.vy = -s.gravity; s.grounded = false;
+            } else if (t <= 112) {
+                s.y = B.baseY - 225; s.vy = -s.gravity; s.grounded = false;
+                const charge = clamp((t - 50) / 62, 0, 1);
+                B.radius = 8 + 212 * charge;
+                if (t % 3 === 0) {
+                    const a = Math.random() * TAU, r = B.radius + rr(65,145);
+                    particles.push({ type:'spark', x:s.x+Math.cos(a)*r, y:s.y-270+Math.sin(a)*r,
+                      vx:-Math.cos(a)*rr(4,8), vy:-Math.sin(a)*rr(4,8), length:15,
+                      color:Math.random()>.35?'#bfdbfe':'#ffffff', alpha:1, decay:.035 });
+                }
+            } else if (t === 113 && !B.thrown) {
+                const x0 = s.x, y0 = s.y - 270;
+                const ahead = (opp.x - s.x) * B.facing;
+                const canLock = !!opp && opp.hp > 0 && ahead > 0 && ahead <= B.aimRange;
+                B.aimTarget = canLock ? opp : null;
+                const tx = canLock ? opp.x : (s.x + B.facing * B.aimRange);
+                const ty = canLock ? (opp.y - 70) : y0;
+                const dx = canLock ? tx - x0 : B.facing;
+                const dy = canLock ? ty - y0 : 0;
+                const d = Math.hypot(dx,dy) || 1;
+                const speed = 22;
+                spiritBombs42.push({ owner:s, target:B.aimTarget, lockTarget:canLock,
+                  x:x0, y:y0, vx:dx/d*speed, vy:dy/d*speed, targetX:tx, targetY:ty,
+                  radius:220, age:0, exploded:false, dir:B.facing, aimRange:B.aimRange, travelled:0 });
+                B.thrown = true;
+                setPrincipleBadge(canLock ? 'SPIRIT BOMB — KHÓA MỤC TIÊU PHÍA TRƯỚC!' : 'SPIRIT BOMB — NÉM THEO HƯỚNG ĐANG QUAY MẶT!', 100);
+                camera.triggerShake(8);
+            }
+            if (t >= 134) {
+                s.y = B.baseY; s.vy = 0; s.grounded = true; s._spiritBomb42 = null; s.endCast();
+            }
+        };
+
+        updateSpiritBombs42 = function () {
+            for (let i = spiritBombs42.length - 1; i >= 0; i--) {
+                const b = spiritBombs42[i];
+                b.age++;
+                const o = b.target, s = b.owner;
+                if (b.exploded) {
+                    if (b.age - b.explosionAge > 24) spiritBombs42.splice(i,1);
+                    continue;
+                }
+                const speed = 22;
+                if (b.lockTarget && o && o.hp > 0) {
+                    // Homing chỉ tồn tại với mục tiêu hợp lệ đã khóa ở thời điểm ném.
+                    b.targetX = o.x; b.targetY = o.y - 70;
+                    const dx = b.targetX - b.x, dy = b.targetY - b.y, d = Math.hypot(dx,dy) || 1;
+                    const wantX = dx/d*speed, wantY = dy/d*speed;
+                    b.vx += (wantX-b.vx)*.16; b.vy += (wantY-b.vy)*.16;
+                    const v = Math.hypot(b.vx,b.vy) || 1; b.vx=b.vx/v*speed; b.vy=b.vy/v*speed;
+                } else {
+                    // Không khóa: tuyệt đối không quay theo đối thủ nằm phía sau.
+                    b.lockTarget = false; b.target = null; b.vx = b.dir*speed; b.vy = 0;
+                }
+                b.x += b.vx; b.y += b.vy;
+                b.travelled += Math.hypot(b.vx,b.vy);
+                if (b.age % 2 === 0) particles.push({ type:'spark', x:b.x+rr(-78,78), y:b.y+rr(-78,78),
+                    vx:rr(-2,2), vy:rr(-2,2), length:13, color:'#dbeafe', alpha:1, decay:.05 });
+
+                const hit = b.lockTarget && o && o.hp > 0 &&
+                    Math.hypot(o.x-b.x,(o.y-70)-b.y) < 138;
+                const reachedAimPoint = b.lockTarget && o && o.hp > 0 &&
+                    Math.hypot(b.targetX-b.x,b.targetY-b.y) < 28;
+                const reachedRange = b.travelled >= b.aimRange;
+                const expired = b.age > Math.ceil(b.aimRange/speed) + 18;
+                if (hit || reachedAimPoint || reachedRange || expired || b.x < leftWall-250 || b.x > rightWall+250) {
+                    b.exploded = true; b.explosionAge = b.age;
+                    const landedOnTarget = !!(hit || reachedAimPoint);
+                    const hx = landedOnTarget && o ? o.x : b.x;
+                    const hy = landedOnTarget && o ? o.y-70 : b.y;
+                    blastRings.push({ x:hx, y:hy, r:26, max:390, life:32, maxLife:32 });
+                    spiritExplosion42 = { x:hx, y:hy, age:0, life:32 };
+                    if (landedOnTarget && o && o.hp > 0) {
+                        const dmg = o.maxHp * .30 * (s.skillMult || 1);
+                        o.takeHit(dmg, b.dir * ((WORLD_S()/4)/12.5), -17, true, s, true);
+                        o.state='knockdown'; o.stateTimer=55; o.grounded=false;
+                        o.vx=b.dir*((WORLD_S()/4)/12.5); o.vy=-17;
+                        spawnFloatingText(o.x,o.y-170,`SPIRIT BOMB!! -${Math.round(dmg)}`,'#2563eb',1.65);
+                        spawnHitSparks(o.x,o.y-75,'#bfdbfe',true);
+                    }
+                    for (let k=0;k<30;k++) {
+                        const a=k*TAU/30;
+                        particles.push({type:'spark',x:hx,y:hy,vx:Math.cos(a)*rr(5,16),vy:Math.sin(a)*rr(5,16),
+                          length:17,color:k%2?'#60a5fa':'#ffffff',alpha:1,decay:.04});
+                    }
+                    hitstopFrames=10; impactFlashFrames=7; camera.triggerShake(32); updateHealthUI();
+                }
+            }
+            if (spiritExplosion42) {
+                spiritExplosion42.age++;
+                if (spiritExplosion42.age > spiritExplosion42.life) spiritExplosion42=null;
+            }
+        };
+
+        // Tư thế Energy: nhảy -> đứng thẳng 0,5s -> giơ hai tay tích tụ -> ném.
+        const _getCastPoseUpd42Final = SP.getCastPose;
+        SP.getCastPose = function () {
+            if (this.charId === 'energy' && this.castType === 'bomb') {
+                const t = this.castTimer || 0;
+                const P = o => Object.assign(this.getDefaultPose(), o);
+                if (t <= 20) return P({
+                    hipX:0,hipY:-54,neckY:-102,headY:-122,
+                    lShoulderX:-8,lShoulderY:-88,rShoulderX:8,rShoulderY:-88,
+                    lElbowX:-28,lElbowY:-76,lHandX:-42,lHandY:-62,
+                    rElbowX:24,rElbowY:-80,rHandX:34,rHandY:-66,
+                    lKneeX:-20,lKneeY:-30,lFootX:-34,lFootY:-12,rKneeX:22,rKneeY:-34,rFootX:32,rFootY:-16
+                });
+                if (t <= 50) return P({
+                    hipX:0,hipY:-46,neckY:-94,headY:-114,
+                    lShoulderX:0,lShoulderY:-90,rShoulderX:0,rShoulderY:-90,
+                    lElbowX:-16,lElbowY:-68,lHandX:-8,lHandY:-50,
+                    rElbowX:14,rElbowY:-68,rHandX:16,rHandY:-54,
+                    lKneeX:-12,lFootX:-16,rKneeX:12,rFootX:16
+                });
+                if (t <= 112) return P({
+                    hipX:0,hipY:-46,neckY:-94,headY:-114,
+                    lShoulderX:-5,lShoulderY:-91,rShoulderX:5,rShoulderY:-91,
+                    lElbowX:-24,lElbowY:-118,lHandX:-30,lHandY:-151,
+                    rElbowX:24,rElbowY:-118,rHandX:30,rHandY:-151,
+                    lKneeX:-15,lFootX:-25,rKneeX:15,rFootX:25
+                });
+                const release = clamp((t-112)/8,0,1);
+                return P({
+                    hipX:4+release*5,hipY:-44,neckX:8+release*7,neckY:-88,headX:12+release*10,headY:-108,
+                    lShoulderX:5,lShoulderY:-88,rShoulderX:9,rShoulderY:-88,
+                    lElbowX:18+release*8,lElbowY:-82,lHandX:34+release*12,lHandY:-75,
+                    rElbowX:22+release*9,rElbowY:-84,rHandX:40+release*13,rHandY:-77,
+                    lKneeX:-14,lFootX:-25,rKneeX:18,rFootX:28
+                });
+            }
+            if (this.charId === 'strength' && this.castType === 'chop') {
+                const t = this.castTimer || 0;
+                const P = o => Object.assign(this.getDefaultPose(), o);
+                if (t <= 24) {
+                    const phase = this.animTime * .95;
+                    const a = Math.sin(phase), b = Math.cos(phase), bounce = Math.abs(b)*5;
+                    return P({
+                        hipX:10,hipY:-44-bounce,neckX:34,neckY:-82-bounce,headX:45,headY:-96-bounce,
+                        lShoulderX:24,lShoulderY:-78,rShoulderX:24,rShoulderY:-78,
+                        lElbowX:8-a*14,lElbowY:-70-bounce,lHandX:-8-a*18,lHandY:-62-bounce,
+                        rElbowX:8+a*14,rElbowY:-70-bounce,rHandX:-8+a*18,rHandY:-62-bounce,
+                        lKneeX:6+a*26,lKneeY:-24-bounce*.4,lFootX:2+a*38,lFootY:Math.min(0,b*17),
+                        rKneeX:6-a*26,rKneeY:-24-bounce*.4,rFootX:2-a*38,rFootY:Math.min(0,-b*17)
+                    });
+                }
+                if (t >= 65 && t <= 184) {
+                    const phase = (t-65)/119 * Math.PI*4;
+                    const a = Math.sin(phase), b = Math.cos(phase);
+                    return P({
+                        hipX:8+a*9,hipY:-42,neckX:12+b*8,neckY:-82,headX:18+b*12,headY:-100,
+                        lShoulderX:-5+a*5,lShoulderY:-82,rShoulderX:5-a*5,rShoulderY:-82,
+                        lElbowX:-22+a*8,lElbowY:-72+b*8,lHandX:-34+a*12,lHandY:-65+b*10,
+                        rElbowX:22-a*8,rElbowY:-72-b*8,rHandX:34-a*12,rHandY:-65-b*10,
+                        lKneeX:-26+a*18,lKneeY:-28,lFootX:-44+a*24,lFootY:-10+b*10,
+                        rKneeX:26-a*18,rKneeY:-28,rFootX:44-a*24,rFootY:-10-b*10
+                    });
+                }
+            }
+            return _getCastPoseUpd42Final.call(this);
+        };
+
+        // ---------------------- STRENGTH: BIỂU LIÊN HOA -------------------
+        // Tiếp cận trong 24 frame hiển thị đủ run-cycle; giai đoạn lao xuống 120
+        // frame = 2 giây ở 60 FPS, không bị rút ngắn bởi cleanup cũ.
+        CASTS.chop = function (s, opp) {
+            s.castTimer++;
+            const t = s.castTimer;
+            const L = s._lotus42 || (s._lotus42 = {
+                startX:s.x, floorY:floorAtFor(s), dir:opp.x>=s.x?1:-1,
+                targetX:opp.x, targetFloor:floorAtFor(opp), airY:0, hit1:false, hit2:false
+            });
+            s.vx=0;
+            if (t===1) {
+                L.startX=s.x; L.floorY=floorAtFor(s); L.targetX=opp.x;
+                L.targetFloor=floorAtFor(opp); L.dir=opp.x>=s.x?1:-1;
+                s.facing=L.dir; s.grounded=true; s.vy=0;
+            }
+            // Giai đoạn chạy lao tới: nội suy liên tục, không teleport/ẩn nhân vật.
+            if (t<=24) {
+                const p=clamp(t/24,0,1), eased=p*p*(3-2*p);
+                const endX=L.targetX-L.dir*78;
+                s.x=clamp(L.startX+(endX-L.startX)*eased,leftWall,rightWall);
+                s.y=L.floorY; s.grounded=true; s.vy=0; s.vx=0; s.facing=L.dir;
+                if (t%3===0) spawnDust(s.x,s.y,2,-L.dir);
+            }
+            if (t===25) {
+                if (opp.hp<=0 || opp.frozen || opp.state==='knockdown') { s._lotus42=null; s.endCast(); return; }
+                const dmg=opp.maxHp*.05*(s.skillMult||1);
+                opp.takeHit(dmg,L.dir*5,-7,false,s,true);
+                L.targetX=opp.x; L.targetFloor=floorAtFor(opp); L.airY=L.targetFloor-390;
+                opp.state='jump'; opp.stateTimer=0; opp.grounded=false; opp.vx=0; opp.vy=0;
+                opp.x=L.targetX; opp.y=L.airY;
+                if (typeof opp.computeSkeletonPose==='function') opp.computeSkeletonPose();
+                opp.freezeFor(205,'lotus',s); opp.state='jump'; opp.x=L.targetX; opp.y=L.airY; opp.grounded=false;
+                L.hit1=true;
+                spawnFloatingText(opp.x,opp.y-145,'BIỂU LIÊN HOA!','#6b7280',1.25);
+                spawnHitSparks(opp.x,opp.y-70,'#f3f4f6',true); camera.triggerShake(13);
+            }
+            if (t>25 && t<=40) {
+                opp.x=L.targetX; opp.y=L.airY; opp.vx=0; opp.vy=0;
+                s.x=clamp(L.targetX-L.dir*70,leftWall,rightWall); s.y=L.floorY; s.grounded=true; s.vy=0;
+            }
+            if (t>=41 && t<=54) {
+                const p=(t-41)/13, eased=p*p*(3-2*p);
+                s.x=clamp(L.targetX+L.dir*75,leftWall,rightWall);
+                s.y=L.floorY-220*eased; s.grounded=false; s.vy=-s.gravity;
+                opp.x=L.targetX; opp.y=L.airY; opp.vx=0; opp.vy=0;
+            }
+            if (t>=55 && t<=64) {
+                s.x=clamp(L.targetX+L.dir*24,leftWall,rightWall);
+                s.y=L.airY+60; s.grounded=false; s.vy=-s.gravity;
+                opp.x=L.targetX; opp.y=L.airY; opp.vx=0; opp.vy=0;
+                s._lotusSpin42=0; opp._lotusSpin42=0;
+                lotusFx42={x:(s.x+opp.x)/2,y:opp.y+5,age:0,dir:L.dir};
+            }
+            // 120 frame trọn vẹn kể từ lúc bắt đầu lao từ trên cao xuống mặt đất.
+            if (t>=65 && t<=184) {
+                const frame=t-65, p=clamp(frame/119,0,1), eased=p*p*(3-2*p);
+                const y=L.airY+(L.targetFloor-L.airY)*eased;
+                s.x=clamp(L.targetX+L.dir*(24*(1-p)),leftWall,rightWall);
+                s.y=y+60; s.grounded=false; s.vy=-s.gravity;
+                opp.x=L.targetX; opp.y=y; opp.vx=0; opp.vy=0; opp.grounded=false;
+                const spin=p*Math.PI*4;
+                s._lotusSpin42=Math.sin(spin)*.22;
+                opp._lotusSpin42=-Math.sin(spin)*.22;
+                lotusFx42={x:(s.x+opp.x)/2,y:y+12,age:frame,dir:L.dir};
+                if (t%5===0) particles.push({type:'spark',x:(s.x+opp.x)/2+rr(-45,45),y:y+rr(-55,55),
+                  vx:rr(-3,3),vy:rr(-4,4),length:12,color:'#e5e7eb',alpha:1,decay:.055});
+            }
+            if (t===185 && !L.hit2) {
+                if (opp.frozen && opp.frozen.kind==='lotus') opp.frozen=null;
+                opp.x=L.targetX; opp.y=L.targetFloor; opp.grounded=true; opp.vx=0; opp.vy=0;
+                const dmg=opp.maxHp*.25*(s.skillMult||1);
+                opp.takeHit(dmg,L.dir*((WORLD_S()/5)/12.5),-15,true,s,true);
+                opp.state='knockdown'; opp.stateTimer=52; opp.grounded=false;
+                opp.vx=L.dir*((WORLD_S()/5)/12.5); opp.vy=-15;
+                s.state='knockdown'; s.stateTimer=48; s.castType=null; s.beam=null; s.grounded=false;
+                s.vx=-L.dir*((WORLD_S()/6)/12.5); s.vy=-13;
+                s._lotusSpin42=0; opp._lotusSpin42=0; s._lotus42=null;
+                L.hit2=true; lotusFx42=null;
+                blastRings.push({x:opp.x,y:opp.y-35,r:20,max:285,life:30,maxLife:30});
+                spawnHitSparks(opp.x,opp.y-65,'#ffffff',true);
+                spawnFloatingText(opp.x,opp.y-170,`BIỂU LIÊN HOA!! -${Math.round(dmg)}`,'#4b5563',1.55);
+                hitstopFrames=12; impactFlashFrames=6; camera.triggerShake(32); updateHealthUI();
+            }
+            if (t>188) { s._lotus42=null; s._lotusSpin42=0; opp._lotusSpin42=0; lotusFx42=null; }
+        };
+
+        // Xoay nhẹ hai stickman trong pha lao xuống để tăng cảm giác cuộn/lốc xoáy.
+        const _drawLotusSpin42Final = SP.draw;
+        SP.draw = function (c) {
+            const spin=this._lotusSpin42||0;
+            if (!spin) return _drawLotusSpin42Final.call(this,c);
+            c.save(); c.translate(this.x,this.y-66); c.rotate(spin); c.translate(-this.x,-(this.y-66));
+            try { _drawLotusSpin42Final.call(this,c); } finally { c.restore(); }
+        };
+
+        // ------------------------- SPACE: ĐÁNH THƯỜNG ---------------------
+        // Tăng tầm từ 3x lên 4x; giảm sát thương còn 70%; không gọi takeHit()
+        // nên đòn đánh không gây hitstun/knockdown hoặc ngắt hành động (trừ đòn kết liễu).
+        const _updateSpaceAttackRange42Final = SP.updateAttackState;
+        SP.updateAttackState = function (opponent) {
+            const before = spaceShots42.length;
+            const result = _updateSpaceAttackRange42Final.call(this, opponent);
+            if (this.charId === 'space' && spaceShots42.length > before) {
+                for (let i=before; i<spaceShots42.length; i++) {
+                    const shot=spaceShots42[i];
+                    if (shot && shot.owner===this) shot.max=shot.cfg.range*4;
+                }
+            }
+            return result;
+        };
+
+        updateSpaceShots42 = function () {
+            for (let i=spaceShots42.length-1;i>=0;i--) {
+                const p=spaceShots42[i], o=p.target, s=p.owner;
+                p.age++; p.x+=p.dir*p.speed; p.travel+=p.speed;
+                if (p.age%2===0) particles.push({type:'spark',x:p.x-p.dir*rr(2,16),y:p.y+rr(-7,7),
+                    vx:-p.dir*2,vy:rr(-1,1),length:10,color:'#a78bfa',alpha:1,decay:.08});
+                const hit=o&&o.hp>0&&((o.x-p.x)*p.dir>=-24)&&Math.abs(o.x-p.x)<40&&
+                    Math.abs((o.y-74)-p.y)<74&&o.state!=='knockdown';
+                if (hit) {
+                    if (!o.tryBlockNormal(s)) {
+                        const cfg=p.cfg;
+                        const original=(s.isBot&&!s.isClone)
+                            ? Math.max(1,Math.round(cfg.dmg*BOT_NERF))
+                            : Math.round(cfg.dmg*NORMAL_ATK_MULT*(typeof s.atkMult==='function'?s.atkMult():1)*10)/10;
+                        const dmg=Math.max(.1,Math.round(original*.70*10)/10);
+                        const beforeHp=o.hp;
+                        // Chỉ trừ máu: giữ nguyên state/attackPhase/cast để đối thủ tiếp tục hành động.
+                        o.hp=Math.max(0,o.hp-dmg);
+                        if (o.hp<=0 && beforeHp>0) {
+                            o.state='knockdown'; o.stateTimer=46; o.grounded=false;
+                            o.vx=p.dir*cfg.kbX; o.vy=-5;
+                        }
+                        updateHealthUI();
+                        spawnHitSparks((p.x+o.x)/2,p.y,'#a78bfa',!!cfg.heavy);
+                        spawnFloatingText(o.x,o.y-112,`MAGIC -${dmg}`,'#6d28d9',1.0);
+                        hitstopFrames=1; camera.triggerShake(cfg.heavy?9:5);
+                        if (!s.isBot&&!s.isClone&&!s.isP2) registerPlayerCombo(s.comboStep);
+                    }
+                    spaceShots42.splice(i,1); continue;
+                }
+                if (p.travel>=p.max||p.age>110||p.x<leftWall-100||p.x>rightWall+100) spaceShots42.splice(i,1);
+            }
+        };
+
+        // Dọn trạng thái xoay tạm của Strength trong reset/round mới, giữ nguyên
+        // toàn bộ lớp reset đặc biệt và chỉ bổ sung hai thuộc tính mới.
+        const _clearSpecialsUpd42Final = clearSpecials;
+        clearSpecials = function () {
+            _clearSpecialsUpd42Final.apply(this, arguments);
+            [player,bot].forEach(f => { f._lotusSpin42=0; f._lotus42=null; });
+        };
+
+/* ================= UPD4.2.2 APPEND-ONLY PATCH =================
+   HUD kính khói + Energy O trình tự chuẩn + Strength O combo 30%.
+   Chỉ thêm lớp bổ sung; không xóa hoặc sửa cấu trúc gameplay cũ. */
+(() => {
+  if (window.__TFIGHTER_UPD422__) return;
+  window.__TFIGHTER_UPD422__ = true;
+
+  // ------------------------------------------------------------------
+  // A. HUD: Smoke Gray glassmorphism, giảm gần 50% chiều cao tổng thể.
+  // ------------------------------------------------------------------
+  const hudStyle422 = document.createElement('style');
+  hudStyle422.id = 'tf-upd422-hud-style';
+  hudStyle422.textContent = `
+    .upd422-hud {
+      box-sizing:border-box !important;
+      padding:5px 11px !important;
+      min-height:0 !important;
+      border:1.5px solid rgba(8,10,14,.82) !important;
+      border-radius:14px !important;
+      background:rgba(91,98,108,.50) !important;
+      background-image:none !important;
+      -webkit-backdrop-filter:blur(10px) saturate(135%) !important;
+      backdrop-filter:blur(10px) saturate(135%) !important;
+      box-shadow:0 5px 16px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.18) !important;
+    }
+    .upd422-hud .upd422-hud-label-row {
+      min-height:13px !important;
+      margin-bottom:2px !important;
+      line-height:1 !important;
+    }
+    .upd422-hud .upd422-hud-label-row > * { line-height:1.05 !important; }
+    .upd422-hud .upd422-hud-label-row span { font-size:12px !important; }
+    .upd422-hp-track {
+      box-sizing:border-box !important;
+      height:12px !important;
+      min-height:12px !important;
+      padding:1px !important;
+      border:1.5px solid rgba(0,0,0,.92) !important;
+      border-radius:999px !important;
+      background:rgba(16,20,26,.84) !important;
+      overflow:hidden !important;
+    }
+    .upd422-hp-fill { height:100% !important; border-radius:999px !important; }
+    .upd422-hud .round-stars { margin-top:1px !important; gap:2px !important; }
+    @media(max-width:640px) {
+      .upd422-hud { padding:4px 7px !important; border-radius:11px !important; }
+      .upd422-hud .upd422-hud-label-row { min-height:12px !important; }
+      .upd422-hud .upd422-hud-label-row span { font-size:10px !important; }
+      .upd422-hp-track { height:10px !important; min-height:10px !important; }
+    }
+  `;
+  document.head.appendChild(hudStyle422);
+
+  const pHp422 = document.getElementById('playerHpBar');
+  const bHp422 = document.getElementById('botHpBar');
+  [pHp422, bHp422].forEach((bar) => {
+    if (!bar) return;
+    const panel = bar.closest('.paper-panel');
+    const row = bar.parentElement && bar.parentElement.previousElementSibling;
+    if (panel) panel.classList.add('upd422-hud');
+    if (row) row.classList.add('upd422-hud-label-row');
+    if (bar.parentElement) bar.parentElement.classList.add('upd422-hp-track');
+    bar.classList.add('upd422-hp-fill');
+  });
+
+  // ------------------------------------------------------------------
+  // B. ENERGY O: nhảy -> đứng yên 30 frame -> giơ tay/tích tụ -> ném.
+  // ------------------------------------------------------------------
+  CASTS.bomb = function (s, opp) {
+    s.castTimer++;
+    const t = s.castTimer;
+    const B = s._spiritBomb42 || (s._spiritBomb42 = {
+      baseY:s.y, baseX:s.x, facing:s.facing || 1, radius:0, thrown:false,
+      aimRange:WORLD_S()/3, aimTarget:null, armRaise:0
+    });
+    s.vx = 0;
+    s.facing = B.facing || s.facing || 1;
+
+    if (t === 1) {
+      B.baseY = s.y; B.baseX = s.x; B.facing = s.facing || 1;
+      B.aimRange = WORLD_S()/3; B.aimTarget = null; B.radius = 0; B.thrown = false;
+      B.armRaise = 0;
+      s.grounded = false; s.vy = -s.gravity;
+      spawnDust(s.x, s.y, 10, 0); camera.triggerShake(5);
+    }
+
+    if (t <= 20) {
+      // Pha 1: chỉ nhảy lên không trung, chưa triệu hồi quả cầu.
+      const p = t/20, eased = p*p*(3-2*p);
+      s.y = B.baseY - 225*eased;
+      s.vy = -s.gravity; s.grounded = false;
+      B.radius = 0;
+    } else if (t <= 50) {
+      // Pha 2: đứng thẳng, bất động hoàn toàn đúng 30 frame (0,5 giây ở 60 FPS).
+      s.y = B.baseY - 225;
+      s.vy = -s.gravity; s.grounded = false;
+      B.armRaise = 0; B.radius = 0;
+    } else if (t <= 112) {
+      // Pha 3: tay từ từ nâng lên; quả cầu chỉ xuất hiện từ frame đầu của pha này.
+      s.y = B.baseY - 225;
+      s.vy = -s.gravity; s.grounded = false;
+      B.armRaise = clamp((t-50)/16,0,1);
+      const charge = clamp((t-50)/62,0,1);
+      const eased = charge*charge*(3-2*charge);
+      B.radius = 2 + 218*eased;
+      if (t % 3 === 0) {
+        const a = Math.random()*TAU, r = B.radius + rr(45,115);
+        particles.push({type:'spark',x:s.x+Math.cos(a)*r,y:s.y-270+Math.sin(a)*r,
+          vx:-Math.cos(a)*rr(3,7),vy:-Math.sin(a)*rr(3,7),length:14,
+          color:Math.random()>.35?'#bfdbfe':'#ffffff',alpha:1,decay:.04});
+      }
+    } else if (t === 113 && !B.thrown) {
+      // Pha 4: aim chỉ xét phía trước theo hướng đã quay mặt lúc bắt đầu chiêu.
+      const x0=s.x, y0=s.y-270;
+      const ahead=opp && opp.hp>0 ? (opp.x-s.x)*B.facing : -1;
+      const canLock=!!(opp && opp.hp>0 && !opp.frozen && ahead>0 && ahead<=B.aimRange);
+      B.aimTarget=canLock?opp:null;
+      const tx=canLock?opp.x:(s.x+B.facing*B.aimRange);
+      const ty=canLock?(opp.y-70):y0;
+      const dx=canLock?(tx-x0):B.facing, dy=canLock?(ty-y0):0;
+      const d=Math.hypot(dx,dy)||1, speed=22;
+      spiritBombs42.push({owner:s,target:B.aimTarget,lockTarget:canLock,
+        x:x0,y:y0,vx:dx/d*speed,vy:dy/d*speed,targetX:tx,targetY:ty,
+        radius:220,age:0,exploded:false,dir:B.facing,aimRange:B.aimRange,travelled:0});
+      B.thrown=true; B.radius=0;
+      setPrincipleBadge(canLock?'SPIRIT BOMB — KHÓA MỤC TIÊU PHÍA TRƯỚC!':'SPIRIT BOMB — NÉM THEO HƯỚNG ĐANG QUAY MẶT!',100);
+      camera.triggerShake(8);
+    }
+
+    if (t >= 114 && t < 134) {
+      // Sau khi ném, hạ dần về sàn thay vì rơi tức thời.
+      const fall=smooth422((t-113)/21);
+      s.y=(B.baseY-225)+225*fall;
+      s.vy=-s.gravity; s.grounded=false;
+    }
+    if (t >= 134) {
+      s.y=B.baseY; s.vy=0; s.grounded=true;
+      s._spiritBomb42=null; s.endCast();
+    }
+  };
+
+  // ------------------------------------------------------------------
+  // C. Strength O: auto aim cùng tầng, 2 cú đấm ngược hướng, đá bay,
+  //    dừng xoay 10 vòng/1 giây, đạp xuống; tổng sát thương 30%.
+  // ------------------------------------------------------------------
+  const lotusDust422 = [];
+  const smooth422 = (p) => { p=clamp(p,0,1); return p*p*(3-2*p); };
+  const lerp422 = (a,b,p) => a+(b-a)*p;
+  const pose422 = (actor, values) => Object.assign(actor.getDefaultPose(), values);
+
+  function lotusSetTarget422(opp, x, y, state) {
+    opp.x=x; opp.y=y; opp.vx=0; opp.vy=0; opp.grounded=false;
+    if (state) opp.state=state;
+    if (opp.frozen && opp.frozen.kind==='lotus43') opp.frozen.left=999999;
+    if (typeof opp.computeSkeletonPose==='function') opp.computeSkeletonPose();
+  }
+  function lotusDamage422(s, opp, amount, label, color, heavy) {
+    const dmg=opp.maxHp*amount;
+    opp.hp=Math.max(0,opp.hp-dmg);
+    updateHealthUI();
+    spawnHitSparks(opp.x,opp.y-70,color||'#ffffff',!!heavy);
+    spawnFloatingText(opp.x,opp.y-150,`${label} -${Math.round(dmg)}`,'#374151',1.25);
+    hitstopFrames=heavy?8:4;
+    if (heavy) impactFlashFrames=5;
+    camera.triggerShake(heavy?20:10);
+  }
+
+  // Giữ nguyên đối thủ bị stun xuyên suốt combo; không cho bộ đếm freeze
+  // tự giải phóng sớm kể cả khi máu đối thủ đã về 0.
+  const _updateWithLotusLock422 = SP.update;
+  SP.update = function (opponent, inputKeys) {
+    if (this.frozen && this.frozen.kind==='lotus43') {
+      this.vx=0; this.vy=0;
+      return;
+    }
+    return _updateWithLotusLock422.apply(this,arguments);
+  };
+
+  if (CHAR_SKILLS.strength && CHAR_SKILLS.strength.KeyO) {
+    CHAR_SKILLS.strength.KeyO.name='Biểu Liên Hoa';
+    CHAR_SKILLS.strength.KeyO.short='Biểu Liên Hoa';
+  }
+  if (CHARACTERS.strength) {
+    CHARACTERS.strength.skillText=(CHARACTERS.strength.skillText||[]).map(t=>
+      t.startsWith('O ·')?'O · Biểu Liên Hoa (30% máu tối đa: 5% + 5% + 5% + 15%)':t);
+  }
+
+  SKILL_IMPL.chop = {
+    can: groundIdle,
+    start(s) {
+      s.beginCast('chop');
+      s._lotus43=null; s._lotusSpin43=0;
+      setPrincipleBadge('BIỂU LIÊN HOA — COMBO 4 GIAI ĐOẠN!',150);
+    }
+  };
+
+  CASTS.chop = function (s, opp) {
+    s.castTimer++;
+    const t=s.castTimer;
+    s.vx=0;
+    let L=s._lotus43;
+
+    if (t===1) {
+      const sFloor=floorAtFor(s), oFloor=floorAtFor(opp);
+      const inRange=opp && Math.abs(opp.x-s.x)<=WORLD_S()/3;
+      const sameTier=!!(opp && opp.grounded && Math.abs(oFloor-sFloor)<=12 && Math.abs(opp.y-s.y)<=18);
+      const available=!!(opp && opp.hp>0 && !opp.frozen && opp.state!=='knockdown' && opp.state!=='held');
+      if (!inRange || !sameTier || !available) {
+        spawnFloatingText(s.x,s.y-165,'KHÔNG CÓ MỤC TIÊU CÙNG TẦNG TRONG TẦM!','#6b7280',1.15);
+        s._lotus43=null; s.endCast(); return;
+      }
+      const dir1=opp.x>=s.x?1:-1;
+      const quarter=WORLD_S()/4;
+      const targetX=opp.x;
+      L=s._lotus43={
+        target:opp, dir1, dir2:-dir1, quarter,
+        startX:s.x, targetStartX:targetX, sFloor:sFloor, floorY:oFloor,
+        end1:clamp(targetX+dir1*quarter,leftWall,rightWall), end2:0,
+        airY:0, topY:0, finalEnd:0,
+        phase:'run1',phaseFrame:1,
+        hit1:false,hit2:false,hit3:false,hitFinal:false,
+        flight1Start:targetX, flight2Start:0,
+        attackerStart1:s.x, attackerStart2:0,
+        spinAngle:0
+      };
+      L.end2=clamp(L.end1+L.dir2*quarter,leftWall,rightWall);
+      L.airY=L.floorY-390;
+      L.floorY2=floorAtFor({x:L.end2,y:L.airY,vy:0});
+      if (!Number.isFinite(L.floorY2)) L.floorY2=L.floorY;
+      L.finalEnd=clamp(L.end2+dir1*quarter,leftWall,rightWall);
+      L.topY=L.airY-150;
+      s.facing=dir1; s.grounded=true; s.y=L.sFloor; s.vy=0;
+      opp.freezeFor(999999,'lotus43',s);
+      opp.state='hitstun'; opp.grounded=false; opp.vx=0; opp.vy=0;
+      lotusSetTarget422(opp,targetX,L.floorY,'hitstun');
+      spawnFloatingText(opp.x,opp.y-165,'AUTO AIM · STUN!','#6b7280',1.15);
+    }
+
+    if (!L || L.target!==opp) { s.endCast(); return; }
+    if (opp.hp<0) opp.hp=0;
+    if (!opp.frozen || opp.frozen.kind!=='lotus43') opp.freezeFor(999999,'lotus43',s);
+    opp.frozen.left=999999; opp.frozen.owner=s;
+    s.state='cast'; s.castType='chop'; s.beam=null;
+    s._lotusSpin42=0; s._lotusSpin43=0;
+
+    const runAt422=(startX,endX,dir,phase,frame,total)=>{
+      const p=clamp(frame/total,0,1);
+      s.x=clamp(lerp422(startX,endX,p),leftWall,rightWall);
+      s.y=L.sFloor; s.grounded=true; s.vy=0; s.vx=0; s.facing=dir;
+      L.phase=phase; L.phaseFrame=frame;
+      if (frame%5===0) spawnDust(s.x,s.y,2,-dir);
+    };
+    const holdTarget422=(x,y,state='hitstun')=>lotusSetTarget422(opp,x,y,state);
+
+    // GIAI ĐOẠN 1: chạy tiếp cận, cú đấm phải thứ nhất, bay theo hướng tấn công.
+    if (t>=1 && t<=28) {
+      const end=L.targetStartX-L.dir1*60;
+      runAt422(L.startX,end,L.dir1,'run1',t,28);
+      holdTarget422(L.targetStartX,L.floorY,'hitstun');
+    } else if (t>=29 && t<=34) {
+      s.x=L.targetStartX-L.dir1*60; s.y=L.sFloor; s.grounded=true; s.vy=0; s.facing=L.dir1;
+      L.phase='punch1'; L.phaseFrame=t-28;
+      holdTarget422(L.targetStartX,L.floorY,'hitstun');
+      if (t===31 && !L.hit1) {
+        L.hit1=true;
+        lotusDamage422(s,opp,.05,'ĐẤM 1','#e5e7eb',false);
+        L.flight1Start=opp.x;
+      }
+    }
+
+    // Chạy đón đầu quỹ đạo để cú đấm thứ hai đánh ngược chiều cú thứ nhất.
+    if (t>=35 && t<=70) {
+      const p=(t-35+1)/36, eased=smooth422(p);
+      const targetX=lerp422(L.flight1Start,L.end1,p);
+      const y=L.floorY-48*Math.sin(Math.PI*p);
+      holdTarget422(targetX,y,'hitstun');
+      const from=L.targetStartX-L.dir1*60, to=L.end1+L.dir1*60;
+      runAt422(from,to,L.dir1,'chase1',t-34,36);
+    } else if (t>=71 && t<=76) {
+      s.x=L.end1+L.dir1*60; s.y=L.sFloor; s.grounded=true; s.vy=0; s.facing=L.dir2;
+      L.phase='punch2'; L.phaseFrame=t-70;
+      holdTarget422(L.end1,L.floorY,'hitstun');
+      if (t===73 && !L.hit2) {
+        L.hit2=true;
+        lotusDamage422(s,opp,.05,'ĐẤM 2','#e5e7eb',false);
+        L.flight2Start=opp.x;
+      }
+    }
+
+    // GIAI ĐOẠN 2: đuổi theo hướng ngược lại, đấm lần hai theo chiều ngược.
+    if (t>=77 && t<=112) {
+      const p=(t-77+1)/36;
+      const targetX=lerp422(L.flight2Start,L.end2,p);
+      const y=L.floorY-48*Math.sin(Math.PI*p);
+      holdTarget422(targetX,y,'hitstun');
+      const from=L.end1+L.dir1*60, to=L.end2+L.dir2*60;
+      runAt422(from,to,L.dir2,'chase2',t-76,36);
+    } else if (t>=113 && t<=118) {
+      s.x=L.end2+L.dir2*60; s.y=L.sFloor; s.grounded=true; s.vy=0; s.facing=L.dir2;
+      L.phase='kick3'; L.phaseFrame=t-112;
+      holdTarget422(L.end2,L.floorY,'hitstun');
+      if (t===115 && !L.hit3) {
+        L.hit3=true;
+        lotusDamage422(s,opp,.05,'ĐÁ 3','#d1d5db',true);
+        L.kickRiseStart=L.floorY;
+        holdTarget422(L.end2,L.floorY,'jump');
+      }
+    }
+
+    // Đối thủ bị đá bay thẳng lên cao, vẫn bị khóa stun.
+    if (t>=119 && t<=134) {
+      const p=(t-118)/16;
+      const y=lerp422(L.floorY,L.airY,smooth422(p));
+      holdTarget422(L.end2,y,'jump');
+      s.x=L.end2+L.dir2*60; s.y=L.sFloor; s.grounded=true; s.vy=0;
+      L.phase='holdAfterKick'; L.phaseFrame=t-118; s.facing=L.dir2;
+    }
+
+    // Strength nhảy lên cao hơn đối thủ một chiều cao nhân vật.
+    if (t>=135 && t<=156) {
+      const p=(t-134)/22, eased=smooth422(p);
+      holdTarget422(L.end2,L.airY,'jump');
+      s.x=lerp422(L.end2+L.dir2*60,L.end2,eased);
+      s.y=lerp422(L.sFloor,L.topY,eased); s.grounded=false; s.vy=-s.gravity;
+      s.facing=L.dir2; L.phase='jumpAbove'; L.phaseFrame=t-134;
+    }
+
+    // GIAI ĐOẠN 3: đứng yên tại chỗ, xoay đủ 10 vòng trong đúng 60 frame.
+    if (t>=157 && t<=216) {
+      holdTarget422(L.end2,L.airY,'jump');
+      s.x=L.end2; s.y=L.topY; s.grounded=false; s.vy=-s.gravity;
+      s.facing=L.dir2; L.phase='spin10'; L.phaseFrame=t-156;
+      const progress=(t-156)/60;
+      L.spinAngle=Math.PI*20*progress;
+      s._lotusSpin43=L.spinAngle;
+    }
+
+    // Hoàn tất xoay, dừng hẳn rồi mới đưa chân phải vào tư thế chuẩn bị đạp.
+    if (t>=217 && t<=222) {
+      holdTarget422(L.end2,L.airY,'jump');
+      s.x=L.end2; s.y=L.topY; s.grounded=false; s.vy=-s.gravity;
+      s._lotusSpin43=0; L.phase='stompPrep'; L.phaseFrame=t-216;
+    }
+
+    // GIAI ĐOẠN 4: đạp thẳng xuống; cả hai hạ độ cao liên tục, chạm đất ở frame 246.
+    if (t>=223 && t<=246) {
+      const p=(t-222)/24, eased=smooth422(p);
+      const oppY=lerp422(L.airY,L.floorY2,eased);
+      const ownY=lerp422(L.topY,L.floorY2,eased);
+      holdTarget422(L.end2,oppY,'jump');
+      s.x=L.end2; s.y=ownY; s.grounded=false; s.vy=-s.gravity;
+      s._lotusSpin43=0; L.phase='stompDive'; L.phaseFrame=t-222;
+      if (t===246 && !L.hitFinal) {
+        L.hitFinal=true;
+        holdTarget422(L.end2,L.floorY2,'knockdown');
+        lotusDamage422(s,opp,.15,'TAEKWONDO FINISH','#ffffff',true);
+        blastRings.push({x:L.end2,y:L.floorY2-28,r:18,max:300,life:32,maxLife:32});
+        spawnDust(L.end2,L.floorY2,42,0);
+        for(let k=0;k<32;k++){
+          const a=k*TAU/32;
+          particles.push({type:'spark',x:L.end2,y:L.floorY2-20,
+            vx:Math.cos(a)*rr(5,15),vy:Math.sin(a)*rr(4,12)-2,
+            length:16,color:k%2?'#9ca3af':'#ffffff',alpha:1,decay:.045});
+        }
+        lotusDust422.push({x:L.end2,y:L.floorY2,age:0,life:34,seed:Math.random()*TAU});
+        camera.triggerShake(28); impactFlashFrames=7;
+      }
+    }
+
+    // Đối thủ bị đánh văng thêm 1/4 map sau tiếp đất; chỉ mở stun khi chuyển động cuối xong.
+    if (t>=247 && t<=270) {
+      const p=(t-246)/24;
+      const x=lerp422(L.end2,L.finalEnd,p);
+      const y=L.floorY2-78*Math.sin(Math.PI*p);
+      holdTarget422(x,y,'knockdown');
+      s.x=L.end2; s.y=L.floorY2; s.grounded=true; s.vy=0;
+      s._lotusSpin43=0; L.phase='finishFollow'; L.phaseFrame=t-246;
+    }
+
+    if (t>=270) {
+      holdTarget422(L.finalEnd,L.floorY2,'knockdown');
+      if (opp.frozen && opp.frozen.kind==='lotus43') opp.frozen=null;
+      opp.state='knockdown'; opp.stateTimer=42; opp.grounded=true; opp.vx=0; opp.vy=0;
+      if (typeof opp.computeSkeletonPose==='function') opp.computeSkeletonPose();
+      s._lotusSpin43=0; s._lotus43=null; lotusFx42=null;
+      s.endCast();
+    }
+  };
+
+  // Pose riêng cho từng giai đoạn Strength, ưu tiên animation chân/tay đúng động tác.
+  const _getCastPose422 = SP.getCastPose;
+  SP.getCastPose = function () {
+    if (this.charId==='energy' && this.castType==='bomb') {
+      const t=this.castTimer||0, P=o=>pose422(this,o);
+      if (t<=20) return _getCastPose422.call(this);
+      if (t<=50) return P({
+        hipX:0,hipY:-46,neckY:-94,headY:-114,
+        lShoulderX:-5,lShoulderY:-83,rShoulderX:5,rShoulderY:-83,
+        lElbowX:-15,lElbowY:-65,lHandX:-19,lHandY:-42,
+        rElbowX:15,rElbowY:-65,rHandX:19,rHandY:-42,
+        lKneeX:-12,lFootX:-16,rKneeX:12,rFootX:16
+      });
+      const raise=clamp((t-50)/16,0,1), armY=lerp422(-42,-154,raise), elbowY=lerp422(-64,-116,raise);
+      if (t<=112) return P({
+        hipX:0,hipY:-46,neckY:-94,headY:-114,
+        lShoulderX:-8,lShoulderY:-84,rShoulderX:8,rShoulderY:-84,
+        lElbowX:-24,lElbowY:elbowY,lHandX:-30,lHandY:armY,
+        rElbowX:24,rElbowY:elbowY,rHandX:30,rHandY:armY,
+        lKneeX:-14,lFootX:-24,rKneeX:14,rFootX:24
+      });
+      if (t<=120) return P({
+        hipX:5,hipY:-44,neckX:5,neckY:-88,headX:8,headY:-108,
+        lShoulderX:-4,lShoulderY:-86,rShoulderX:8,rShoulderY:-86,
+        lElbowX:8,lElbowY:-112,lHandX:28,lHandY:-126,
+        rElbowX:34,rElbowY:-88,rHandX:52,rHandY:-106,
+        lKneeX:-14,lFootX:-24,rKneeX:18,rFootX:28
+      });
+      return P({hipX:2,hipY:-44,neckY:-88,headY:-108,
+        lShoulderX:-4,lShoulderY:-84,rShoulderX:5,rShoulderY:-84,
+        lElbowX:-18,lElbowY:-75,lHandX:-28,lHandY:-60,
+        rElbowX:18,rElbowY:-74,rHandX:30,rHandY:-58,
+        lKneeX:-14,lFootX:-24,rKneeX:18,rFootX:28});
+    }
+
+    if (this.charId==='strength' && this.castType==='chop' && this._lotus43) {
+      const L=this._lotus43, f=L.phaseFrame||0, P=o=>pose422(this,o);
+      const run=()=>{
+        const a=Math.sin(f*1.22), b=Math.cos(f*1.22), bounce=Math.abs(b)*5;
+        return P({
+          hipX:10,hipY:-44-bounce,neckX:28,neckY:-82-bounce,headX:38,headY:-98-bounce,
+          lShoulderX:20,lShoulderY:-78,rShoulderX:20,rShoulderY:-78,
+          lElbowX:5-a*14,lElbowY:-70-bounce,lHandX:-10-a*17,lHandY:-62-bounce,
+          rElbowX:5+a*14,rElbowY:-70-bounce,rHandX:-10+a*17,rHandY:-62-bounce,
+          lKneeX:6+a*26,lKneeY:-24-bounce*.4,lFootX:2+a*38,lFootY:Math.max(-15,b*16),
+          rKneeX:6-a*26,rKneeY:-24-bounce*.4,rFootX:2-a*38,rFootY:Math.max(-15,-b*16)
+        });
+      };
+      const punch=(active)=>P({
+        hipX:active?14:-5,hipY:-44,neckX:active?24:-8,neckY:-84,headX:active?33:-10,headY:-103,
+        lShoulderX:active?-10:-8,lShoulderY:-82,rShoulderX:active?24:-14,rShoulderY:-82,
+        lElbowX:active?-28:8,lElbowY:-70,lHandX:active?-42:18,lHandY:-58,
+        rElbowX:active?47:-8,rElbowY:active?-80:-69,
+        rHandX:active?70:-30,rHandY:active?-84:-66,
+        lKneeX:-14,lFootX:-26,rKneeX:20,rFootX:28
+      });
+      switch(L.phase){
+        case 'run1': case 'chase1': case 'chase2': return run();
+        case 'punch1': case 'punch2': return punch(f>=3);
+        case 'kick3': return P({
+          hipX:8,hipY:-48,neckX:16,neckY:-88,headX:20,headY:-108,
+          lShoulderX:-12,lShoulderY:-82,rShoulderX:24,rShoulderY:-86,
+          lElbowX:-28,lElbowY:-70,lHandX:-40,lHandY:-58,
+          rElbowX:50,rElbowY:-92,rHandX:62,rHandY:-106,
+          lKneeX:-18,lKneeY:-25,lFootX:-32,lFootY:0,
+          rKneeX:34,rKneeY:-42,rFootX:72,rFootY:-42
+        });
+        case 'holdAfterKick': case 'jumpAbove': return P({
+          hipX:0,hipY:-50,neckY:-98,headY:-119,
+          lShoulderX:-8,lShoulderY:-86,rShoulderX:8,rShoulderY:-86,
+          lElbowX:-26,lElbowY:-105,lHandX:-38,lHandY:-126,
+          rElbowX:26,rElbowY:-105,rHandX:38,rHandY:-126,
+          lKneeX:-20,lKneeY:-30,lFootX:-34,lFootY:-8,
+          rKneeX:20,rKneeY:-30,rFootX:34,rFootY:-8
+        });
+        case 'spin10': return P({
+          hipX:0,hipY:-44,neckY:-86,headY:-106,
+          lShoulderX:-5,lShoulderY:-82,rShoulderX:5,rShoulderY:-82,
+          lElbowX:-42,lElbowY:-72,lHandX:-68,lHandY:-62,
+          rElbowX:42,rElbowY:-72,rHandX:68,rHandY:-62,
+          lKneeX:-32,lKneeY:-24,lFootX:-58,lFootY:-2,
+          rKneeX:32,rKneeY:-24,rFootX:58,rFootY:-2
+        });
+        case 'stompPrep': return P({
+          hipX:0,hipY:-44,neckX:4,neckY:-88,headX:6,headY:-108,
+          lShoulderX:-12,lShoulderY:-82,rShoulderX:14,rShoulderY:-82,
+          lElbowX:-34,lElbowY:-76,lHandX:-46,lHandY:-66,
+          rElbowX:34,rElbowY:-88,rHandX:46,rHandY:-102,
+          lKneeX:-18,lKneeY:-24,lFootX:-32,lFootY:0,
+          rKneeX:18,rKneeY:-38,rFootX:26,rFootY:28
+        });
+        case 'stompDive': return P({
+          hipX:0,hipY:-38,neckY:-74,headY:-92,
+          lShoulderX:-20,lShoulderY:-74,rShoulderX:18,rShoulderY:-74,
+          lElbowX:-42,lElbowY:-54,lHandX:-56,lHandY:-38,
+          rElbowX:38,rElbowY:-58,rHandX:48,rHandY:-40,
+          lKneeX:-18,lKneeY:-16,lFootX:-38,lFootY:4,
+          rKneeX:16,rKneeY:-12,rFootX:18,rFootY:44
+        });
+        case 'finishFollow': return P({
+          hipX:2,hipY:-44,neckY:-86,headY:-106,
+          lShoulderX:-12,lShoulderY:-82,rShoulderX:12,rShoulderY:-82,
+          lElbowX:-30,lElbowY:-72,lHandX:-42,lHandY:-56,
+          rElbowX:28,rElbowY:-74,rHandX:40,rHandY:-60,
+          lKneeX:-14,lFootX:-26,rKneeX:18,rFootX:28
+        });
+      }
+    }
+    return _getCastPose422.call(this);
+  };
+
+  // Xoay toàn thân đúng 10 vòng/60 frame. Không có chuyển động ngang trong pha xoay.
+  const _drawStickman422 = SP.draw;
+  SP.draw = function (c) {
+    if (this.charId==='strength' && this.castType==='chop' && this._lotusSpin43) {
+      const oldSpin=this._lotusSpin42||0;
+      this._lotusSpin42=0;
+      c.save(); c.translate(this.x,this.y-66); c.rotate(this._lotusSpin43); c.translate(-this.x,-(this.y-66));
+      try { _drawStickman422.call(this,c); } finally { c.restore(); this._lotusSpin42=oldSpin; }
+      return;
+    }
+    return _drawStickman422.apply(this,arguments);
+  };
+
+  // Vẽ quả cầu đang tích tụ (không tồn tại trong pha bất động 0,5 giây).
+  function drawSpiritCharge422(c) {
+    [player,bot].forEach((s)=>{
+      const B=s && s._spiritBomb42;
+      if (!B || B.thrown || !(B.radius>0) || s.castType!=='bomb') return;
+      const x=s.x,y=s.y-270,r=B.radius,tm=performance.now()*.003;
+      c.save();
+      const glow=c.createRadialGradient(x-r*.22,y-r*.28,1,x,y,r*1.24);
+      glow.addColorStop(0,'rgba(255,255,255,1)');
+      glow.addColorStop(.34,'rgba(219,234,254,.99)');
+      glow.addColorStop(.72,'rgba(96,165,250,.96)');
+      glow.addColorStop(1,'rgba(37,99,235,.08)');
+      c.globalAlpha=clamp(B.radius/20,0,1);
+      c.shadowColor='#60a5fa'; c.shadowBlur=42;
+      c.fillStyle=glow; c.beginPath(); c.arc(x,y,r,0,TAU); c.fill();
+      c.strokeStyle='rgba(255,255,255,.92)'; c.lineWidth=Math.max(1.2,r*.035);
+      c.beginPath(); c.arc(x,y,r*.82,tm,tm+Math.PI*1.55); c.stroke();
+      c.strokeStyle='rgba(191,219,254,.9)'; c.lineWidth=Math.max(1,r*.018);
+      c.beginPath(); c.arc(x,y,r*.62,-tm*1.4,-tm*1.4+Math.PI*1.45); c.stroke();
+      c.restore();
+    });
+  }
+
+  // Hiệu ứng khói lớn tại điểm tiếp đất cuối combo.
+  function drawLotusDust422(c) {
+    for(let i=lotusDust422.length-1;i>=0;i--){
+      const f=lotusDust422[i],p=f.age/f.life;
+      if(p>=1){lotusDust422.splice(i,1);continue;}
+      const expand=18+p*88,alpha=(1-p)*.42;
+      c.save(); c.globalAlpha=alpha; c.fillStyle='#9ca3af'; c.shadowColor='#6b7280'; c.shadowBlur=18;
+      for(let j=0;j<13;j++){
+        const a=f.seed+j*TAU/13, wobble=Math.sin(f.age*.22+j)*7;
+        const x=f.x+Math.cos(a)*(expand*.72+wobble);
+        const y=f.y-14-Math.sin(p*Math.PI/2)*35+Math.sin(a)*(expand*.34+wobble*.4);
+        const r=8+p*19+(j%3)*3;
+        c.beginPath(); c.arc(x,y,r,0,TAU); c.fill();
+      }
+      c.restore(); f.age++;
+    }
+  }
+  const _drawSkillEffects422=drawSkillEffects;
+  drawSkillEffects=function(c){
+    _drawSkillEffects422.apply(this,arguments);
+    drawSpiritCharge422(c);
+    drawLotusDust422(c);
+  };
+
+  // Dọn trạng thái mới khi reset/đổi round, không ảnh hưởng những hệ thống cũ.
+  const _clearSpecials422=clearSpecials;
+  clearSpecials=function(){
+    [player,bot].forEach((fighter)=>{
+      const L=fighter && fighter._lotus43;
+      if(L && L.target && L.target.frozen && L.target.frozen.kind==='lotus43'){
+        L.target.frozen=null;
+        L.target.state='idle'; L.target.vx=0; L.target.vy=0;
+      }
+      if(fighter){fighter._lotus43=null;fighter._lotusSpin43=0;fighter._lotusSpin42=0;}
+    });
+    lotusDust422.length=0;
+    return _clearSpecials422.apply(this,arguments);
+  };
+
+  const _cancelCast422=SP.cancelCast;
+  SP.cancelCast=function(){
+    const L=this._lotus43;
+    if(L && L.target && L.target.frozen && L.target.frozen.kind==='lotus43'){
+      L.target.frozen=null; L.target.state='idle'; L.target.vx=0; L.target.vy=0;
+      this._lotus43=null; this._lotusSpin43=0;
+    }
+    return _cancelCast422.apply(this,arguments);
+  };
+
+  console.info('[UPD4.2.2] Smoke-glass HUD, staged Spirit Bomb and 30% Lotus combo loaded.');
+})();
+
+
+        console.info('[UPD4.2 FINAL] Three-column 2P picker and character tuning loaded.');
+    })();
+
+})();
+
     })();
     
         // ================= UPDATE 2.1 =================
@@ -6252,3 +8326,6 @@
 </script>
 </body>
 </html>
+
+
+
