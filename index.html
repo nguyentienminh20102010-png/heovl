@@ -74,20 +74,15 @@ Tôi thấy game đã hoàn hảo rồi bay giờ bạn hãy update theo tôi m�
 -Thanh máu của 2 nhân vật
 
 Hãy chỉnh sửa lại giao diện thanh máu (HUD) của cả hai nhân vật dựa trên hình ảnh tham chiếu: Đầu tiên, giảm chiều cao tổng thể của hai khung thanh máu xuống gần 50% so với kích thước hiện tại, giúp chúng trở nên thon gọn, mảnh mai và tinh tế hơn, không còn cảm giác quá dày và cồng kềnh. Tiếp theo, thay đổi màu nền chủ đạo của toàn bộ khung thanh máu từ màu trắng kem hiện tại sang màu xám khói (Smoke Gray), đồng thời áp dụng hiệu ứng trong suốt khoảng 50% (Opacity 50%) để tạo cảm giác giao diện kính mờ (Glassmorphism), giúp khung HUD trông hiện đại và có chiều sâu hơn. Áp dụng đồng bộ thiết kế mới cho cả thanh máu của người chơi và BOT, bao gồm phần khung chứa, khu vực hiển thị tên nhân vật, và các thông tin liên quan. Giữ nguyên vị trí, cách bố trí, nội dung chữ, biểu tượng, tỷ lệ chiều dài và màu sắc riêng của phần thanh năng lượng bên trong (đỏ, cam, xanh dương...), chỉ thay đổi độ dày và phong cách thiết kế của khung giao diện. Các đường viền đen cũng cần được tinh chỉnh mảnh hơn, hài hòa với kích thước mới. Lưu ý: Không thay đổi cơ chế hoạt động, giá trị máu, năng lượng hoặc logic chiến đấu; chỉ chỉnh sửa phần giao diện HUD theo phong cách xám khói trong suốt, tối giản, gọn gàng và hiện đại.
-
 **Nhân vật
 
 -Nhân vật strength:
 
-Chiêu O (Chiêu thứ 3): Sửa từ "Khi người chơi kích hoạt chiêu O, nhân vật Strength lập tức lao nhanh về phía đối thủ với tốc độ rất cao. Trong giai đoạn tiếp cận, phải hiển thị rõ ràng toàn bộ animation nhân vật Strength chạy lao đến đối thủ, không được dịch chuyển tức thời (teleport), ẩn nhân vật hoặc bỏ qua động tác chạy. Khi tiếp cận mục tiêu, nhân vật Strength sử dụng chân phải tung một cú đá mạnh khiến đối thủ bị hất văng thẳng lên không trung với độ cao khoảng gấp 3 lần chiều cao của nhân vật Strength. Đòn đá đầu tiên gây sát thương bằng 5% lượng máu tối đa của đối thủ. Sau khi bị đá lên trời, đối thủ lập tức rơi vào trạng thái stun và bất động hoàn toàn, không thể di chuyển hoặc thực hiện bất kỳ hành động nào. Tiếp theo, nhân vật Strength nhảy lên không trung, di chuyển đến vị trí đối diện với đối thủ, sau đó sử dụng cả hai tay ôm chặt đối thủ để thực hiện động tác lao thẳng cả hai xuống mặt đất. Đặc biệt, ở giai đoạn lao xuống, không được để hai nhân vật rơi xuống đất quá nhanh hoặc ngay lập tức. Kể từ thời điểm Strength ôm chặt đối thủ trên không trung và bắt đầu lao xuống, toàn bộ quá trình di chuyển từ độ cao trên trời xuống mặt đất phải kéo dài chính xác khoảng 2 giây. Trong khoảng thời gian này, cần hiển thị đầy đủ animation hai nhân vật lao xuống liên tục, kết hợp hiệu ứng lốc xoáy lớn bao quanh cả hai với kích thước khoảng gấp đôi cơ thể nhân vật Strength, tạo cảm giác hai nhân vật đang xoay và lao xuống với tốc độ cao nhưng vẫn đủ thời gian để người chơi quan sát rõ chuyển động. Khi cả hai va chạm với mặt đất, tạo ra một vụ nổ năng lượng mạnh với hiệu ứng hình ảnh ấn tượng, sóng xung kích và hiệu ứng mặt đất rung chuyển, gây thêm sát thương bằng 25% lượng máu tối đa của đối thủ. Ngay sau vụ nổ, cả hai nhân vật phải bị hất văng ra xa theo hai hướng ngược nhau. Đảm bảo toàn bộ chuỗi animation được thực hiện liên tục, đúng trình tự và không bị ngắt quãng giữa các giai đoạn; đặc biệt phải giữ nguyên thời lượng 2 giây cho animation lao xuống, không được rút ngắn hoặc bỏ qua giai đoạn này." thành "Khi người chơi kích hoạt kỹ năng, nhân vật lập tức tự động khóa mục tiêu (Auto Aim) vào đối thủ nằm trong phạm vi bằng 1/3 chiều dài bản đồ tính từ vị trí hiện tại. Tuy nhiên, kỹ năng chỉ được phép khóa những đối thủ đang đứng cùng một tầng với nhân vật. Ví dụ: nếu nhân vật đang đứng ở tầng dưới cùng thì chỉ được khóa đối thủ ở tầng dưới cùng; nếu nhân vật đang đứng ở tầng thứ hai thì chỉ được khóa đối thủ ở tầng thứ hai. Sau khi khóa mục tiêu thành công, đối thủ lập tức bị rơi vào trạng thái Stun, không thể di chuyển, nhảy, tấn công hoặc sử dụng kỹ năng trong suốt chuỗi combo. Ngay sau đó, nhân vật nhanh chóng lao đến vị trí đối thủ bằng animation chạy tốc độ cao. Phải hiển thị rõ animation chạy trong suốt quá trình di chuyển, tuyệt đối không được sử dụng Teleport hoặc dịch chuyển tức thời. Khi tiếp cận đối thủ, nhân vật tung một cú đấm mạnh bằng tay phải, gây sát thương bằng 5% lượng máu tối đa của đối thủ và khiến đối thủ bị hất văng ra xa một khoảng bằng 1/4 chiều dài bản đồ tính từ vị trí bị đánh trúng. Hướng bay phải luôn là hướng phía trước, tức hướng ngược lại với vị trí nhân vật đang đứng và hướng nhân vật đang tấn công. Ví dụ: nếu nhân vật đứng bên phải và đối thủ đứng bên trái thì đối thủ bị đấm bay tiếp về bên trái; ngược lại, nếu nhân vật đứng bên trái và đối thủ đứng bên phải thì đối thủ bị đấm bay về bên phải. Ngay khi đối thủ bắt đầu bị hất văng, nhân vật lập tức chạy tốc độ cao đuổi theo và di chuyển đến phía sau đối thủ tại vị trí mà đối thủ đang bay tới. Trong quá trình truy đuổi vẫn phải hiển thị animation chạy rõ ràng, không được Teleport. Khi tiếp cận thành công, nhân vật tiếp tục tung một cú đấm mạnh bằng tay phải vào đối thủ, gây thêm 5% lượng máu tối đa và hất đối thủ bay ra xa một khoảng bằng 1/4 chiều dài bản đồ. Đặc biệt, hướng bay của cú đấm thứ hai phải ngược hoàn toàn với hướng bay của cú đấm thứ nhất. Ngay khi đối thủ bắt đầu bị cú đấm thứ hai hất văng, nhân vật tiếp tục chạy tốc độ cao đến phía sau đối thủ tại vị trí đối thủ đang bay tới, vẫn phải hiển thị animation chạy xuyên suốt quá trình di chuyển. Khi tiếp cận, nhân vật tung một cú đá mạnh bằng chân phải, gây thêm 5% lượng máu tối đa và khiến đối thủ bay thẳng lên không trung. Sau khi bị đá lên trời, đối thủ lập tức rơi vào trạng thái Air Stun, bị giữ cố định trên không và không thể thực hiện bất kỳ hành động nào. Tiếp đó, nhân vật lập tức nhảy vút lên trời và bay đến vị trí cao hơn đối thủ đang bị giữ trên không một khoảng tương đương chiều cao của một nhân vật. Khi đạt đến độ cao thích hợp, nhân vật dừng lại giữa không trung và bắt đầu xoay tròn tại chỗ như chong chóng, hoàn thành chính xác 10 vòng xoay trong vòng 1 giây mà không di chuyển sang trái hoặc phải. LƯU Ý QUAN TRỌNG: Trong suốt quá trình xoay, nhân vật tuyệt đối không được tung cú đá xuống đối thủ. Phải hoàn thành đầy đủ 10 vòng xoay trong 1 giây, kết thúc hoàn toàn animation xoay, sau đó mới chuyển sang hành động tiếp theo. Sau khi xoay đủ 10 vòng, nhân vật dừng hẳn chuyển động xoay, chuyển sang tư thế chuẩn bị tấn công bằng cách duỗi chân phải ra phía trước theo phong cách đá Taekwondo, rồi mới tung một cú đạp cực mạnh theo phương thẳng đứng xuống dưới, khiến đối thủ đang bị giữ trên không lao thẳng xuống mặt đất. Cú đạp cuối cùng gây sát thương bằng 15% lượng máu tối đa của đối thủ, nhưng sát thương chỉ được tính tại thời điểm đối thủ thực sự chạm đất, không được gây sát thương ngay khi vừa thực hiện cú đạp hoặc khi đối thủ vẫn đang ở trên không. Trong lúc đối thủ lao thẳng xuống đất, nhân vật phải từ từ hạ độ cao bằng animation rơi chậm, không được rơi nhanh theo đối thủ. Khi đối thủ chạm đất, lập tức tạo hiệu ứng bụi khói bùng lên tại vị trí va chạm, lan tỏa xung quanh để nhấn mạnh sức mạnh của cú đạp, đồng thời khiến đối thủ bị hất văng ra xa thêm một khoảng bằng 1/4 chiều dài bản đồ tính từ vị trí tiếp đất. Đảm bảo toàn bộ kỹ năng diễn ra tuần tự và chính xác với 4 giai đoạn tấn công: 2 cú đấm bằng tay phải, 1 cú đá bằng chân phải hất đối thủ lên trời và 1 cú đạp từ trên không xuống đất. Tổng sát thương của kỹ năng là 30% lượng máu tối đa của đối thủ (5% + 5% + 5% + 15%). Đối thủ phải luôn duy trì trạng thái Stun trong toàn bộ chuỗi combo và chỉ được giải phóng khỏi trạng thái này sau khi toàn bộ kỹ năng, hiệu ứng va chạm và chuyển động cuối cùng hoàn tất.."
-
+Chiêu O (Chiêu thứ 3): Sửa từ ""Khi người chơi kích hoạt chiêu O, nhân vật Strength lập tức lao nhanh về phía đối thủ với tốc độ rất cao. Trong giai đoạn tiếp cận, phải hiển thị rõ ràng toàn bộ animation nhân vật Strength chạy lao đến đối thủ, không được dịch chuyển tức thời (teleport), ẩn nhân vật hoặc bỏ qua động tác chạy. Khi tiếp cận mục tiêu, nhân vật Strength sử dụng chân phải tung một cú đá mạnh khiến đối thủ bị hất văng thẳng lên không trung với độ cao khoảng gấp 3 lần chiều cao của nhân vật Strength. Đòn đá đầu tiên gây sát thương bằng 5% lượng máu tối đa của đối thủ. Sau khi bị đá lên trời, đối thủ lập tức rơi vào trạng thái stun và bất động hoàn toàn, không thể di chuyển hoặc thực hiện bất kỳ hành động nào. Tiếp theo, nhân vật Strength nhảy lên không trung, di chuyển đến vị trí đối diện với đối thủ, sau đó sử dụng cả hai tay ôm chặt đối thủ để thực hiện động tác lao thẳng cả hai xuống mặt đất. Đặc biệt, ở giai đoạn lao xuống, không được để hai nhân vật rơi xuống đất quá nhanh hoặc ngay lập tức. Kể từ thời điểm Strength ôm chặt đối thủ trên không trung và bắt đầu lao xuống, toàn bộ quá trình di chuyển từ độ cao trên trời xuống mặt đất phải kéo dài chính xác khoảng 2 giây. Trong khoảng thời gian này, cần hiển thị đầy đủ animation hai nhân vật lao xuống liên tục, kết hợp hiệu ứng lốc xoáy lớn bao quanh cả hai với kích thước khoảng gấp đôi cơ thể nhân vật Strength, tạo cảm giác hai nhân vật đang xoay và lao xuống với tốc độ cao nhưng vẫn đủ thời gian để người chơi quan sát rõ chuyển động. Khi cả hai va chạm với mặt đất, tạo ra một vụ nổ năng lượng mạnh với hiệu ứng hình ảnh ấn tượng, sóng xung kích và hiệu ứng mặt đất rung chuyển, gây thêm sát thương bằng 25% lượng máu tối đa của đối thủ. Ngay sau vụ nổ, cả hai nhân vật phải bị hất văng ra xa theo hai hướng ngược nhau. Đảm bảo toàn bộ chuỗi animation được thực hiện liên tục, đúng trình tự và không bị ngắt quãng giữa các giai đoạn; đặc biệt phải giữ nguyên thời lượng 2 giây cho animation lao xuống, không được rút ngắn hoặc bỏ qua giai đoạn này." thành "Khi người chơi kích hoạt kỹ năng, nhân vật sẽ tự động khóa mục tiêu là đối thủ nằm trong phạm vi khoảng 1/3 chiều dài bản đồ tính từ vị trí hiện tại, với điều kiện đối thủ phải đứng cùng tầng (cùng độ cao) với nhân vật; ví dụ, nếu nhân vật đang đứng ở tầng dưới cùng thì chỉ có thể nhắm mục tiêu vào đối thủ ở tầng dưới cùng, còn nếu nhân vật đang đứng ở tầng thứ hai thì chỉ có thể nhắm mục tiêu vào đối thủ ở tầng thứ hai. Ngay khi bị khóa mục tiêu, đối thủ lập tức rơi vào trạng thái Stun, không thể di chuyển, tấn công hoặc sử dụng kỹ năng trong suốt quá trình combo. Sau đó, nhân vật lập tức chạy với tốc độ cực cao đến vị trí hiện tại của đối thủ, nhưng vẫn phải hiển thị đầy đủ animation chạy liên tục, tuyệt đối không được dịch chuyển tức thời (Teleport). Khi tiếp cận đối thủ, nhân vật sử dụng tay phải tung một cú đấm mạnh khiến đối thủ mất 5% máu tối đa và bị đánh văng ra xa khoảng 1/4 chiều dài bản đồ tính từ vị trí va chạm. Ngay khi đối thủ vừa bắt đầu bị đánh văng, nhân vật lập tức chạy thật nhanh theo hướng đối thủ bay đến, tiếp cận vị trí phía sau đối thủ tại điểm dự kiến đối thủ sẽ đến, vẫn phải hiển thị rõ animation chạy, sau đó tiếp tục sử dụng tay phải tung cú đấm thứ hai khiến đối thủ mất thêm 5% máu tối đa và bị đánh văng thêm 1/4 chiều dài bản đồ tính từ vị trí va chạm mới. Ngay khi đối thủ vừa bắt đầu bị cú đấm thứ hai đánh văng, nhân vật tiếp tục chạy thật nhanh đến vị trí phía sau đối thủ theo hướng bay của mục tiêu, vẫn hiển thị animation chạy liên tục, sau đó sử dụng chân phải tung một cú đá mạnh khiến đối thủ mất thêm 5% máu tối đa và bị hất bay thẳng lên không trung. Khi đang ở trên không, đối thủ tiếp tục bị Stun, không thể thực hiện bất kỳ hành động nào. Ngay sau đó, nhân vật nhảy vút lên trời và đạt độ cao cao hơn vị trí đối thủ đang bị giữ trên không khoảng một chiều cao nhân vật, rồi dừng tại một vị trí cố định và xoay tròn liên tục như một chiếc chong chóng trong đúng 1 giây, hoàn thành chính xác 10 vòng xoay. Sau khi xoay đủ 10 vòng, nhân vật lập tức dừng lại, đưa chân phải ra phía trước theo tư thế chuẩn bị đạp kiểu Taekwondo, sau đó lao thẳng từ trên không xuống mặt đất bằng một cú đạp cực mạnh. Chỉ khi chân phải thực sự chạm đất tại vị trí đối thủ đang bị khống chế thì đòn kết liễu mới gây sát thương bằng 15% máu tối đa của đối thủ, đồng thời tạo ra một vùng bụi khói lớn bốc lên tại điểm va chạm và khiến đối thủ bị đánh văng ra xa thêm khoảng 1/4 chiều dài bản đồ. Sau khi hoàn thành toàn bộ combo, trạng thái Stun được kết thúc và đối thủ được khôi phục quyền điều khiển bình thường. Toàn bộ kỹ năng phải diễn ra liên tục, đúng thứ tự gồm hai lần chạy đến đấm, một lần chạy đến đá đối thủ bay lên trời và cuối cùng là xoay 10 vòng trên không rồi đạp đối thủ xuống đất; tất cả animation chạy, đấm, đá, nhảy, xoay và đạp phải được thể hiện rõ ràng, mượt mà, đồng bộ với hiệu ứng va chạm và thời điểm gây sát thương, tuyệt đối không được bỏ qua bất kỳ hành động nào hoặc thay thế chuyển động bằng Teleport. Tổng sát thương của toàn bộ kỹ năng là 30% máu tối đa của đối thủ."
 -Nhân vật energy:
 
-Chiêu O (Chiêu thứ 3): Sửa từ "Khi người chơi kích hoạt chiêu O, nhân vật Energy nhanh chóng nhảy vọt lên không trung bằng animation nhảy tương ứng. Sau khi đạt đến độ cao thích hợp, nhân vật đứng thẳng giữa không trung và giữ nguyên tư thế trong 0,5 giây. Tiếp đó, nhân vật giơ cả hai tay lên trời để bắt đầu tạo ra một quả cầu năng lượng Spirit Bomb. Quả cầu xuất hiện dần từ trạng thái mờ đến rõ nét, kết hợp hiệu ứng phát sáng mạnh mẽ và các luồng năng lượng liên tục hội tụ xung quanh để thể hiện quá trình tích tụ sức mạnh. Kích thước quả cầu phải cực lớn, khoảng gấp 3 lần kích thước cơ thể nhân vật. Sau khi quá trình tích tụ hoàn tất, nhân vật thực hiện animation ném quả cầu về phía đối thủ. Về cơ chế nhắm mục tiêu (Aim): Quả cầu có khả năng tự động định hướng về phía đối thủ trong phạm vi tối đa bằng 1/3 chiều dài bản đồ, nhưng chỉ được phép khóa mục tiêu khi đối thủ đang ở phía trước mặt nhân vật Energy. Nếu đối thủ nằm phía sau lưng, quả cầu tuyệt đối không được tự động xoay hướng hoặc khóa mục tiêu để đuổi theo đối thủ mà chỉ được ném theo hướng mà nhân vật đang quay mặt. Về animation ném: Khi thực hiện động tác ném quả cầu, hai cánh tay của nhân vật phải giữ nguyên kích thước, chiều dài và tỷ lệ hình thể ban đầu, tuyệt đối không được kéo dài, phóng to hoặc làm biến dạng cánh tay trong quá trình animation. Chuyển động ném phải tự nhiên, mượt mà và phù hợp với tư thế của nhân vật. Khi quả cầu chạm mục tiêu hoặc đến vị trí đối thủ được nhắm tới, nó lập tức phát nổ, tạo thành một vụ nổ năng lượng cực lớn với hiệu ứng ánh sáng, sóng xung kích và các luồng năng lượng lan tỏa nổi bật. Vụ nổ gây sát thương bằng 30% lượng máu tối đa của đối thủ và hất văng đối thủ ra xa khoảng 1/4 chiều dài bản đồ, tính từ vị trí đối thủ đứng tại thời điểm bị trúng chiêu." thành "Khi người chơi kích hoạt chiêu O, nhân vật Energy nhanh chóng nhảy vọt lên không trung bằng animation nhảy tương ứng. Sau khi đạt đến độ cao thích hợp, nhân vật phải giữ tư thế đứng thẳng giữa không trung và bất động hoàn toàn trong đúng 0,5 giây. Trong khoảng thời gian này, nhân vật không được thực hiện bất kỳ chuyển động nào khác, không giơ tay, không tạo hiệu ứng tích tụ năng lượng và đặc biệt là tuyệt đối chưa được xuất hiện quả cầu Spirit Bomb. Chỉ sau khi kết thúc 0,5 giây bất động, nhân vật mới bắt đầu từ từ giơ cả hai tay lên trời bằng animation tương ứng. Ngay khi hai tay bắt đầu được giơ lên, quá trình triệu hồi Spirit Bomb mới chính thức bắt đầu. Quả cầu năng lượng phải xuất hiện từ kích thước cực nhỏ, sau đó liên tục phóng to dần theo thời gian cho đến khi đạt kích thước hoàn chỉnh, khoảng gấp 3 lần kích thước cơ thể nhân vật Energy. Quá trình quả cầu lớn dần cần được thể hiện rõ ràng, mượt mà, kết hợp hiệu ứng phát sáng neon mạnh mẽ và các luồng năng lượng liên tục hội tụ xung quanh để tạo cảm giác sức mạnh đang được tích tụ. Không được để quả cầu xuất hiện ngay lập tức ở kích thước tối đa hoặc xuất hiện trong giai đoạn nhân vật đang bất động trên không trung. Sau khi quá trình tích tụ hoàn tất, nhân vật thực hiện animation ném quả cầu về phía đối thủ. Về cơ chế nhắm mục tiêu (Aim): Quả cầu có khả năng tự động định hướng về phía đối thủ trong phạm vi tối đa bằng 1/3 chiều dài bản đồ, nhưng chỉ được phép khóa mục tiêu khi đối thủ đang ở phía trước mặt nhân vật Energy. Nếu đối thủ nằm phía sau lưng, quả cầu tuyệt đối không được tự động xoay hướng hoặc khóa mục tiêu để đuổi theo đối thủ mà chỉ được ném theo hướng mà nhân vật đang quay mặt. Về animation ném: Khi thực hiện động tác ném quả cầu, hai cánh tay của nhân vật phải giữ nguyên kích thước, chiều dài và tỷ lệ hình thể ban đầu, tuyệt đối không được kéo dài, phóng to hoặc làm biến dạng cánh tay trong quá trình animation. Chuyển động ném phải tự nhiên, mượt mà và phù hợp với tư thế của nhân vật. Khi quả cầu chạm mục tiêu hoặc đến vị trí đối thủ được nhắm tới, nó lập tức phát nổ, tạo thành một vụ nổ năng lượng cực lớn với hiệu ứng ánh sáng, sóng xung kích và các luồng năng lượng lan tỏa nổi bật. Vụ nổ gây sát thương bằng 30% lượng máu tối đa của đối thủ và hất văng đối thủ ra xa khoảng 1/4 chiều dài bản đồ, tính từ vị trí đối thủ đứng tại thời điểm bị trúng chiêu. Yêu cầu quan trọng: Phải đảm bảo toàn bộ chuỗi animation diễn ra chính xác theo trình tự: Nhảy lên không trung → Đứng thẳng và bất động 0,5 giây → Giơ cả hai tay lên trời → Quả cầu xuất hiện từ kích thước cực nhỏ và lớn dần → Hoàn tất tích tụ năng lượng → Ném quả cầu → Phát nổ khi đến mục tiêu. Không được bỏ qua, đảo lộn hoặc gộp các giai đoạn này vào nhau."
-
-Đọc file game T-Fighter_UPD4.2(1).html ở trên và sửa lại game theo tất cả các yêu cầu bên trên của tôi.
-***Chỉ cải thiện chứ không thay đổi hay xóa code cũ, nếu xóa cấu trúc cũ tôi sẽ khóc***
-
+Chiêu O (Chiêu thứ 3): Sửa từ "Khi người chơi kích hoạt chiêu O, nhân vật Energy nhanh chóng nhảy vọt lên không trung bằng animation nhảy tương ứng. Sau khi đạt đến độ cao thích hợp, nhân vật đứng thẳng giữa không trung và giữ nguyên tư thế trong 0,5 giây. Tiếp đó, nhân vật giơ cả hai tay lên trời để bắt đầu tạo ra một quả cầu năng lượng Spirit Bomb. Quả cầu xuất hiện dần từ trạng thái mờ đến rõ nét, kết hợp hiệu ứng phát sáng mạnh mẽ và các luồng năng lượng liên tục hội tụ xung quanh để thể hiện quá trình tích tụ sức mạnh. Kích thước quả cầu phải cực lớn, khoảng gấp 3 lần kích thước cơ thể nhân vật. Sau khi quá trình tích tụ hoàn tất, nhân vật thực hiện animation ném quả cầu về phía đối thủ. Về cơ chế nhắm mục tiêu (Aim): Quả cầu có khả năng tự động định hướng về phía đối thủ trong phạm vi tối đa bằng 1/3 chiều dài bản đồ, nhưng chỉ được phép khóa mục tiêu khi đối thủ đang ở phía trước mặt nhân vật Energy. Nếu đối thủ nằm phía sau lưng, quả cầu tuyệt đối không được tự động xoay hướng hoặc khóa mục tiêu để đuổi theo đối thủ mà chỉ được ném theo hướng mà nhân vật đang quay mặt. Về animation ném: Khi thực hiện động tác ném quả cầu, hai cánh tay của nhân vật phải giữ nguyên kích thước, chiều dài và tỷ lệ hình thể ban đầu, tuyệt đối không được kéo dài, phóng to hoặc làm biến dạng cánh tay trong quá trình animation. Chuyển động ném phải tự nhiên, mượt mà và phù hợp với tư thế của nhân vật. Khi quả cầu chạm mục tiêu hoặc đến vị trí đối thủ được nhắm tới, nó lập tức phát nổ, tạo thành một vụ nổ năng lượng cực lớn với hiệu ứng ánh sáng, sóng xung kích và các luồng năng lượng lan tỏa nổi bật. Vụ nổ gây sát thương bằng 30% lượng máu tối đa của đối thủ và hất văng đối thủ ra xa khoảng 1/4 chiều dài bản đồ, tính từ vị trí đối thủ đứng tại thời điểm bị trúng chiêu." thành "Khi người chơi kích hoạt chiêu O, nhân vật Energy nhanh chóng nhảy vọt lên không trung bằng animation nhảy tương ứng. Sau khi đạt đến độ cao thích hợp, nhân vật phải giữ tư thế đứng thẳng giữa không trung và bất động hoàn toàn trong đúng 0,5 giây. Trong khoảng thời gian này, nhân vật không được thực hiện bất kỳ chuyển động nào khác, không giơ tay, không tạo hiệu ứng tích tụ năng lượng và đặc biệt là tuyệt đối chưa được xuất hiện quả cầu Spirit Bomb. Chỉ sau khi kết thúc 0,5 giây bất động, nhân vật mới bắt đầu từ từ giơ cả hai tay lên trời bằng animation tương ứng. Ngay khi hai tay bắt đầu được giơ lên, quá trình triệu hồi Spirit Bomb mới chính thức bắt đầu. Quả cầu năng lượng phải xuất hiện từ kích thước cực nhỏ, sau đó liên tục phóng to dần theo thời gian cho đến khi đạt kích thước hoàn chỉnh, khoảng gấp 3 lần kích thước cơ thể nhân vật Energy. Quá trình quả cầu lớn dần cần được thể hiện rõ ràng, mượt mà, kết hợp hiệu ứng phát sáng neon mạnh mẽ và các luồng năng lượng liên tục hội tụ xung quanh để tạo cảm giác sức mạnh đang được tích tụ. Không được để quả cầu xuất hiện ngay lập tức ở kích thước tối đa hoặc xuất hiện trong giai đoạn nhân vật đang bất động trên không trung. Sau khi quá trình tích tụ hoàn tất, nhân vật thực hiện animation ném quả cầu về phía đối thủ. Về cơ chế nhắm mục tiêu (Aim): Quả cầu có khả năng tự động định hướng về phía đối thủ trong phạm vi tối đa bằng 1/3 chiều dài bản đồ, nhưng chỉ được phép khóa mục tiêu khi đối thủ đang ở phía trước mặt nhân vật Energy. Nếu đối thủ nằm phía sau lưng, quả cầu tuyệt đối không được tự động xoay hướng hoặc khóa mục tiêu để đuổi theo đối thủ mà chỉ được ném theo hướng mà nhân vật đang quay mặt. Về animation ném: Khi thực hiện động tác ném quả cầu, hai cánh tay của nhân vật phải giữ nguyên kích thước, chiều dài và tỷ lệ hình thể ban đầu, tuyệt đối không được kéo dài, phóng to hoặc làm biến dạng cán
+…
 Đã cập nhật UPD4.2.1
 Mình đã chỉnh sửa trực tiếp trên file T-Fighter_UPD4.2(1).html và xuất ra phiên bản mới.
 
@@ -169,76 +164,336 @@ Tôi thấy game đã hoàn hảo rồi bay giờ bạn hãy update theo tôi m�
 + Chiêu O (Chiêu thứ 3): Sửa từ "Khi người chơi kích hoạt chiêu O, nhân vật Strength lập tức lao nhanh về phía đối thủ với tốc độ rất cao. Trong giai đoạn tiếp cận, phải hiển thị rõ ràng toàn bộ animation nhân vật Strength chạy lao đến đối thủ, không được dịch chuyển tức thời (teleport), ẩn nhân vật hoặc bỏ qua động tác chạy. Khi tiếp cận mục tiêu, nhân vật Strength sử dụng chân phải tung một cú đá mạnh khiến đối thủ bị hất văng thẳng lên không trung với độ cao khoảng gấp 3 lần chiều cao của nhân vật Strength. Đòn đá đầu tiên gây sát thương bằng 5% lượng máu tối đa của đối thủ. Sau khi bị đá lên trời, đối thủ lập tức rơi vào trạng thái stun và bất động hoàn toàn, không thể di chuyển hoặc thực hiện bất kỳ hành động nào. Tiếp theo, nhân vật Strength nhảy lên không trung, di chuyển đến vị trí đối diện với đối thủ, sau đó sử dụng cả hai tay ôm chặt đối thủ để thực hiện động tác lao thẳng cả hai xuống mặt đất. Đặc biệt, ở giai đoạn lao xuống, không được để hai nhân vật rơi xuống đất quá nhanh hoặc ngay lập tức. Kể từ thời điểm Strength ôm chặt đối thủ trên không trung và bắt đầu lao xuống, toàn bộ quá trình di chuyển từ độ cao trên trời xuống mặt đất phải kéo dài chính xác khoảng 2 giây. Trong khoảng thời gian này, cần hiển thị đầy đủ animation hai nhân vật lao xuống liên tục, kết hợp hiệu ứng lốc xoáy lớn bao quanh cả hai với kích thước khoảng gấp đôi cơ thể nhân vật Strength, tạo cảm giác hai nhân vật đang xoay và lao xuống với tốc độ cao nhưng vẫn đủ thời gian để người chơi quan sát rõ chuyển động. Khi cả hai va chạm với mặt đất, tạo ra một vụ nổ năng lượng mạnh với hiệu ứng hình ảnh ấn tượng, sóng xung kích và hiệu ứng mặt đất rung chuyển, gây thêm sát thương bằng 25% lượng máu tối đa của đối thủ. Ngay sau vụ nổ, cả hai nhân vật phải bị hất văng ra xa theo hai hướng ngược nhau. Đảm bảo toàn bộ chuỗi animation được thực hiện liên tục, đúng trình tự và không bị ngắt quãng giữa các giai đoạn; đặc biệt phải giữ nguyên thời lượng 2 giây cho animation lao xuống, không được rút ngắn hoặc bỏ qua giai đoạn này." thành "Khi người chơi kích hoạt kỹ năng, nhân vật lập tức tự động khóa mục tiêu (Auto Aim) vào đối thủ nằm trong phạm vi bằng 1/3 chiều dài bản đồ tính từ vị trí hiện tại. Tuy nhiên, kỹ năng chỉ được phép khóa những đối thủ đang đứng cùng một tầng với nhân vật. Ví dụ: nếu nhân vật đang đứng ở tầng dưới cùng thì chỉ được khóa đối thủ ở tầng dưới cùng; nếu nhân vật đang đứng ở tầng thứ hai thì chỉ được khóa đối thủ ở tầng thứ hai. Sau khi khóa mục tiêu thành công, đối thủ lập tức bị rơi vào trạng thái Stun, không thể di chuyển, nhảy, tấn công hoặc sử dụng kỹ năng trong suốt chuỗi combo. Ngay sau đó, nhân vật nhanh chóng lao đến vị trí đối thủ bằng animation chạy tốc độ cao. Phải hiển thị rõ animation chạy trong suốt quá trình di chuyển, tuyệt đối không được sử dụng Teleport hoặc dịch chuyển tức thời. Khi tiếp cận đối thủ, nhân vật tung một cú đấm mạnh bằng tay phải, gây sát thương bằng 5% lượng máu tối đa của đối thủ và khiến đối thủ bị hất văng ra xa một khoảng bằng 1/4 chiều dài bản đồ tính từ vị trí bị đánh trúng. Hướng bay phải luôn là hướng phía trước, tức hướng ngược lại với vị trí nhân vật đang đứng và hướng nhân vật đang tấn công. Ví dụ: nếu nhân vật đứng bên phải và đối thủ đứng bên trái thì đối thủ bị đấm bay tiếp về bên trái; ngược lại, nếu nhân vật đứng bên trái và đối thủ đứng bên phải thì đối thủ bị đấm bay về bên phải. Ngay khi đối thủ bắt đầu bị hất văng, nhân vật lập tức chạy tốc độ cao đuổi theo và di chuyển đến phía sau đối thủ tại vị trí mà đối thủ đang bay tới. Trong quá trình truy đuổi vẫn phải hiển thị animation chạy rõ ràng, không được Teleport. Khi tiếp cận thành công, nhân vật tiếp tục tung một cú đấm mạnh bằng tay phải vào đối thủ, gây thêm 5% lượng máu tối đa và hất đối thủ bay ra xa một khoảng bằng 1/4 chiều dài bản đồ. Đặc biệt, hướng bay của cú đấm thứ hai phải ngược hoàn toàn với hướng bay của cú đấm thứ nhất. Ngay khi đối thủ bắt đầu bị cú đấm thứ hai hất văng, nhân vật tiếp tục chạy tốc độ cao đến phía sau đối thủ tại vị trí đối thủ đang bay tới, vẫn phải hiển thị animation chạy xuyên suốt quá trình di chuyển. Khi tiếp cận, nhân vật tung một cú đá mạnh bằng chân phải, gây thêm 5% lượng máu tối đa và khiến đối thủ bay thẳng lên không trung. Sau khi bị đá lên trời, đối thủ lập tức rơi vào trạng thái Air Stun, bị giữ cố định trên không và không thể thực hiện bất kỳ hành động nào. Tiếp đó, nhân vật lập tức nhảy vút lên trời và bay đến vị trí cao hơn đối thủ đang bị giữ trên không một khoảng tương đương chiều cao của một nhân vật. Khi đạt đến độ cao thích hợp, nhân vật dừng lại giữa không trung và bắt đầu xoay tròn tại chỗ như chong chóng, hoàn thành chính xác 10 vòng xoay trong vòng 1 giây mà không di chuyển sang trái hoặc phải. **LƯU Ý QUAN TRỌNG: Trong suốt quá trình xoay, nhân vật tuyệt đối không được tung cú đá xuống đối thủ. Phải hoàn thành đầy đủ 10 vòng xoay trong 1 giây, kết thúc hoàn toàn animation xoay, sau đó mới chuyển sang hành động tiếp theo.** Sau khi xoay đủ 10 vòng, nhân vật dừng hẳn chuyển động xoay, chuyển sang tư thế chuẩn bị tấn công bằng cách duỗi chân phải ra phía trước theo phong cách đá Taekwondo, rồi mới tung một cú đạp cực mạnh theo phương thẳng đứng xuống dưới, khiến đối thủ đang bị giữ trên không lao thẳng xuống mặt đất. Cú đạp cuối cùng gây sát thương bằng 15% lượng máu tối đa của đối thủ, nhưng sát thương chỉ được tính tại thời điểm đối thủ thực sự chạm đất, không được gây sát thương ngay khi vừa thực hiện cú đạp hoặc khi đối thủ vẫn đang ở trên không. Trong lúc đối thủ lao thẳng xuống đất, nhân vật phải từ từ hạ độ cao bằng animation rơi chậm, không được rơi nhanh theo đối thủ. Khi đối thủ chạm đất, lập tức tạo hiệu ứng bụi khói bùng lên tại vị trí va chạm, lan tỏa xung quanh để nhấn mạnh sức mạnh của cú đạp, đồng thời khiến đối thủ bị hất văng ra xa thêm một khoảng bằng 1/4 chiều dài bản đồ tính từ vị trí tiếp đất. Đảm bảo toàn bộ kỹ năng diễn ra tuần tự và chính xác với 4 giai đoạn tấn công: 2 cú đấm bằng tay phải, 1 cú đá bằng chân phải hất đối thủ lên trời và 1 cú đạp từ trên không xuống đất. Tổng sát thương của kỹ năng là 30% lượng máu tối đa của đối thủ (5% + 5% + 5% + 15%). Đối thủ phải luôn duy trì trạng thái Stun trong toàn bộ chuỗi combo và chỉ được giải phóng khỏi trạng thái này sau khi toàn bộ kỹ năng, hiệu ứng va chạm và chuyển động cuối cùng hoàn tất.."
 
 -Nhân vật energy:
-+ Chiêu O (Chiêu thứ 3): Sửa từ "Khi người chơi kích hoạt chiêu O, nhân vật Energy nhanh chóng nhảy vọt lên không trung bằng animation nhảy tương ứng. Sau khi đạt đến độ cao thích hợp, nhân vật đứng thẳng giữa không trung và giữ nguyên tư thế trong 0,5 giây. Tiếp đó, nhân vật giơ cả hai tay lên trời để bắt đầu tạo ra một quả cầu năng lượng Spirit Bomb. Quả cầu xuất hiện dần từ trạng thái mờ đến rõ nét, kết hợp hiệu ứng phát sáng mạnh mẽ và các luồng năng lượng liên tục hội tụ xung quanh để thể hiện quá trình tích tụ sức mạnh. Kích thước quả cầu phải cực lớn, khoảng gấp 3 lần kích thước cơ thể nhân vật. Sau khi quá trình tích tụ hoàn tất, nhân vật thực hiện animation ném quả cầu về phía đối thủ. Về cơ chế nhắm mục tiêu (Aim): Quả cầu có khả năng tự động định hướng về phía đối thủ trong phạm vi tối đa bằng 1/3 chiều dài bản đồ, nhưng chỉ được phép khóa mục tiêu khi đối thủ đang ở phía trước mặt nhân vật Energy. Nếu đối thủ nằm phía sau lưng, quả cầu tuyệt đối không được tự động xoay hướng hoặc khóa mục tiêu để đuổi theo đối thủ mà chỉ được ném theo hướng mà nhân vật đang quay mặt. Về animation ném: Khi thực hiện động tác ném quả cầu, hai cánh tay của nhân vật phải giữ nguyên kích thước, chiều dài và tỷ lệ hình thể ban đầu, tuyệt đối không được kéo dài, phóng to hoặc làm biến dạng cánh tay trong quá trình animation. Chuyển động ném phải tự nhiên, mượt mà và phù hợp với tư thế của nhân vật. Khi quả cầu chạm mục tiêu hoặc đến vị trí đối thủ được nhắm tới, nó lập tức phát nổ, tạo thành một vụ nổ năng lượng cực lớn với hiệu ứng ánh sáng, sóng xung kích và các luồng năng lượng lan tỏa nổi bật. Vụ nổ gây sát thương bằng 30% lượng máu tối đa của đối thủ và hất văng đối thủ ra xa khoảng 1/4 chiều dài bản đồ, tính từ vị trí đối thủ đứng tại thời điểm bị trúng chiêu." thành "Khi người chơi kích hoạt chiêu O, nhân vật Energy nhanh chóng nhảy vọt lên không trung bằng animation nhảy tương ứng. Sau khi đạt đến độ cao thích hợp, nhân vật phải giữ tư thế đứng thẳng giữa không trung và **bất động hoàn toàn trong đúng 0,5 giây**. Trong khoảng thời gian này, nhân vật không được thực hiện bất kỳ chuyển động nào khác, không giơ tay, không tạo hiệu ứng tích tụ năng lượng và đặc biệt là tuyệt đối chưa được xuất hiện quả cầu Spirit Bomb. **Chỉ sau khi kết thúc 0,5 giây bất động**, nhân vật mới bắt đầu từ từ giơ cả hai tay lên trời bằng animation tương ứng. Ngay khi hai tay bắt đầu được giơ lên, quá trình triệu hồi Spirit Bomb mới chính thức bắt đầu. Quả cầu năng lượng phải xuất hiện từ kích thước cực nhỏ, sau đó liên tục phóng to dần theo thời gian cho đến khi đạt kích thước hoàn chỉnh, khoảng gấp 3 lần kích thước cơ thể nhân vật Energy. Quá trình quả cầu lớn dần cần được thể hiện rõ ràng, mượt mà, kết hợp hiệu ứng phát sáng neon mạnh mẽ và các luồng năng lượng liên tục hội tụ xung quanh để tạo cảm giác sức mạnh đang được tích tụ. Không được để quả cầu xuất hiện ngay lập tức ở kích thước tối đa hoặc xuất hiện trong giai đoạn nhân vật đang bất động trên không trung. Sau khi quá trình tích tụ hoàn tất, nhân vật thực hiện animation ném quả cầu về phía đối thủ. **Về cơ chế nhắm mục tiêu (Aim):** Quả cầu có khả năng tự động định hướng về phía đối thủ trong phạm vi tối đa bằng 1/3 chiều dài bản đồ, nhưng chỉ được phép khóa mục tiêu khi đối thủ đang ở phía trước mặt nhân vật Energy. Nếu đối thủ nằm phía sau lưng, quả cầu tuyệt đối không được tự động xoay hướng hoặc khóa mục tiêu để đuổi theo đối thủ mà chỉ được ném theo hướng mà nhân vật đang quay mặt. **Về animation ném:** Khi thực hiện động tác ném quả cầu, hai cánh tay của nhân vật phải giữ nguyên kích thước, chiều dài và tỷ lệ hình thể ban đầu, tuyệt đối không được kéo dài, phóng to hoặc làm biến dạng cánh tay trong quá trình animation. Chuyển động ném phải tự nhiên, mượt mà và phù hợp với tư thế của nhân vật. Khi quả cầu chạm mục tiêu hoặc đến vị trí đối thủ được nhắm tới, nó lập tức phát nổ, tạo thành một vụ nổ năng lượng cực lớn với hiệu ứng ánh sáng, sóng xung kích và các luồng năng lượng lan tỏa nổi bật. Vụ nổ gây sát thương bằng 30% lượng máu tối đa của đối thủ và hất văng đối thủ ra xa khoảng 1/4 chiều dài bản đồ, tính từ vị trí đối thủ đứng tại thời điểm bị trúng chiêu. **Yêu cầu quan trọng:** Phải đảm bảo toàn bộ chuỗi animation diễn ra chính xác theo trình tự: Nhảy lên không trung → Đứng thẳng và bất động 0,5 giây → Giơ cả hai tay lên trời → Quả cầu xuất hiện từ kích thước cực nhỏ và lớn dần → Hoàn tất tích tụ năng lượng → Ném quả cầu → Phát nổ khi đến mục tiêu. Không được bỏ qua, đảo lộn hoặc gộp các giai đoạn này vào nhau."
-
-Đọc file game T-Fighter_UPD4.2(2).html ở trên và sửa lại game theo tất cả các yêu cầu bên trên của tôi.
-*****Chỉ cải thiện chứ không thay đổi hay xóa code cũ, nếu xóa cấu trúc cũ tôi sẽ khóc******
-
-Đã xử lý trong 16m 31s
-Đã hoàn thành bản cập nhật UPD4.2.2
-Mình đã chỉnh sửa trực tiếp trên file T-Fighter_UPD4.2(2).html, giữ lại code nền và bổ sung lớp cập nhật mới.
++ Chiêu O (Chiêu thứ 3): Sửa từ "Khi người chơi kích hoạt chiêu O, nhân vật Energy nhanh chóng nhảy vọt lên không trung bằng animation nhảy tương ứng. Sau khi đạt đến độ cao thích hợp, nhân vật đứng thẳng giữa không trung và giữ nguyên tư thế trong 0,5 giây. Tiếp đó, nhân vật giơ cả hai tay lên trời để bắt đầu tạo ra một quả cầu năng lượng Spirit Bomb. Quả cầu xuất hiện dần từ trạng thái mờ đến rõ nét, kết hợp hiệu ứng phát sáng mạnh mẽ và các luồng năng lượng liên tục hội tụ xung quanh để thể hiện quá trình tích tụ sức mạnh. Kích thước quả cầu phải cực lớn, khoảng gấp 3 lần kích thước cơ thể nhân vật. Sau khi quá trình tích tụ hoàn tất, nhân vật thực hiện animation ném quả cầu về phía đối thủ. Về cơ chế nhắm mục tiêu (Aim): Quả cầu có khả năng tự động định hướng về phía đối thủ trong phạm vi tối đa bằng 1/3 chiều dài bản đồ, nhưng chỉ được phép khóa mục tiêu khi đối thủ đang ở phía trước mặt nhân vật Energy. Nếu đối thủ nằm phía sau lưng, quả cầu tuyệt đối không được tự động xoay hướng hoặc khóa mục tiêu để đuổi theo đối thủ mà chỉ được ném theo hướng mà nhân vật đang quay mặt. Về animation ném: Khi thực hiện động tác ném quả cầu, hai cánh tay của nhân vật phải giữ nguyên kích thước, chiều dài và tỷ lệ hình thể ban đầu, tuyệt đối không được kéo dài, phóng to hoặc làm biến dạng cánh tay trong quá trình animation. Chuyển động ném phải tự nhiên, mượt mà và phù hợp với tư thế của nhân vật. Khi quả cầu chạm mục tiêu hoặc đến vị trí đối thủ được nhắm tới, nó lập tức phát nổ, tạo thành một vụ nổ năng lượng cực lớn với hiệu ứng ánh sáng, sóng xung kích và các luồng năng lượng lan tỏa nổi bật. Vụ nổ gây sát thương bằng 30% lượng máu tối đa của đối thủ và hất văng đối thủ ra xa khoảng 1/4 chiều dài bản đồ, tính từ vị trí đối thủ đứng tại thời điểm bị trúng chiêu." thành "Khi người chơi kích hoạt chiêu O, nhân vật Energy nhanh chóng nhảy vọt lên không trung bằng animation nhảy tương ứng. Sau khi đạt đến độ cao thích hợp, nhân vật phải giữ tư thế đứng thẳng giữa không trung và **bất động hoàn toàn trong đúng 0,5 giây**. Trong khoảng thời gian này, nhân vật không được thực hiện bất kỳ chuyển động nào khác, không giơ tay, không tạo hiệu ứng tích tụ năng lượng và đặc biệt là tuyệt đối chưa được xuất hiện quả cầu Spirit Bomb. **Chỉ sau khi kết thúc 0,5 giây bất động**, nhân vật mới bắt đầu từ từ giơ cả hai tay lên trời bằng animation tương ứng. Ngay khi hai tay bắt đầu được giơ lên, quá trình triệu hồi Spirit Bomb mới chính 
+…
+Đã hoàn thành – T-Fighter UPD4.2.2
+Mình đã cập nhật game dựa trực tiếp trên file T-Fighter_UPD4.2(2).html bạn cung cấp.
 
 T-Fighter_UPD4.2.2.html
 
-HTML · 5,16 MB
+HTML · 5 MB
 
 Sẵn sàng
- Tải game UPD4.2.2
+Tải xuống game UPD4.2.2
 
-Các thay đổi đã thực hiện
+Các nội dung đã cập nhật
 1. HUD thanh máu
 
-Thu nhỏ chiều cao gần 50%.
+Thu nhỏ chiều cao khoảng 50%.
 
-Nền Smoke Gray trong suốt 50%.
+Nền Smoke Gray, độ trong suốt 50%.
 
-Hiệu ứng Glassmorphism.
+Hiệu ứng kính mờ và đường viền mảnh.
 
-Viền đen mảnh hơn.
+Giữ nguyên màu thanh máu, thông tin và cơ chế chiến đấu.
 
-Giữ màu và cơ chế thanh máu cũ.
+2. Strength – Chiêu O
 
-2. Strength – Biểu Liên Hoa
+Khóa mục tiêu cùng tầng trong phạm vi 1/3 bản đồ.
 
-Auto Aim đối thủ cùng tầng, phạm vi 1/3 bản đồ.
+Hai cú đấm liên tiếp, mỗi cú gây 5% sát thương.
 
-Hai cú đấm liên tiếp, mỗi cú 5%, hướng bay ngược nhau.
+Một cú đá gây 5% và hất đối thủ lên trời.
 
-Cú đá thứ ba gây 5%, hất đối thủ lên trời.
+Xoay chính xác 10 vòng trong 1 giây, không tấn công trong lúc xoay.
 
-Nhảy lên cao và xoay đủ 10 vòng trong 1 giây.
+Sau đó mới thực hiện cú đạp kết liễu.
 
-Kết thúc xoay mới thực hiện cú đạp xuống.
+Chỉ gây 15% sát thương khi đối thủ thực sự chạm đất.
 
-Chỉ gây 15% sát thương cuối khi đối thủ chạm đất.
-
-Giữ stun đến hết chuyển động hất văng cuối cùng.
+Tổng sát thương: 30% máu tối đa.
 
 3. Energy – Spirit Bomb
 
 Nhảy lên không trung.
 
-Đứng yên chính xác 0,5 giây.
+Đứng bất động chính xác 0,5 giây.
 
-Từ từ giơ hai tay.
+Sau đó mới giơ hai tay và triệu hồi quả cầu.
 
-Quả cầu xuất hiện cực nhỏ rồi lớn dần.
+Quả cầu lớn dần từ kích thước cực nhỏ.
 
-Chỉ ném sau khi tích tụ hoàn tất.
+Chỉ khóa mục tiêu phía trước trong phạm vi 1/3 bản đồ.
 
-Giữ nguyên quy tắc Aim phía trước trong phạm vi 1/3 bản đồ.
+Giữ tỷ lệ cánh tay và animation ném tự nhiên.
 
-Giữ nguyên tỷ lệ cánh tay.
+Gây 30% sát thương khi phát nổ.
 
-Kiểm tra code
-Đã kiểm tra cú pháp thành công cho cả 3 khối JavaScript.
+Kiểm tra kỹ thuật
+Đã kiểm tra cú pháp JavaScript của các đoạn script.
 
-Mình chưa xác nhận toàn bộ gameplay bằng một lượt chơi thực tế trong trình duyệt.
+Đã thử nghiệm luồng Spirit Bomb và sát thương trong môi trường trình duyệt.
 
-Đặc biệt: Code cũ vẫn được giữ lại trong file; những thay đổi mới được bổ sung ở cuối và ghi đè các xử lý cần thiết khi game chạy. Không viết lại toàn bộ hệ thống nhân vật hay chiến đấu.
+Đã kiểm tra combo Strength qua vòng cập nhật nhân vật.
+
+Chưa thực hiện kiểm thử thủ công toàn bộ trận đấu trên mọi thiết bị.
+
+Đặc biệt: Mình tiếp tục sử dụng phương pháp bổ sung lớp cập nhật mới, không chủ động xóa hệ thống nhân vật, dữ liệu cũ hay cấu trúc chiến đấu nền của game.
+
+Chúc T-Fighter tiếp tục phát triển thật tốt!
 
 
 T-Fighter_UPD4.2.2.html
+HTML
+Tệp đính kèm của người dùng
+
+T-Fighter_UPD4.2(3).html
+HTML
+Tôi thấy game đã hoàn hảo rồi bay giờ bạn hãy update theo tôi một chút:
+
+***Update tổng thể game
+
+**Giao diện game
+*Giao diện trong game
+-Thanh máu của 2 nhân vật
++ Hãy chỉnh sửa lại giao diện thanh máu (HUD) của cả hai nhân vật dựa trên hình ảnh tham chiếu: Đầu tiên, giảm chiều cao tổng thể của hai khung thanh máu xuống gần 50% so với kích thước hiện tại, giúp chúng trở nên thon gọn, mảnh mai và tinh tế hơn, không còn cảm giác quá dày và cồng kềnh. Tiếp theo, thay đổi màu nền chủ đạo của toàn bộ khung thanh máu từ màu trắng kem hiện tại sang **màu xám khói (Smoke Gray)**, đồng thời áp dụng hiệu ứng trong suốt khoảng **50% (Opacity 50%)** để tạo cảm giác giao diện kính mờ (Glassmorphism), giúp khung HUD trông hiện đại và có chiều sâu hơn. Áp dụng đồng bộ thiết kế mới cho cả thanh máu của người chơi và BOT, bao gồm phần khung chứa, khu vực hiển thị tên nhân vật, và các thông tin liên quan. Giữ nguyên vị trí, cách bố trí, nội dung chữ, biểu tượng, tỷ lệ chiều dài và màu sắc riêng của phần thanh năng lượng bên trong (đỏ, cam, xanh dương...), chỉ thay đổi độ dày và phong cách thiết kế của khung giao diện. Các đường viền đen cũng cần được tinh chỉnh mảnh hơn, hài hòa với kích thước mới. **Lưu ý:** Không thay đổi cơ chế hoạt động, giá trị máu, năng lượng hoặc logic chiến đấu; chỉ chỉnh sửa phần giao diện HUD theo phong cách xám khói trong suốt, tối giản, gọn gàng và hiện đại.
+
+**Nhân vật
+-Nhân vật strength:
++ Chiêu O (Chiêu thứ 3): Sửa từ "Khi người chơi kích hoạt chiêu O, nhân vật Strength lập tức lao nhanh về phía đối thủ với tốc độ rất cao. Trong giai đoạn tiếp cận, phải hiển thị rõ ràng toàn bộ animation nhân vật Strength chạy lao đến đối thủ, không được dịch chuyển tức thời (teleport), ẩn nhân vật hoặc bỏ qua động tác chạy. Khi tiếp cận mục tiêu, nhân vật Strength sử dụng chân phải tung một cú đá mạnh khiến đối thủ bị hất văng thẳng lên không trung với độ cao khoảng gấp 3 lần chiều cao của nhân vật Strength. Đòn đá đầu tiên gây sát thương bằng 5% lượng máu tối đa của đối thủ. Sau khi bị đá lên trời, đối thủ lập tức rơi vào trạng thái stun và bất động hoàn toàn, không thể di chuyển hoặc thực hiện bất kỳ hành động nào. Tiếp theo, nhân vật Strength nhảy lên không trung, di chuyển đến vị trí đối diện với đối thủ, sau đó sử dụng cả hai tay ôm chặt đối thủ để thực hiện động tác lao thẳng cả hai xuống mặt đất. Đặc biệt, ở giai đoạn lao xuống, không được để hai nhân vật rơi xuống đất quá nhanh hoặc ngay lập tức. Kể từ thời điểm Strength ôm chặt đối thủ trên không trung và bắt đầu lao xuống, toàn bộ quá trình di chuyển từ độ cao trên trời xuống mặt đất phải kéo dài chính xác khoảng 2 giây. Trong khoảng thời gian này, cần hiển thị đầy đủ animation hai nhân vật lao xuống liên tục, kết hợp hiệu ứng lốc xoáy lớn bao quanh cả hai với kích thước khoảng gấp đôi cơ thể nhân vật Strength, tạo cảm giác hai nhân vật đang xoay và lao xuống với tốc độ cao nhưng vẫn đủ thời gian để người chơi quan sát rõ chuyển động. Khi cả hai va chạm với mặt đất, tạo ra một vụ nổ năng lượng mạnh với hiệu ứng hình ảnh ấn tượng, sóng xung kích và hiệu ứng mặt đất rung chuyển, gây thêm sát thương bằng 25% lượng máu tối đa của đối thủ. Ngay sau vụ nổ, cả hai nhân vật phải bị hất văng ra xa theo hai hướng ngược nhau. Đảm bảo toàn bộ chuỗi animation được thực hiện liên tục, đúng trình tự và không bị ngắt quãng giữa các giai đoạn; đặc biệt phải giữ nguyên thời lượng 2 giây cho animation lao xuống, không được rút ngắn hoặc bỏ qua giai đoạn này." thành "Khi người chơi kích hoạt kỹ năng, nhân vật lập tức tự động khóa mục tiêu (Auto Aim) vào đối thủ nằm trong phạm vi bằng 1/3 chiều dài bản đồ tính từ vị trí hiện tại. Tuy nhiên, kỹ năng chỉ được phép khóa những đối thủ đang đứng cùng một tầng với nhân vật. Ví dụ: nếu nhân vật đang đứng ở tầng dưới cùng thì chỉ được khóa đối thủ ở tầng dưới cùng; nếu nhân vật đang đứng ở tầng thứ hai thì chỉ được khóa đối thủ ở tầng thứ hai. Sau khi khóa mục tiêu thành công, đối thủ lập tức bị rơi vào trạng thái Stun, không thể di chuyển, nhảy, tấn công hoặc sử dụng kỹ năng trong suốt chuỗi combo. Ngay sau đó, nhân vật nhanh chóng lao đến vị trí đối thủ bằng animation chạy tốc độ cao. Phải hiển thị rõ animation chạy trong suốt quá trình di chuyển, tuyệt đối không được sử dụng Teleport hoặc dịch chuyển tức thời. Khi tiếp cận đối thủ, nhân vật tung một cú đấm mạnh bằng tay phải, gây sát thương bằng 5% lượng máu tối đa của đối thủ và khiến đối thủ bị hất văng ra xa một khoảng bằng 1/4 chiều dài bản đồ tính từ vị trí bị đánh trúng. Hướng bay phải luôn là hướng phía trước, tức hướng ngược lại với vị trí nhân vật đang đứng và hướng nhân vật đang tấn công. Ví dụ: nếu nhân vật đứng bên phải và đối thủ đứng bên trái thì đối thủ bị đấm bay tiếp về bên trái; ngược lại, nếu nhân vật đứng bên trái và đối thủ đứng bên phải thì đối thủ bị đấm bay về bên phải. Ngay khi đối thủ bắt đầu bị hất văng, nhân vật lập tức chạy tốc độ cao đuổi theo và di chuyển đến phía sau đối thủ tại vị trí mà đối thủ đang bay tới. Trong quá trình truy đuổi vẫn phải hiển thị animation chạy rõ ràng, không được Teleport. Khi tiếp cận thành công, nhân vật tiếp tục tung một cú đấm mạnh bằng tay phải vào đối thủ, gây thêm 5% lượng máu tối đa và hất đối thủ bay ra xa một khoảng bằng 1/4 chiều dài bản đồ. Đặc biệt, hướng bay của cú đấm thứ hai phải ngược hoàn toàn với hướng bay của cú đấm thứ nhất. Ngay khi đối thủ bắt đầu bị cú đấm thứ hai hất văng, nhân vật tiếp tục chạy tốc độ cao đến phía sau đối thủ tại vị trí đối thủ đang bay tới, vẫn phải hiển thị animation chạy xuyên suốt quá trình di chuyển. Khi tiếp cận, nhân vật tung một cú đá mạnh bằng chân phải, gây thêm 5% lượng máu tối đa và khiến đối thủ bay thẳng lên không trung. Sau khi bị đá lên trời, đối thủ lập tức rơi vào trạng thái Air Stun, bị giữ cố định trên không và không thể thực hiện bất kỳ hành động nào. Tiếp đó, nhân vật lập tức nhảy vút lên trời và bay đến vị trí cao hơn đối thủ đang bị giữ trên không một khoảng tương đương chiều cao của một nhân vật. Khi đạt đến độ cao thích hợp, nhân vật dừng lại giữa không trung và bắt đầu xoay tròn tại chỗ như chong chóng, hoàn thành chính xác 10 vòng xoay trong vòng 1 giây mà không di chuyển sang trái hoặc phải. **LƯU Ý QUAN TRỌNG: Trong suốt quá trình xoay, nhân vật tuyệt đối không được tung cú đá xuống đối thủ. Phải hoàn thành đầy đủ 10 vòng xoay trong 1 giây, kết thúc hoàn toàn animation xoay, sau đó mới chuyển sang hành động tiếp theo.** Sau khi xoay đủ 10 vòng, nhân vật dừng hẳn chuyển động xoay, chuyển sang tư thế chuẩn bị tấn công bằng cách duỗi chân phải ra phía trước theo phong cách đá Taekwondo, rồi mới tung một cú đạp cực mạnh theo phương thẳng đứng xuống dưới, khiến đối thủ đang bị giữ trên không lao thẳng xuống mặt đất. Cú đạp cuối cùng gây sát thương bằng 15% lượng máu tối đa của đối thủ, nhưng sát thương chỉ được tính tại thời điểm đối thủ thực sự chạm đất, không được gây sát thương ngay khi vừa thực hiện cú đạp hoặc khi đối thủ vẫn đang ở trên không. Trong lúc đối thủ lao thẳng xuống đất, nhân vật phải từ từ hạ độ cao bằng animation rơi chậm, không được rơi nhanh theo đối thủ. Khi đối thủ chạm đất, lập tức tạo hiệu ứng bụi khói bùng lên tại vị trí va chạm, lan tỏa xung quanh để nhấn mạnh sức mạnh của cú đạp, đồng thời khiến đối thủ bị hất văng ra xa thêm một khoảng bằng 1/4 chiều dài bản đồ tính từ vị trí tiếp đất. Đảm bảo toàn bộ kỹ năng diễn ra tuần tự và chính xác với 4 giai đoạn tấn công: 2 cú đấm bằng tay phải, 1 cú đá bằng chân phải hất đối thủ lên trời và 1 cú đạp từ trên không xuống đất. Tổng sát thương của kỹ năng là 30% lượng máu tối đa của đối thủ (5% + 5% + 5% + 15%). Đối thủ phải luôn duy trì trạng thái Stun trong toàn bộ chuỗi combo và chỉ được giải phóng khỏi trạng thái này sau khi toàn bộ kỹ năng, hiệu ứng va chạm và chuyển động cuối cùng hoàn tất.."
+
+-Nhân vật energy:
++ Chiêu O (Chiêu thứ 3): Sửa từ "Khi người chơi kích hoạt chiêu O, nhân vật Energy nhanh chóng nhảy vọt lên không trung bằng animation nhảy tương ứng. Sau khi đạt đến độ cao thích hợp, nhân vật đứng thẳng giữa không trung và giữ nguyên tư thế trong 0,5 giây. Tiếp đó, nhân vật giơ cả hai tay lên trời để bắt đầu tạo ra một quả cầu năng lượng Spirit Bomb. Quả cầu xuất hiện dần từ trạng thái mờ đến rõ nét, kết hợp hiệu ứng phát sáng mạnh mẽ và các luồng năng lượng liên tục hội tụ xung quanh để thể hiện quá trình tích tụ sức mạnh. Kích thước quả cầu phải cực lớn, khoảng gấp 3 lần kích thước cơ thể nhân vật. Sau khi quá trình tích tụ hoàn tất, nhân vật thực hiện animation ném quả cầu về phía đối thủ. Về cơ chế nhắm mục tiêu (Aim): Quả cầu có khả năng tự động định hướng về phía đối thủ trong phạm vi tối đa bằng 1/3 chiều dài bản đồ, nhưng chỉ được phép khóa mục tiêu khi đối thủ đang ở phía trước mặt nhân vật Energy. Nếu đối thủ nằm phía sau lưng, quả cầu tuyệt đối không được tự động xoay hướng hoặc khóa mục tiêu để đuổi theo đối thủ mà chỉ được ném theo hướng mà nhân vật đang quay mặt. Về animation ném: Khi thực hiện động tác ném quả cầu, hai cánh tay của nhân vật phải giữ nguyên kích thước, chiều dài và tỷ lệ hình thể ban đầu, tuyệt đối không được kéo dài, phóng to hoặc làm biến dạng cánh tay trong quá trình animation. Chuyển động ném phải tự nhiên, mượt mà và phù hợp với tư thế của nhân vật. Khi quả cầu chạm mục tiêu hoặc đến vị trí đối thủ được nhắm tới, nó lập tức phát nổ, tạo thành một vụ nổ năng lượng cực lớn với hiệu ứng ánh sáng, sóng xung kích và các luồng năng lượng lan tỏa nổi bật. Vụ nổ gây sát thương bằng 30% lượng máu tối đa của đối thủ và hất văng đối thủ ra xa khoảng 1/4 chiều dài bản đồ, tính từ vị trí đối thủ đứng tại thời điểm bị trúng chiêu." thành "Khi người chơi kích hoạt chiêu O, nhân vật Energy nhanh chóng nhảy vọt lên không trung bằng animation nhảy tương ứng. Sau khi đạt đến độ cao thích hợp, nhân vật phải giữ tư thế đứng thẳng giữa không trung và **bất động hoàn toàn trong đúng 0,5 giây**. Trong khoảng thời gian này, nhân vật không được thực hiện bất kỳ chuyển động nào khác, không giơ tay, không tạo hiệu ứng tích tụ năng lượng và đặc biệt là tuyệt đối chưa được xuất hiện quả cầu Spirit Bomb. **Chỉ sau khi kết thúc 0,5 giây bất động**, nhân vật mới bắt đầu từ từ giơ cả hai tay lên trời bằng animation tương ứng. Ngay khi hai tay bắt đầu được giơ lên, quá trình triệu hồi Spirit Bomb mới chính
+…
+Đã hoàn thành – T-Fighter UPD4.2.3
+Mình đã cập nhật trực tiếp từ file T-Fighter_UPD4.2(3).html và tạo phiên bản mới.
+
+T-Fighter_UPD4.2.3.html
+
+HTML · 5 MB
+
+Đã tạo
+ Tải xuống game UPD4.2.3
+
+Các thay đổi đã thực hiện
+1. HUD thanh máu
+
+Thu nhỏ khung, chuyển sang Smoke Gray trong suốt 50%.
+
+Bổ sung hiệu ứng kính mờ.
+
+Viền mảnh hơn, giữ nguyên màu và cơ chế thanh máu.
+
+2. Strength – Chiêu O
+
+Khóa mục tiêu cùng tầng, trong phạm vi 1/3 bản đồ.
+
+Hai cú đấm liên tiếp: 5% + 5%, hướng hất văng ngược nhau.
+
+Chạy đuổi theo mục tiêu sau mỗi cú đánh.
+
+Đá đối thủ lên trời: 5%.
+
+Xoay đủ 10 vòng trong 1 giây, không tấn công khi xoay.
+
+Sau đó mới thực hiện cú đạp kết liễu: 15%, chỉ tính sát thương khi đối thủ chạm đất.
+
+Giữ stun đến khi toàn bộ combo kết thúc.
+
+3. Energy – Chiêu O
+
+Nhảy lên rồi đứng bất động đúng 0,5 giây.
+
+Không xuất hiện quả cầu trong giai đoạn đứng yên.
+
+Sau đó giơ hai tay và triệu hồi quả cầu từ nhỏ đến lớn.
+
+Giới hạn Auto Aim ở phía trước, trong phạm vi 1/3 bản đồ.
+
+Giữ nguyên tỷ lệ cánh tay và gây 30% sát thương khi phát nổ.
+
+Kiểm tra và bảo toàn code
+JavaScript vượt qua kiểm tra cú pháp Mô phỏng logic kỹ năng đạt yêu cầu
+
+Mình đã kiểm tra mô phỏng:
+
+Strength gây tổng cộng 30% máu tối đa.
+
+Hai cú đấm có hướng hất văng ngược nhau.
+
+Pha xoay có đúng 60 khung hình và kết thúc ở góc 10 vòng.
+
+Energy không xuất hiện cầu trong 30 frame đứng yên.
+
+Đối thủ phía sau không bị Spirit Bomb khóa mục tiêu.
+
+Đặc biệt: Mình đã đối chiếu file trước và sau khi cập nhật: phần code gốc trước và sau vị trí chèn bản vá được giữ nguyên. Không chủ động xóa cấu trúc cũ. Phần giao diện chưa được kiểm thử trực quan đầy đủ trên trình duyệt thật.
+
+Chúc T-Fighter ngày càng hoàn thiện!
+
+
+T-Fighter_UPD4.2.3.html
+HTML
+
+T-Fighter_UPD4.2.3(1).html
+HTML
+Tôi thấy game đã hoàn hảo rồi bay giờ bạn hãy update theo tôi một chút:
+
+***Update tổng thể game
+
+**Nhân vật
+
+-Nhân vật energy
+
+Chiêu O (chiêu thứ 3): Bạn hãy đọc kỹ file và sửa lại thời gian hồi chiêu của chiêu này thành 30s
+-Nhân vật speed
+
+Chiêu O (chiêu thứ 3): Bạn hãy đọc kỹ file và sửa lại thời gian hồi chiêu của chiêu này thành 20s
+-Nhân vật strength
+
+Chiêu O (chiêu thứ 3): Bạn hãy đọc kỹ file và sửa lại thời gian hồi chiêu của chiêu này thành 30s
+Đọc file game T-Fighter_UPD4.2.3(1).html ở trên và sửa lại game theo tất cả các yêu cầu bên trên của tôi
+******Chỉ cải thiện chứ không thay đổi hay xóa code cũ, nếu xóa cấu trúc cũ tôi sẽ khóc******
+
+…
+Đã hoàn thành – T-Fighter UPD4.2.4
+Mình đã đọc và chỉnh sửa trực tiếp file T-Fighter_UPD4.2.3(1).html.
+
+Thời gian hồi chiêu mới
+Nhân vật
+
+Chiêu O
+
+Hồi chiêu mới
+
+Energy
+
+Spirit Bomb
+
+30 giây
+
+Speed
+
+Vận tốc ánh sáng
+
+20 giây
+
+Strength
+
+Biểu Liên Hoa
+
+30 giây
+
+Mình đã sửa cả cấu hình ban đầu và những dòng code ghi đè hồi chiêu phía sau để tránh tình trạng thay đổi không có hiệu lực.
+
+File game mới
+T-Fighter_UPD4.2.4.html
+
+HTML · Khoảng 5 MB
+
+Hoàn tất
+ Tải xuống game UPD4.2.4
+
+Đảm bảo cấu trúc cũ:
+
+Không xóa hệ thống nhân vật.
+
+Không thay đổi animation và sát thương.
+
+Không thay đổi cơ chế chiến đấu.
+
+Giữ nguyên các kỹ năng U, I và những chức năng khác.
+
+Giữ nguyên hệ số hồi chiêu riêng của BOT.
+
+JavaScript đã vượt qua kiểm tra cú pháp
+Chỉ bổ sung và điều chỉnh những phần liên quan đến thời gian hồi chiêu O.
+
+
+T-Fighter_UPD4.2.4.html
+HTML
+
+T-Fighter_UPD4.2.4(1).html
+HTML
+Tôi thấy game đã hoàn hảo rồi bay giờ bạn hãy update theo tôi một chút:
+
+***Update tổng thể game
+
+**Cơ chế trong game
+
+*hệ thống tính toán và hiển thị thanh máu của nhân vật:
+
+-Sửa lỗi hệ thống tính toán và hiển thị thanh máu của nhân vật:
+
+Hiện tại, thanh máu của nhân vật đang gặp lỗi nghiêm trọng về cách tính toán. Cụ thể, mặc dù thanh máu hiển thị 500%, nhưng hệ thống thực tế lại đang xử lý nó như 100% máu. Điều này khiến lượng sát thương và lượng máu bị trừ không chính xác. Ví dụ, khi nhân vật có 500% máu và nhận sát thương tương đương 30%, đáng lẽ máu còn lại phải là 470% (500 - 30 = 470), nhưng hệ thống lại chỉ hiển thị 150%. Điều này cho thấy giá trị 500% hiện tại chỉ mang tính tượng trưng chứ chưa phải giá trị máu thực tế. Vì vậy, hãy kiểm tra và sửa lại toàn bộ cơ chế quản lý, tính toán và hiển thị HP của nhân vật, đảm bảo con số phần trăm hiển thị chính là lượng máu thực tế mà nhân vật đang sở hữu, không bị quy đổi hoặc giới hạn ngầm về mức 100%. Tất cả các cơ chế liên quan như nhận sát thương, hồi máu, kỹ năng gây sát thương, hiệu ứng trừ máu theo thời gian và thanh máu giao diện đều phải sử dụng chung một hệ thống giá trị HP chính xác. Ví dụ: nếu nhân vật đang có 380% máu và nhận 30% sát thương thì máu phải giảm chính xác xuống còn 350% (380 - 30 = 350). Tương tự, nếu có 500% máu và nhận 30% sát thương thì phải còn 470%. Lưu ý quan trọng: Không được chỉ sửa con số hiển thị trên giao diện; phải sửa tận gốc logic tính toán HP trong hệ thống game, để mọi giá trị máu đều hoạt động chính xác theo phần trăm thực tế.
+Đọc file game T-Fighter_UPD4.2.4(1).html ở trên và sửa lại game theo tất cả các yêu cầu bên trên của tôi.
+***Chỉ cải thiện chứ không thay đổi hay xóa code cũ, nếu xóa cấu trúc cũ tôi sẽ khóc***
+
+…
+
+Đã xử lý trong 3m 50s
+
+Đã hoàn thành – T-Fighter UPD4.2.5
+Mình đã kiểm tra và sửa tận gốc cách tính sát thương theo HP trong file T-Fighter_UPD4.2.4(1).html.
+
+1. Nguyên nhân lỗi
+Trong code cũ, HP tối đa được khởi tạo bằng:
+
+BASE_HP × HP_MULT = 100 × 5 = 500
+
+Nhưng một số kỹ năng lại tính sát thương bằng maxHp × tỷ lệ. Vì vậy, đòn gây 30% sát thương thực tế trừ 150 HP thay vì 30 HP. 
+T-Fighter_UPD4.2.4(1).html
+ 
+T-Fighter_UPD4.2.4(1).html
+
+2. Cơ chế HP mới
+Mình đã thống nhất hệ thống theo nguyên tắc:
+
+HP tối đa vẫn là 500.
+
+1 điểm phần trăm sát thương tương ứng 1 điểm HP.
+
+Sát thương 30% = trừ 30 HP.
+
+Sát thương 5% = trừ 5 HP.
+
+Sát thương 15% = trừ 15 HP.
+
+Kiểm tra các trường hợp tính toán
+
+500% HP − 30%
+
+470%
+380% HP − 30%
+
+350%
+3. Những hệ thống đã sửa
+Khởi tạo và quản lý HP thực tế.
+
+Công thức sát thương của các kỹ năng.
+
+Sát thương theo thời gian (Damage Over Time).
+
+Sát thương tích lũy khi đối thủ bị đóng băng.
+
+Combo và sát thương của Strength.
+
+Sát thương của Energy và Space.
+
+Cập nhật thanh máu và số phần trăm hiển thị.
+
+Giới hạn HP trong khoảng 0–500 và giữ nguyên giới hạn hồi máu.
+
+Đặc biệt: Thanh máu vẫn hiển thị theo tỷ lệ HP hiện tại trên tổng HP tối đa, còn con số bên cạnh hiển thị HP thực tế. Ví dụ 470/500 sẽ hiển thị 470% và thanh máu còn 94%.
+
+4. Tải phiên bản mới
+T-Fighter_UPD4.2.5.html
+
+HTML · Khoảng 5 MB
+
+Đã tạo
+ Tải game UPD4.2.5 tại đây
+
+5. Kiểm tra code
+4 khối JavaScript vượt qua kiểm tra cú pháp
+Đã kiểm tra các phép tính 500 − 30, 380 − 30 và tổng sát thương 5 + 5 + 5 + 15. Không còn công thức sát thương phần trăm nào nhân trực tiếp với maxHp.
+
+Mình giữ nguyên cấu trúc nhân vật, animation, dữ liệu và hệ thống chiến đấu cũ; chỉ điều chỉnh những công thức liên quan đến HP. Chưa xác nhận toàn bộ gameplay trực tiếp trên trình duyệt.
+
+Bản gốc vẫn được giữ nguyên, bản mới được xuất thành file riêng.
+
+
+T-Fighter_UPD4.2.5.html
 HTML
 <!DOCTYPE html>
 <html lang="vi">
@@ -877,8 +1132,9 @@ HTML
 
         // Bot yếu đi 30% (di chuyển, tần suất hành động, sát thương)
         const BOT_NERF = 0.55;   // (trước là 0.7) bot yếu đi thêm
-        const BASE_HP = 100;           // mốc máu gốc: sát thương theo % luôn tính trên 100
-        const HP_MULT = 5;   /* [UPD4] máu 500% */             // máu nhân vật x3 (100% -> 300%)
+        const BASE_HP = 100;           // 100 điểm HP tương ứng 100 điểm phần trăm sát thương cơ sở
+        const HP_MULT = 5;               // Sức chứa HP thực = 500; không nhân sát thương phần trăm theo hệ số này
+        const HP_PERCENT_BASE = BASE_HP; // Mọi sát thương/hồi-trừ theo % dùng chung thang HP cơ sở 100
         const BOT_SKILL_DMG = 0.6;     // skill của bot chỉ gây 60% sát thương
         const BOT_SKILL_CD_MULT = 1.6; // hồi chiêu skill của bot dài hơn 1.6 lần
         const MAX_ROUNDS = 5;          // tối đa 5 round
@@ -911,7 +1167,7 @@ HTML
         const SKILLS = {
             KeyU: { type: 'blast', name: 'Energy Blast', cd: 10000 },
             KeyI: { type: 'kame',  name: 'Kamehameha',   cd: 15000 },
-            KeyO: { type: 'bomb',  name: 'Spirit Bomb',  cd: 25000 }
+            KeyO: { type: 'bomb',  name: 'Spirit Bomb',  cd: 30000 }
         };
         const skillReadyAt = { KeyU: 0, KeyI: 0, KeyO: 0 };
         const botSkillReadyAt = { KeyU: 0, KeyI: 0, KeyO: 0 };   // hồi chiêu riêng của bot
@@ -1255,7 +1511,8 @@ HTML
                     damage *= 0.9;
                     this.breakShield();
                 }
-                this.hp = Math.max(0, this.hp - damage);
+                damage = Number.isFinite(damage) ? Math.max(0, damage) : 0;
+                this.hp = Math.max(0, Math.min(this.maxHp, this.hp - damage));
                 this.vx = knockbackX;
                 this.vy = knockbackY;
                 if (knockbackY < 0) this.grounded = false;
@@ -1470,7 +1727,7 @@ HTML
                 // Tự động hồi máu cho Bao Cát ở Chế độ 1 khi người chơi ngừng đánh
                 if (this.isBot && this.botMode === 1 && this.state === 'idle' && this.hp < this.maxHp) {
                     if (this.animTime % 20 === 0) {
-                        this.hp = Math.min(this.maxHp, this.hp + 2 * HP_MULT);
+                        this.hp = Math.min(this.maxHp, this.hp + HP_PERCENT_BASE * 0.02 * HP_MULT);
                         updateHealthUI();
                     }
                 }
@@ -2816,10 +3073,17 @@ HTML
         }
 
         function updateHealthUI() {
-            playerHpBar.style.width = `${player.hp / player.maxHp * 100}%`;
-            playerHpText.textContent = `${Math.round(player.hp)}%`;
-            botHpBar.style.width = `${bot.hp / bot.maxHp * 100}%`;
-            botHpText.textContent = `${Math.round(bot.hp)}%`;
+            // hp là số HP thực (thang 0..500); nhãn hiển thị trực tiếp giá trị này,
+            // không quy đổi về 0..100. Chỉ chiều rộng thanh mới biểu diễn tỷ lệ trên sức chứa.
+            const hpLabel = (value) => `${Number(Math.max(0, value).toFixed(2))}%`;
+            const hpBarWidth = (fighter) => {
+                const capacity = Number.isFinite(fighter.maxHp) && fighter.maxHp > 0 ? fighter.maxHp : BASE_HP;
+                return `${Math.max(0, Math.min(100, fighter.hp / capacity * 100))}%`;
+            };
+            playerHpBar.style.width = hpBarWidth(player);
+            playerHpText.textContent = hpLabel(player.hp);
+            botHpBar.style.width = hpBarWidth(bot);
+            botHpText.textContent = hpLabel(bot.hp);
         }
 
         // Bắt sự kiện bàn phím
@@ -3443,12 +3707,12 @@ HTML
             energy: {
                 KeyU: { type: 'blast',      name: 'Energy Blast',     short: 'Energy Blast', cd: 10000 },
                 KeyI: { type: 'kame',       name: 'Kamehameha',       short: 'Kamehameha',   cd: 15000 },
-                KeyO: { type: 'bomb',       name: 'Spirit Bomb',      short: 'Spirit Bomb',  cd: 25000 }
+                KeyO: { type: 'bomb',       name: 'Spirit Bomb',      short: 'Spirit Bomb',  cd: 30000 }
             },
             speed: {
                 KeyU: { type: 'gatling',    name: 'Liên hoàn đấm',    short: 'Liên hoàn', cd: 10000 },
                 KeyI: { type: 'afterimage', name: 'Dư ảnh',           short: 'Dư ảnh',        cd: 15000 },
-                KeyO: { type: 'lightspeed', name: 'Vận tốc ánh sáng', short: 'Vận tốc AS',    cd: 30000 }
+                KeyO: { type: 'lightspeed', name: 'Vận tốc ánh sáng', short: 'Vận tốc AS',    cd: 20000 }
             },
             time: {
                 KeyU: { type: 'timezone',   name: 'Vùng thời gian',   short: 'Vùng TG',       cd: 10000 },
@@ -3914,7 +4178,7 @@ HTML
                     let mult = 1;
                     if (opp.state === 'guard' && opp.shieldHits > 0) { mult = 0.9; opp.breakShield(); }
                     opp.freezeFor(180, 'light', s);     // khống chế 3 giây
-                    opp.frozen.pendingDmg = opp.maxHp * 0.07 * 3 * mult;   // [2.1] 7% máu tối đa mỗi giây x 3 giây, nổ đồng loạt khi hết khống chế
+                    opp.frozen.pendingDmg = HP_PERCENT_BASE * 0.07 * 3 * mult;   // [2.1] 7 điểm HP cơ sở/giây x 3 giây, nổ đồng loạt khi hết khống chế
                     L.cx = opp.x; L.cy = opp.y - 62; L.D = 118; L.H = 80;
                     s.hiddenFrames = 22;
                     spawnFloatingText(opp.x, opp.y - 160, 'VẬN TỐC ÁNH SÁNG!', '#b45309', 1.35);
@@ -5120,11 +5384,11 @@ HTML
         // =====================================================================
         // NHÂN VẬT MỚI: STRENGTH (trắng + xám)
         // =====================================================================
-        const STR = { NEAR: 0.30, FAR: 0.15, CHAIN_PER_SEC: 0.10, CHOP: 0.30 };    // % máu tối đa của đối thủ
+        const STR = { NEAR: 0.30, FAR: 0.15, CHAIN_PER_SEC: 0.10, CHOP: 0.30 };    // tỷ lệ sát thương trên thang HP cơ sở 100 (100 HP = 100%)
         CHAR_SKILLS.strength = {
             KeyU: { type: 'npunch', name: 'Cú đấm thường',          short: 'Đấm thường', cd: 15000 },
             KeyI: { type: 'cpunch', name: 'Cú đấm liên hoàn thường', short: 'Liên hoàn',  cd: 20000 },
-            KeyO: { type: 'chop',   name: 'Cú chém tay nghiêm túc',  short: 'Chém',       cd: 25000 }
+            KeyO: { type: 'chop',   name: 'Cú chém tay nghiêm túc',  short: 'Chém',       cd: 30000 }
         };
         CHAR_STYLE.strength = { p1: { color: '#6b7280', accent: '#ffffff' }, p2: { color: '#6b7280', accent: '#ffffff' } };
 
@@ -5244,7 +5508,7 @@ HTML
         function addTrail(s) {
             trails.push({ x0: s.x + s.facing * 60, dir: s.facing, y: s.y, len: WORLD_S() / 4, age: 0, life: 70 });
         }
-        function strSkillDmg(en, pct, s) { return en.maxHp * pct * (s.skillMult || 1); }
+        function strSkillDmg(en, pct, s) { return HP_PERCENT_BASE * pct * (s.skillMult || 1); }
 
         SKILL_IMPL.npunch = { can: groundIdle, start(s) { s.beginCast('npunch'); setPrincipleBadge("Cú đấm thường (Normal Punch)", 80); } };
         SKILL_IMPL.cpunch = { can: groundIdle, start(s) { s.beginCast('cpunch'); s.gat = { locked: false, n: 0, mult: 1, total: 0 }; setPrincipleBadge("Đấm liên hoàn thường!", 80); } };
@@ -5291,7 +5555,7 @@ HTML
             if (G.locked) {
                 if (opp.state !== 'held' || opp.heldBy !== s) { s.endCast(); return; }
                 if (t >= 10 && t < 130) {
-                    const d = opp.maxHp * STR.CHAIN_PER_SEC / 60 * G.mult * (s.skillMult || 1);       // 10% máu/giây trong 2 giây
+                    const d = HP_PERCENT_BASE * STR.CHAIN_PER_SEC / 60 * G.mult * (s.skillMult || 1);       // 10 điểm HP cơ sở/giây trong 2 giây
                     opp.hp = Math.max(0, opp.hp - d); G.total += d; updateHealthUI();
                     for (let k = 0; k < 3; k++) strFists.push({ x: s.x + s.facing * rr(46, 108), y: s.y - rr(40, 120), r: rr(6, 13), life: 5, max: 5, dir: s.facing });
                     if (t % 3 === 0) spawnHitSparks(opp.x - s.facing * 8, opp.y - rr(40, 120), '#e5e7eb', false);
@@ -5434,10 +5698,10 @@ HTML
                 if (r.act) {
                     r.actT++;
                     o.x += (r.x - o.x) * 0.16; o.vx *= 0.3;               // hút vào, không thoát được
-                    if (r.actT % 6 === 0 && o.hp > 1) { o.hp = Math.max(1, o.hp - o.maxHp * 0.05 / 10 * (s.skillMult || 1)); updateHealthUI(); }   // 5% máu tối đa / giây
+                    if (r.actT % 6 === 0 && o.hp > 1) { o.hp = Math.max(1, o.hp - HP_PERCENT_BASE * 0.05 / 10 * (s.skillMult || 1)); updateHealthUI(); }   // 5 điểm HP cơ sở / giây
                     if (r.actT >= 120) {                                   // hết 2s: nổ nhỏ 5% + hất văng
                         const dir = o.x >= r.x ? 1 : -1;
-                        o.takeHit(o.maxHp * 0.05 * (s.skillMult || 1), dir * 14, -10, true, s, true);
+                        o.takeHit(HP_PERCENT_BASE * 0.05 * (s.skillMult || 1), dir * 14, -10, true, s, true);
                         blastRings.push({ x: r.x, y: r.y - 90, r: 20, max: 170, life: 18, maxLife: 18 });
                         spawnHitSparks(r.x, r.y - 90, '#a78bfa', true); spSfx('boom'); camera.triggerShake(16);
                         spRifts.splice(i, 1);
@@ -5449,7 +5713,7 @@ HTML
                 if (f.t === 180) {
                     if (f.caught && o.frozen && o.frozen.kind === 'void') {   // sụp đổ: 25% sát thương chí mạng
                         o.releaseFreeze();
-                        const dmg = o.maxHp * 0.20 * (s.skillMult || 1);
+                        const dmg = HP_PERCENT_BASE * 0.20 * (s.skillMult || 1);
                         o.takeHit(dmg, (o.x >= f.x ? 1 : -1) * ((WORLD_S() / 4) / 12.5), -14, true, s, true);
                         spawnFloatingText(o.x, o.y - 160, `TUYỆT DIỆT!! -${Math.round(dmg)}`, '#4f46e5', 1.6);
                         hitstopFrames = 10; impactFlashFrames = 5; camera.triggerShake(30);
@@ -5497,7 +5761,7 @@ HTML
         // ================= [UPD4.1] SPACE: THIÊN THẠCH + SỬA TUYỆT DIỆT, SPEED: VẬN TỐC ÁNH SÁNG MỚI, STRENGTH =================
         CHAR_SKILLS.space.KeyI = { type: 'meteor', name: 'Thiên Thạch', short: 'Thiên Thạch', cd: 15000 };
         CHARACTERS.space.skillText = ['Nội tại · Đánh thường 4 lần: khiên không gian (-10% sát thương, 3s)', 'U · Vết nứt không gian', 'I · Thiên Thạch', 'O · Tuyệt Diệt', 'S · Khiên (chung)'];
-        CHAR_SKILLS.speed.KeyI.cd = 20000; CHAR_SKILLS.speed.KeyO.cd = 25000;
+        CHAR_SKILLS.speed.KeyI.cd = 20000; CHAR_SKILLS.speed.KeyO.cd = 20000;
         const spHoles = [], spMeteors = [], lsGhosts = [];
         SKILL_IMPL.meteor = { can: groundIdle, start(s) { s.beginCast('meteor'); setPrincipleBadge("Thiên Thạch!", 90); } };
         CASTS.meteor = function (s, opp) {
@@ -5527,7 +5791,7 @@ HTML
                 blastRings.push({ x: m.tx, y: m.ty - 60, r: 20, max: 220, life: 20, maxLife: 20 });
                 spawnHitSparks(m.tx, m.ty - 40, '#fb923c', true); camera.triggerShake(18); spSfx('boom');
                 if (o.hp > 0 && Math.abs(o.x - m.tx) < 120 && Math.abs(o.y - m.ty) < 120)       // dash (L / numpad 3) vẫn né được
-                    o.takeHit(o.maxHp * 0.07 * (s.skillMult || 1), (o.x >= m.tx ? 1 : -1) * 5, -9, m.k === 2, s, true);
+                    o.takeHit(HP_PERCENT_BASE * 0.07 * (s.skillMult || 1), (o.x >= m.tx ? 1 : -1) * 5, -9, m.k === 2, s, true);
                 spMeteors.splice(i, 1);
             }
         }
@@ -5594,7 +5858,7 @@ HTML
             }
             if (!L.base) return;
             if (t === 6) {                                           // đá bay: 3% máu tối đa, rồi treo trên không
-                opp.hp = Math.max(1, opp.hp - opp.maxHp * 0.03 * mult); updateHealthUI();
+                opp.hp = Math.max(1, opp.hp - HP_PERCENT_BASE * 0.03 * mult); updateHealthUI();
                 opp.freezeFor(215, 'lsair', s); opp.grounded = false;
                 spawnHitSparks(opp.x, opp.y - 60, '#facc15', true); hitstopFrames = 5; camera.triggerShake(16);
                 spawnFloatingText(opp.x, opp.y - 150, 'ĐÁ BAY!', '#dc2626', 1.4);
@@ -5606,14 +5870,14 @@ HTML
                 s.vy = 0; s.vx = 0; s.y = L.base - H;
                 if ((t - 16) % 9 === 0) { ghost(); L.side = -L.side; s.x = clamp(opp.x + L.side * 95, leftWall, rightWall); s.facing = -L.side; ghost(); }
                 if ((t - 16) % 6 === 0 && opp.hp > 1) {
-                    opp.hp = Math.max(1, opp.hp - opp.maxHp * 0.04 / 10 * mult); updateHealthUI();
+                    opp.hp = Math.max(1, opp.hp - HP_PERCENT_BASE * 0.04 / 10 * mult); updateHealthUI();
                     spawnHitSparks(opp.x + rr(-20, 20), opp.y - 60 + rr(-30, 30), '#fde047', false);
                 }
             }
             if (t === 196) {                                         // đá kết liễu: văng 1/4 map + 5%
                 s.x = clamp(opp.x - 80, leftWall, rightWall); s.facing = 1; ghost();
                 opp.releaseFreeze(); opp.grounded = false;
-                opp.takeHit(opp.maxHp * 0.05 * mult, ((WORLD_S() / 4) / 12.5), -6, true, s, true);
+                opp.takeHit(HP_PERCENT_BASE * 0.05 * mult, ((WORLD_S() / 4) / 12.5), -6, true, s, true);
                 hitstopFrames = 8; impactFlashFrames = 3; camera.triggerShake(26);
                 spawnFloatingText(opp.x, opp.y - 150, 'KẾT LIỄU!', '#dc2626', 1.5);
             }
@@ -6685,7 +6949,7 @@ HTML
                 spiritExplosion42 = { x:hx, y:hy, age:0, life:30 };
                 if (hit) {
                     const dir = o.x >= s.x ? 1 : -1;
-                    const dmg = o.maxHp * .30 * (s.skillMult || 1);
+                    const dmg = HP_PERCENT_BASE * .30 * (s.skillMult || 1);
                     o.takeHit(dmg, dir * ((WORLD_S()/4)/12.5), -17, true, s, true);
                     o.state='knockdown'; o.stateTimer=55; o.grounded=false;
                     o.vx=dir*((WORLD_S()/4)/12.5); o.vy=-17;
@@ -6724,7 +6988,7 @@ HTML
         }
         if (t===15) {
             if (opp.hp<=0 || opp.frozen || opp.state==='knockdown') { s._lotus42=null; s.endCast(); return; }
-            const dmg=opp.maxHp*.05*(s.skillMult||1);
+            const dmg=HP_PERCENT_BASE*.05*(s.skillMult||1);
             opp.takeHit(dmg,L.dir*5,-7,false,s,true);
             L.targetX=opp.x; L.targetFloor=floorAtFor(opp); L.airY=L.targetFloor-390;
             opp.state='jump'; opp.stateTimer=0; opp.grounded=false; opp.vx=0; opp.vy=0; opp.x=L.targetX; opp.y=L.airY;
@@ -6752,7 +7016,7 @@ HTML
         if (t===77 && !L.hit2) {
             if (opp.frozen && opp.frozen.kind==='lotus') opp.frozen=null;
             opp.x=L.targetX; opp.y=L.targetFloor; opp.grounded=true; opp.vx=0; opp.vy=0;
-            const dmg=opp.maxHp*.25*(s.skillMult||1);
+            const dmg=HP_PERCENT_BASE*.25*(s.skillMult||1);
             opp.takeHit(dmg,L.dir*((WORLD_S()/5)/12.5),-15,true,s,true);
             opp.state='knockdown'; opp.stateTimer=52; opp.grounded=false; opp.vx=L.dir*((WORLD_S()/5)/12.5); opp.vy=-15;
             s.state='knockdown'; s.stateTimer=48; s.castType=null; s.beam=null; s.grounded=false; s.vx=-L.dir*((WORLD_S()/6)/12.5); s.vy=-13;
@@ -6890,11 +7154,11 @@ HTML
                 // giữ trong vùng hút nhưng không đặt trạng thái stun: animation di chuyển vẫn chạy
                 if(Math.abs(o.x-r.x)>88)o.x=r.x-Math.sign(dx||1)*88;
                 if(r.actT===60||r.actT===120){
-                    if(o.hp>0){const dmg=o.maxHp*.03*(s.skillMult||1);o.hp=Math.max(0,o.hp-dmg);updateHealthUI();spawnFloatingText(o.x,o.y-138,`-${Math.round(dmg)} (KHÔNG GIAN)`,'#6d28d9',.95);}
+                    if(o.hp>0){const dmg=HP_PERCENT_BASE*.03*(s.skillMult||1);o.hp=Math.max(0,o.hp-dmg);updateHealthUI();spawnFloatingText(o.x,o.y-138,`-${Math.round(dmg)} (KHÔNG GIAN)`,'#6d28d9',.95);}
                 }
             }
             if(r.life<=0){
-                if(r.act&&!r.exploded){r.exploded=true;const dir=o.x>=r.x?1:-1,dmg=o.maxHp*.05*(s.skillMult||1);
+                if(r.act&&!r.exploded){r.exploded=true;const dir=o.x>=r.x?1:-1,dmg=HP_PERCENT_BASE*.05*(s.skillMult||1);
                     o.takeHit(dmg,dir*8,-7,false,s,true);o.vx=dir*10;o.vy=-7;
                     blastRings.push({x:r.x,y:r.y-65,r:12,max:150,life:20,maxLife:20});
                     spawnHitSparks(r.x,r.y-65,'#a78bfa',true);spawnFloatingText(o.x,o.y-160,`NỨT KHÔNG GIAN -${Math.round(dmg)}`,'#6d28d9',1.1);
@@ -6910,7 +7174,7 @@ HTML
                 // Không phụ thuộc trạng thái frozen còn tồn tại hay không: hai bàn phím nhận cùng một vụ nổ.
                 if(f.caught&&o&&o.hp>0){
                     if(o.frozen&&o.frozen.kind==='void')o.releaseFreeze();
-                    const dmg=o.maxHp*.20*(s.skillMult||1);
+                    const dmg=HP_PERCENT_BASE*.20*(s.skillMult||1);
                     o.takeHit(dmg,(o.x>=f.x?1:-1)*(WORLD_S()/4)/12.5,-14,true,s,true);
                     spawnFloatingText(o.x,o.y-160,`TUYỆT DIỆT!! -${Math.round(dmg)}`,'#4f46e5',1.6);
                     hitstopFrames=10;impactFlashFrames=5;camera.triggerShake(30);updateHealthUI();
@@ -7414,7 +7678,7 @@ HTML
                     blastRings.push({ x:hx, y:hy, r:26, max:390, life:32, maxLife:32 });
                     spiritExplosion42 = { x:hx, y:hy, age:0, life:32 };
                     if (landedOnTarget && o && o.hp > 0) {
-                        const dmg = o.maxHp * .30 * (s.skillMult || 1);
+                        const dmg = HP_PERCENT_BASE * .30 * (s.skillMult || 1);
                         o.takeHit(dmg, b.dir * ((WORLD_S()/4)/12.5), -17, true, s, true);
                         o.state='knockdown'; o.stateTimer=55; o.grounded=false;
                         o.vx=b.dir*((WORLD_S()/4)/12.5); o.vy=-17;
@@ -7528,7 +7792,7 @@ HTML
             }
             if (t===25) {
                 if (opp.hp<=0 || opp.frozen || opp.state==='knockdown') { s._lotus42=null; s.endCast(); return; }
-                const dmg=opp.maxHp*.05*(s.skillMult||1);
+                const dmg=HP_PERCENT_BASE*.05*(s.skillMult||1);
                 opp.takeHit(dmg,L.dir*5,-7,false,s,true);
                 L.targetX=opp.x; L.targetFloor=floorAtFor(opp); L.airY=L.targetFloor-390;
                 opp.state='jump'; opp.stateTimer=0; opp.grounded=false; opp.vx=0; opp.vy=0;
@@ -7573,7 +7837,7 @@ HTML
             if (t===185 && !L.hit2) {
                 if (opp.frozen && opp.frozen.kind==='lotus') opp.frozen=null;
                 opp.x=L.targetX; opp.y=L.targetFloor; opp.grounded=true; opp.vx=0; opp.vy=0;
-                const dmg=opp.maxHp*.25*(s.skillMult||1);
+                const dmg=HP_PERCENT_BASE*.25*(s.skillMult||1);
                 opp.takeHit(dmg,L.dir*((WORLD_S()/5)/12.5),-15,true,s,true);
                 opp.state='knockdown'; opp.stateTimer=52; opp.grounded=false;
                 opp.vx=L.dir*((WORLD_S()/5)/12.5); opp.vy=-15;
@@ -7656,594 +7920,742 @@ HTML
             [player,bot].forEach(f => { f._lotusSpin42=0; f._lotus42=null; });
         };
 
-/* ================= UPD4.2.2 APPEND-ONLY PATCH =================
-   HUD kính khói + Energy O trình tự chuẩn + Strength O combo 30%.
-   Chỉ thêm lớp bổ sung; không xóa hoặc sửa cấu trúc gameplay cũ. */
-(() => {
-  if (window.__TFIGHTER_UPD422__) return;
-  window.__TFIGHTER_UPD422__ = true;
+        // =====================================================================
+        // [UPD4.2.3 APPEND-ONLY PATCH]
+        // HUD Smoke Glass + Strength O combo chain + strict Energy O sequence.
+        // Không xóa cấu trúc cũ: chỉ thêm lớp style và ghi đè các điểm xử lý cuối.
+        // =====================================================================
+        (() => {
+            // --------------------------- HUD GLASS ---------------------------
+            const hudGlassStyle42v3 = document.createElement('style');
+            hudGlassStyle42v3.id = 'tf-hud-smoke-glass-42v3';
+            hudGlassStyle42v3.textContent = `
+              .tf-hud-glass42v3 {
+                box-sizing:border-box !important;
+                padding:5px 10px !important;
+                background:rgba(105,112,122,.50) !important;
+                background-color:rgba(105,112,122,.50) !important;
+                -webkit-backdrop-filter:blur(12px) saturate(125%) !important;
+                backdrop-filter:blur(12px) saturate(125%) !important;
+                border:1.5px solid rgba(12,15,20,.78) !important;
+                box-shadow:0 4px 13px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.18) !important;
+                border-radius:12px !important;
+              }
+              .tf-hud-glass42v3 > .flex { margin-bottom:2px !important; }
+              .tf-hud-glass42v3 .tf-hud-healthrail42v3 {
+                height:11px !important;
+                min-height:11px !important;
+                box-sizing:border-box !important;
+                border-width:1.5px !important;
+                padding:1px !important;
+                border-radius:999px !important;
+                background:rgba(24,29,36,.92) !important;
+              }
+              .tf-hud-glass42v3 .tf-hud-healthrail42v3 > div {
+                height:100% !important;
+                border-radius:999px !important;
+              }
+              @media (max-width:640px) {
+                .tf-hud-glass42v3 { padding:4px 7px !important; border-radius:9px !important; }
+                .tf-hud-glass42v3 .tf-hud-healthrail42v3 { height:9px !important; min-height:9px !important; }
+              }
+              @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+                .tf-hud-glass42v3 { background:rgba(105,112,122,.78) !important; }
+              }
+            `;
+            if (!document.getElementById(hudGlassStyle42v3.id)) document.head.appendChild(hudGlassStyle42v3);
 
-  // ------------------------------------------------------------------
-  // A. HUD: Smoke Gray glassmorphism, giảm gần 50% chiều cao tổng thể.
-  // ------------------------------------------------------------------
-  const hudStyle422 = document.createElement('style');
-  hudStyle422.id = 'tf-upd422-hud-style';
-  hudStyle422.textContent = `
-    .upd422-hud {
-      box-sizing:border-box !important;
-      padding:5px 11px !important;
-      min-height:0 !important;
-      border:1.5px solid rgba(8,10,14,.82) !important;
-      border-radius:14px !important;
-      background:rgba(91,98,108,.50) !important;
-      background-image:none !important;
-      -webkit-backdrop-filter:blur(10px) saturate(135%) !important;
-      backdrop-filter:blur(10px) saturate(135%) !important;
-      box-shadow:0 5px 16px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.18) !important;
-    }
-    .upd422-hud .upd422-hud-label-row {
-      min-height:13px !important;
-      margin-bottom:2px !important;
-      line-height:1 !important;
-    }
-    .upd422-hud .upd422-hud-label-row > * { line-height:1.05 !important; }
-    .upd422-hud .upd422-hud-label-row span { font-size:12px !important; }
-    .upd422-hp-track {
-      box-sizing:border-box !important;
-      height:12px !important;
-      min-height:12px !important;
-      padding:1px !important;
-      border:1.5px solid rgba(0,0,0,.92) !important;
-      border-radius:999px !important;
-      background:rgba(16,20,26,.84) !important;
-      overflow:hidden !important;
-    }
-    .upd422-hp-fill { height:100% !important; border-radius:999px !important; }
-    .upd422-hud .round-stars { margin-top:1px !important; gap:2px !important; }
-    @media(max-width:640px) {
-      .upd422-hud { padding:4px 7px !important; border-radius:11px !important; }
-      .upd422-hud .upd422-hud-label-row { min-height:12px !important; }
-      .upd422-hud .upd422-hud-label-row span { font-size:10px !important; }
-      .upd422-hp-track { height:10px !important; min-height:10px !important; }
-    }
-  `;
-  document.head.appendChild(hudStyle422);
+            [['playerHpBar'], ['botHpBar']].forEach(([id]) => {
+                const bar = document.getElementById(id);
+                if (!bar) return;
+                const panel = bar.closest('.paper-panel');
+                const rail = bar.parentElement;
+                if (panel) panel.classList.add('tf-hud-glass42v3');
+                if (rail) rail.classList.add('tf-hud-healthrail42v3');
+            });
 
-  const pHp422 = document.getElementById('playerHpBar');
-  const bHp422 = document.getElementById('botHpBar');
-  [pHp422, bHp422].forEach((bar) => {
-    if (!bar) return;
-    const panel = bar.closest('.paper-panel');
-    const row = bar.parentElement && bar.parentElement.previousElementSibling;
-    if (panel) panel.classList.add('upd422-hud');
-    if (row) row.classList.add('upd422-hud-label-row');
-    if (bar.parentElement) bar.parentElement.classList.add('upd422-hp-track');
-    bar.classList.add('upd422-hp-fill');
-  });
+            // ---------------------- SHARED HELPERS --------------------------
+            const lotusEase42v3 = p => {
+                p = clamp(p, 0, 1);
+                return p * p * (3 - 2 * p);
+            };
+            const lotusLerp42v3 = (a, b, p) => a + (b - a) * p;
+            const lotusFloor42v3 = f => {
+                let floor = groundY;
+                const ps = platformsCached();
+                for (let i = 0; i < ps.length; i++) {
+                    const p = ps[i];
+                    if (f.x >= p.x0 - 5 && f.x <= p.x1 + 5 && Math.abs(f.y - p.top) <= 34) {
+                        floor = Math.min(floor, p.top);
+                    }
+                }
+                return floor;
+            };
+            const lotusSameTier42v3 = (a, b) => {
+                if (!a || !b || !a.grounded || !b.grounded) return false;
+                const fa = lotusFloor42v3(a), fb = lotusFloor42v3(b);
+                return Math.abs(fa - fb) <= 18 && Math.abs(a.y - b.y) <= 26;
+            };
+            const lotusSetPhase42v3 = (L, phase, extra) => {
+                L.phase = phase;
+                L.frame = 0;
+                if (extra) Object.assign(L, extra);
+            };
+            const lotusSetActorGround42v3 = (s, x, y, facing) => {
+                s.x = clamp(x, leftWall + 12, rightWall - 12);
+                s.y = y;
+                s.facing = facing || s.facing || 1;
+                // Dùng vận tốc bù trọng lực để giữ chuyển động được điều khiển từng frame.
+                s.grounded = false;
+                s.vx = 0;
+                s.vy = -s.gravity;
+                s._lotusSpin42 = 0;
+            };
+            const lotusSetActorAir42v3 = (s, x, y, facing) => {
+                s.x = clamp(x, leftWall + 12, rightWall - 12);
+                s.y = y;
+                s.facing = facing || s.facing || 1;
+                s.grounded = false;
+                s.vx = 0;
+                s.vy = -s.gravity;
+                s._lotusSpin42 = 0;
+            };
+            const lotusSetTarget42v3 = (o, x, y, state, grounded) => {
+                if (!o) return;
+                o.x = clamp(x, leftWall + 12, rightWall - 12);
+                o.y = y;
+                o.state = state;
+                o.grounded = !!grounded;
+                o.vx = 0;
+                o.vy = state === 'jump' ? -1 : 0;
+                if (o.frozen && o.frozen.kind === 'lotusCombo42v3') o.frozen.left = 1000000;
+                if (typeof o.computeSkeletonPose === 'function') o.computeSkeletonPose();
+            };
+            const lotusDamage42v3 = (s, L, pct, label, color) => {
+                const o = L.target;
+                if (!o || L.hpZeroAtStart) return 0;
+                const dmg = HP_PERCENT_BASE * pct * (s.skillMult || 1);
+                o.takeHit(dmg, 0, 0, false, s, true);
+                spawnFloatingText(o.x, o.y - 154, `${label} -${Math.round(dmg)}`, color || '#4b5563', 1.18);
+                spawnHitSparks(o.x, o.y - 64, color || '#e5e7eb', true);
+                updateHealthUI();
+                return dmg;
+            };
+            const lotusStartChase42v3 = (s, L, direction, phaseName) => {
+                const o = L.target;
+                const quarter = WORLD_S() / 4;
+                const fromX = o.x;
+                const toX = clamp(fromX + direction * quarter, leftWall + 55, rightWall - 55);
+                const actorToX = clamp(toX - direction * 76, leftWall + 55, rightWall - 55);
+                const distance = Math.max(Math.abs(toX - fromX), Math.abs(actorToX - s.x));
+                const frames = Math.max(18, Math.ceil(distance / 25));
+                const endFloor = lotusFloor42v3({ x:toX, y:L.targetFloor });
+                lotusSetPhase42v3(L, phaseName, {
+                    flightStartX: fromX,
+                    flightEndX: toX,
+                    chaseStartX: s.x,
+                    chaseEndX: actorToX,
+                    chaseFrames: frames,
+                    chaseFloorStart: L.targetFloor,
+                    chaseFloorEnd: endFloor,
+                    chaseDirection: direction
+                });
+                s.facing = direction;
+            };
 
-  // ------------------------------------------------------------------
-  // B. ENERGY O: nhảy -> đứng yên 30 frame -> giơ tay/tích tụ -> ném.
-  // ------------------------------------------------------------------
-  CASTS.bomb = function (s, opp) {
-    s.castTimer++;
-    const t = s.castTimer;
-    const B = s._spiritBomb42 || (s._spiritBomb42 = {
-      baseY:s.y, baseX:s.x, facing:s.facing || 1, radius:0, thrown:false,
-      aimRange:WORLD_S()/3, aimTarget:null, armRaise:0
-    });
-    s.vx = 0;
-    s.facing = B.facing || s.facing || 1;
+            // Opponent remains fully locked until the full Strength combo ends.
+            const _spUpdateLotusLock42v3 = SP.update;
+            SP.update = function (opponent, inputKeys) {
+                if (this.frozen && this.frozen.kind === 'lotusCombo42v3') {
+                    this.animTime++;
+                    this.frozen.left = 1000000;
+                    this.vx = 0;
+                    this.vy = 0;
+                    return;
+                }
+                return _spUpdateLotusLock42v3.call(this, opponent, inputKeys);
+            };
 
-    if (t === 1) {
-      B.baseY = s.y; B.baseX = s.x; B.facing = s.facing || 1;
-      B.aimRange = WORLD_S()/3; B.aimTarget = null; B.radius = 0; B.thrown = false;
-      B.armRaise = 0;
-      s.grounded = false; s.vy = -s.gravity;
-      spawnDust(s.x, s.y, 10, 0); camera.triggerShake(5);
-    }
+            // --------------------- ENERGY: STRICT SPIRIT BOMB ----------------
+            // 20 frames jump -> 30 frames perfectly still -> lift arms and grow orb
+            // from almost zero -> throw. Legacy cast-bubble is suppressed below.
+            CASTS.bomb = function (s, opp) {
+                s.castTimer++;
+                const t = s.castTimer;
+                const B = s._spiritBomb42 || (s._spiritBomb42 = {
+                    baseY:s.y, baseX:s.x, facing:s.facing || 1, radius:0,
+                    thrown:false, aimRange:WORLD_S()/3, aimTarget:null
+                });
+                if (t === 1) {
+                    B.baseY = s.y;
+                    B.baseX = s.x;
+                    B.facing = s.facing || 1;
+                    B.radius = 0;
+                    B.thrown = false;
+                    B.aimTarget = null;
+                    B.aimRange = WORLD_S()/3;
+                    s.grounded = false;
+                    s.vx = 0;
+                    s.vy = -s.gravity;
+                    spawnDust(s.x, s.y, 9, 0);
+                    camera.triggerShake(5);
+                }
+                s.vx = 0;
+                s.facing = B.facing;
+                if (t <= 20) {
+                    const p = t / 20;
+                    s.y = B.baseY - 225 * lotusEase42v3(p);
+                    s.grounded = false;
+                    s.vy = -s.gravity;
+                    B.radius = 0;
+                } else if (t <= 50) {
+                    // Chính xác 30 frame (0,5 giây ở 60 FPS): không tay giơ, không cầu, không tích tụ.
+                    s.y = B.baseY - 225;
+                    s.grounded = false;
+                    s.vy = -s.gravity;
+                    B.radius = 0;
+                } else if (t <= 112) {
+                    // Hai tay bắt đầu nâng từ frame 51; quả cầu mở đầu cực nhỏ rồi lớn dần.
+                    s.y = B.baseY - 225;
+                    s.grounded = false;
+                    s.vy = -s.gravity;
+                    const p = lotusEase42v3((t - 50) / 62);
+                    B.radius = 2 + 193 * p; // đường kính 390px, xấp xỉ 3 lần chiều cao stickman
+                    if (t % 3 === 0) {
+                        const a = Math.random() * Math.PI * 2;
+                        const r = B.radius + rr(65, 145);
+                        particles.push({
+                            type:'spark', x:s.x + Math.cos(a)*r, y:s.y - 270 + Math.sin(a)*r,
+                            vx:-Math.cos(a)*rr(4,8), vy:-Math.sin(a)*rr(4,8), length:15,
+                            color:Math.random()>.35 ? '#bfdbfe' : '#ffffff', alpha:1, decay:.035
+                        });
+                    }
+                } else if (t === 113 && !B.thrown) {
+                    const x0 = s.x, y0 = s.y - 270;
+                    const ahead = (opp.x - s.x) * B.facing;
+                    const canLock = !!opp && opp.hp > 0 && ahead > 0 && ahead <= B.aimRange;
+                    B.aimTarget = canLock ? opp : null;
+                    const tx = canLock ? opp.x : (s.x + B.facing * B.aimRange);
+                    const ty = canLock ? (opp.y - 70) : y0;
+                    const dx = canLock ? (tx - x0) : B.facing;
+                    const dy = canLock ? (ty - y0) : 0;
+                    const d = Math.hypot(dx, dy) || 1;
+                    const speed = 22;
+                    spiritBombs42.push({
+                        owner:s, target:B.aimTarget, lockTarget:canLock,
+                        x:x0, y:y0, vx:dx/d*speed, vy:dy/d*speed,
+                        targetX:tx, targetY:ty, radius:195, age:0, exploded:false,
+                        dir:B.facing, aimRange:B.aimRange, travelled:0
+                    });
+                    B.thrown = true;
+                    B.radius = 0;
+                    setPrincipleBadge(canLock ? 'SPIRIT BOMB — KHÓA MỤC TIÊU PHÍA TRƯỚC!' : 'SPIRIT BOMB — NÉM THEO HƯỚNG ĐANG QUAY MẶT!', 100);
+                    camera.triggerShake(8);
+                }
+                if (t >= 113 && t < 134) {
+                    // Giữ độ cao trong animation ném; không để nhân vật rơi lệch giữa pha ném.
+                    s.y = B.baseY - 225; s.grounded = false; s.vy = -s.gravity;
+                }
+                if (t >= 134) {
+                    s.y = B.baseY;
+                    s.vy = 0;
+                    s.grounded = true;
+                    s._spiritBomb42 = null;
+                    s.endCast();
+                }
+            };
 
-    if (t <= 20) {
-      // Pha 1: chỉ nhảy lên không trung, chưa triệu hồi quả cầu.
-      const p = t/20, eased = p*p*(3-2*p);
-      s.y = B.baseY - 225*eased;
-      s.vy = -s.gravity; s.grounded = false;
-      B.radius = 0;
-    } else if (t <= 50) {
-      // Pha 2: đứng thẳng, bất động hoàn toàn đúng 30 frame (0,5 giây ở 60 FPS).
-      s.y = B.baseY - 225;
-      s.vy = -s.gravity; s.grounded = false;
-      B.armRaise = 0; B.radius = 0;
-    } else if (t <= 112) {
-      // Pha 3: tay từ từ nâng lên; quả cầu chỉ xuất hiện từ frame đầu của pha này.
-      s.y = B.baseY - 225;
-      s.vy = -s.gravity; s.grounded = false;
-      B.armRaise = clamp((t-50)/16,0,1);
-      const charge = clamp((t-50)/62,0,1);
-      const eased = charge*charge*(3-2*charge);
-      B.radius = 2 + 218*eased;
-      if (t % 3 === 0) {
-        const a = Math.random()*TAU, r = B.radius + rr(45,115);
-        particles.push({type:'spark',x:s.x+Math.cos(a)*r,y:s.y-270+Math.sin(a)*r,
-          vx:-Math.cos(a)*rr(3,7),vy:-Math.sin(a)*rr(3,7),length:14,
-          color:Math.random()>.35?'#bfdbfe':'#ffffff',alpha:1,decay:.04});
-      }
-    } else if (t === 113 && !B.thrown) {
-      // Pha 4: aim chỉ xét phía trước theo hướng đã quay mặt lúc bắt đầu chiêu.
-      const x0=s.x, y0=s.y-270;
-      const ahead=opp && opp.hp>0 ? (opp.x-s.x)*B.facing : -1;
-      const canLock=!!(opp && opp.hp>0 && !opp.frozen && ahead>0 && ahead<=B.aimRange);
-      B.aimTarget=canLock?opp:null;
-      const tx=canLock?opp.x:(s.x+B.facing*B.aimRange);
-      const ty=canLock?(opp.y-70):y0;
-      const dx=canLock?(tx-x0):B.facing, dy=canLock?(ty-y0):0;
-      const d=Math.hypot(dx,dy)||1, speed=22;
-      spiritBombs42.push({owner:s,target:B.aimTarget,lockTarget:canLock,
-        x:x0,y:y0,vx:dx/d*speed,vy:dy/d*speed,targetX:tx,targetY:ty,
-        radius:220,age:0,exploded:false,dir:B.facing,aimRange:B.aimRange,travelled:0});
-      B.thrown=true; B.radius=0;
-      setPrincipleBadge(canLock?'SPIRIT BOMB — KHÓA MỤC TIÊU PHÍA TRƯỚC!':'SPIRIT BOMB — NÉM THEO HƯỚNG ĐANG QUAY MẶT!',100);
-      camera.triggerShake(8);
-    }
+            // Keep the arm segments proportionate while lifting and throwing.
+            const _getCastPoseEnergy42v3 = SP.getCastPose;
+            SP.getCastPose = function () {
+                if (this.charId === 'energy' && this.castType === 'bomb') {
+                    const t = this.castTimer || 0;
+                    const P = o => Object.assign(this.getDefaultPose(), o);
+                    if (t <= 20) {
+                        return P({
+                            hipX:0, hipY:-50, neckY:-96, headY:-116,
+                            lShoulderX:-3,lShoulderY:-90,rShoulderX:3,rShoulderY:-90,
+                            lElbowX:-16,lElbowY:-68,lHandX:-7,lHandY:-51,
+                            rElbowX:15,rElbowY:-68,rHandX:17,rHandY:-54,
+                            lKneeX:-17,lKneeY:-29,lFootX:-26,lFootY:-9,
+                            rKneeX:19,rKneeY:-32,rFootX:26,rFootY:-12
+                        });
+                    }
+                    if (t <= 50) {
+                        // Một tư thế đứng thẳng cố định trong toàn bộ 30 frame đứng yên.
+                        return P({
+                            hipX:0,hipY:-46,neckX:0,neckY:-94,headX:0,headY:-114,
+                            lShoulderX:0,lShoulderY:-90,rShoulderX:0,rShoulderY:-90,
+                            lElbowX:-14,lElbowY:-68,lHandX:-6,lHandY:-50,
+                            rElbowX:14,rElbowY:-68,rHandX:16,rHandY:-54,
+                            lKneeX:-12,lKneeY:-24,lFootX:-16,lFootY:0,
+                            rKneeX:12,rKneeY:-24,rFootX:16,rFootY:0
+                        });
+                    }
+                    if (t <= 112) {
+                        const p = clamp((t - 50) / 18, 0, 1);
+                        const handY = -54 - 80*p;
+                        const elbowY = -68 - 42*p;
+                        return P({
+                            hipX:0,hipY:-46,neckY:-94,headY:-114,
+                            lShoulderX:-4,lShoulderY:-90,rShoulderX:4,rShoulderY:-90,
+                            lElbowX:-14-9*p,lElbowY:elbowY,lHandX:-6-17*p,lHandY:handY,
+                            rElbowX:14+9*p,rElbowY:elbowY,rHandX:16+17*p,rHandY:handY,
+                            lKneeX:-13,lKneeY:-24,lFootX:-18,lFootY:0,
+                            rKneeX:13,rKneeY:-24,rFootX:18,rFootY:0
+                        });
+                    }
+                    const release = clamp((t - 112) / 8, 0, 1);
+                    return P({
+                        hipX:4+release*4,hipY:-44,neckX:5+release*5,neckY:-88,headX:8+release*6,headY:-108,
+                        lShoulderX:-2,lShoulderY:-88,rShoulderX:5,rShoulderY:-88,
+                        lElbowX:15+release*5,lElbowY:-104,lHandX:28+release*7,lHandY:-123,
+                        rElbowX:19+release*5,rElbowY:-102,rHandX:33+release*7,rHandY:-121,
+                        lKneeX:-14,lFootX:-25,rKneeX:17,rFootX:26
+                    });
+                }
+                if (this.charId === 'strength' && this.castType === 'chop' && this._lotus42) {
+                    const L = this._lotus42;
+                    const f = L.frame || 0;
+                    const P = o => Object.assign(this.getDefaultPose(), o);
+                    if (L.phase === 'approach' || L.phase === 'chase1' || L.phase === 'chase2') {
+                        const q = this.animTime * .58;
+                        const sn = Math.sin(q), cs = Math.cos(q), bounce = Math.abs(cs)*5;
+                        return P({
+                            hipX:8,hipY:-44-bounce,neckX:24,neckY:-82-bounce,headX:32,headY:-98-bounce,
+                            lShoulderX:12,lShoulderY:-78-bounce,rShoulderX:12,rShoulderY:-78-bounce,
+                            lElbowX:-3-sn*12,lElbowY:-70-bounce,lHandX:-18-sn*12,lHandY:-62-bounce,
+                            rElbowX:20+sn*12,rElbowY:-70-bounce,rHandX:5+sn*12,rHandY:-62-bounce,
+                            lKneeX:7+sn*23,lKneeY:-22,lFootX:2+sn*34,lFootY:Math.min(0,cs*15),
+                            rKneeX:7-sn*23,rKneeY:-22,rFootX:2-sn*34,rFootY:Math.min(0,-cs*15)
+                        });
+                    }
+                    if (L.phase === 'punch1' || L.phase === 'punch2') {
+                        const hit = f >= 3 && f <= 5;
+                        return P({
+                            hipX:hit?9:0,hipY:-44,neckX:hit?12:0,neckY:-88,headX:hit?17:0,headY:-108,
+                            lShoulderX:-4,lShoulderY:-86,rShoulderX:7,rShoulderY:-86,
+                            lElbowX:-23,lElbowY:-68,lHandX:-35,lHandY:-54,
+                            rElbowX:hit?44:27,rElbowY:hit?-76:-70,rHandX:hit?72:43,rHandY:hit?-72:-70,
+                            lKneeX:-13,lKneeY:-22,lFootX:-20,lFootY:0,
+                            rKneeX:19,rKneeY:-22,rFootX:27,rFootY:0
+                        });
+                    }
+                    if (L.phase === 'kick3') {
+                        return P({
+                            hipX:4,hipY:-43,neckX:10,neckY:-86,headX:15,headY:-105,
+                            lShoulderX:-10,lShoulderY:-84,rShoulderX:8,rShoulderY:-84,
+                            lElbowX:-27,lElbowY:-68,lHandX:-40,lHandY:-57,
+                            rElbowX:25,rElbowY:-72,rHandX:38,rHandY:-62,
+                            lKneeX:-12,lKneeY:-22,lFootX:-19,lFootY:0,
+                            rKneeX:29,rKneeY:-62,rFootX:43,rFootY:-100
+                        });
+                    }
+                    if (L.phase === 'airLaunch' || L.phase === 'ascend') {
+                        return P({
+                            hipX:0,hipY:-48,neckX:4,neckY:-94,headX:8,headY:-114,
+                            lShoulderX:-3,lShoulderY:-90,rShoulderX:4,rShoulderY:-90,
+                            lElbowX:-22,lElbowY:-108,lHandX:-31,lHandY:-130,
+                            rElbowX:23,rElbowY:-108,rHandX:32,rHandY:-130,
+                            lKneeX:-18,lKneeY:-34,lFootX:-30,lFootY:-14,
+                            rKneeX:22,rKneeY:-38,rFootX:30,rFootY:-18
+                        });
+                    }
+                    if (L.phase === 'spin') {
+                        // Tư thế chong chóng; không có bất kỳ chuyển động đá/đạp nào ở pha này.
+                        return P({
+                            hipX:0,hipY:-44,neckX:0,neckY:-88,headX:0,headY:-108,
+                            lShoulderX:-5,lShoulderY:-82,rShoulderX:5,rShoulderY:-82,
+                            lElbowX:-43,lElbowY:-85,lHandX:-70,lHandY:-86,
+                            rElbowX:43,rElbowY:-85,rHandX:70,rHandY:-86,
+                            lKneeX:-38,lKneeY:-34,lFootX:-62,lFootY:-56,
+                            rKneeX:38,rKneeY:-34,rFootX:62,rFootY:-56
+                        });
+                    }
+                    if (L.phase === 'prepareDive') {
+                        return P({
+                            hipX:5,hipY:-45,neckX:8,neckY:-88,headX:12,headY:-108,
+                            lShoulderX:-14,lShoulderY:-86,rShoulderX:12,rShoulderY:-86,
+                            lElbowX:-34,lElbowY:-74,lHandX:-45,lHandY:-62,
+                            rElbowX:26,rElbowY:-106,rHandX:42,rHandY:-121,
+                            lKneeX:-14,lKneeY:-22,lFootX:-22,lFootY:0,
+                            rKneeX:30,rKneeY:-54,rFootX:46,rFootY:-90
+                        });
+                    }
+                    if (L.phase === 'finalDive') {
+                        return P({
+                            hipX:0,hipY:-45,neckX:2,neckY:-88,headX:4,headY:-108,
+                            lShoulderX:-13,lShoulderY:-86,rShoulderX:8,rShoulderY:-86,
+                            lElbowX:-31,lElbowY:-70,lHandX:-43,lHandY:-54,
+                            rElbowX:18,rElbowY:-66,rHandX:28,rHandY:-48,
+                            lKneeX:-20,lKneeY:-25,lFootX:-30,lFootY:-4,
+                            rKneeX:13,rKneeY:-48,rFootX:13,rFootY:-3
+                        });
+                    }
+                    return P({ hipX:0,hipY:-46,neckY:-94,headY:-114 });
+                }
+                return _getCastPoseEnergy42v3.call(this);
+            };
 
-    if (t >= 114 && t < 134) {
-      // Sau khi ném, hạ dần về sàn thay vì rơi tức thời.
-      const fall=smooth422((t-113)/21);
-      s.y=(B.baseY-225)+225*fall;
-      s.vy=-s.gravity; s.grounded=false;
-    }
-    if (t >= 134) {
-      s.y=B.baseY; s.vy=0; s.grounded=true;
-      s._spiritBomb42=null; s.endCast();
-    }
-  };
+            // Hide the old pre-charge glow sphere during jump + 0.5-second hold.
+            // Launched projectile and explosion renderers still run normally.
+            const _drawSkillEffectsEnergy42v3 = drawSkillEffects;
+            function drawEnergyChargeOrb42v3(c, s) {
+                const B = s._spiritBomb42;
+                if (!B || s.state !== 'cast' || s.castType !== 'bomb' || s.castTimer <= 50 || s.castTimer > 112 || B.radius <= 0) return;
+                const x = s.x, y = s.y - 270, r = B.radius;
+                const tm = performance.now() * .001;
+                c.save();
+                c.globalCompositeOperation = 'lighter';
+                c.shadowColor = '#60a5fa';
+                c.shadowBlur = 34;
+                const halo = c.createRadialGradient(x,y,r*.12,x,y,r*1.42);
+                halo.addColorStop(0,'rgba(255,255,255,.98)');
+                halo.addColorStop(.28,'rgba(191,219,254,.86)');
+                halo.addColorStop(.68,'rgba(59,130,246,.34)');
+                halo.addColorStop(1,'rgba(37,99,235,0)');
+                c.fillStyle = halo;
+                c.beginPath(); c.arc(x,y,r*1.42,0,Math.PI*2); c.fill();
+                const core = c.createRadialGradient(x-r*.18,y-r*.22,1,x,y,r);
+                core.addColorStop(0,'#ffffff');
+                core.addColorStop(.42,'#dbeafe');
+                core.addColorStop(.78,'#60a5fa');
+                core.addColorStop(1,'rgba(37,99,235,.18)');
+                c.fillStyle = core;
+                c.beginPath(); c.arc(x,y,r,0,Math.PI*2); c.fill();
+                c.strokeStyle = 'rgba(255,255,255,.9)'; c.lineWidth = Math.max(2,r*.025);
+                c.beginPath(); c.arc(x,y,r*.84,tm*1.4,tm*1.4+Math.PI*1.55); c.stroke();
+                c.strokeStyle = 'rgba(147,197,253,.92)'; c.lineWidth = Math.max(1.5,r*.014);
+                c.beginPath(); c.arc(x,y,r*.68,-tm*1.9,-tm*1.9+Math.PI*1.45); c.stroke();
+                // Các đường năng lượng cuộn và hội tụ từ ngoài vào quả cầu.
+                c.lineWidth = 2.2;
+                for (let k=0;k<8;k++) {
+                    const a = tm*1.7 + k*Math.PI/4;
+                    const r1 = r + 45 + 12*Math.sin(tm*3+k);
+                    const r2 = Math.max(3,r*.48);
+                    c.strokeStyle = k%2 ? 'rgba(191,219,254,.7)' : 'rgba(255,255,255,.88)';
+                    c.beginPath();
+                    c.moveTo(x+Math.cos(a)*r1,y+Math.sin(a)*r1);
+                    c.quadraticCurveTo(x+Math.cos(a+1.1)*r*.9,y+Math.sin(a+1.1)*r*.9,x+Math.cos(a+.35)*r2,y+Math.sin(a+.35)*r2);
+                    c.stroke();
+                }
+                c.restore();
+            }
+            drawSkillEffects = function (c) {
+                const hidden = [];
+                [player, bot].forEach(s => {
+                    if (s && s.charId === 'energy' && s.state === 'cast' && s.castType === 'bomb' && s.castTimer <= 50) {
+                        hidden.push([s,s.castType]);
+                        s.castType = null;
+                    }
+                });
+                try { _drawSkillEffectsEnergy42v3.apply(this, arguments); }
+                finally { hidden.forEach(([s,type]) => { s.castType = type; }); }
+                [player, bot].forEach(s => drawEnergyChargeOrb42v3(c,s));
+            };
 
-  // ------------------------------------------------------------------
-  // C. Strength O: auto aim cùng tầng, 2 cú đấm ngược hướng, đá bay,
-  //    dừng xoay 10 vòng/1 giây, đạp xuống; tổng sát thương 30%.
-  // ------------------------------------------------------------------
-  const lotusDust422 = [];
-  const smooth422 = (p) => { p=clamp(p,0,1); return p*p*(3-2*p); };
-  const lerp422 = (a,b,p) => a+(b-a)*p;
-  const pose422 = (actor, values) => Object.assign(actor.getDefaultPose(), values);
+            // --------------------- STRENGTH: FOUR-HIT O ---------------------
+            function validStrengthTarget42v3(s) {
+                const o = enemyOf(s);
+                const ok = groundIdle(s) && o && o.hp > 0 && !o.frozen && o.state !== 'knockdown' &&
+                    o.state !== 'held' && Math.abs(o.x - s.x) <= WORLD_S()/3 && lotusSameTier42v3(s,o);
+                if (!ok && s && s.charId === 'strength') {
+                    spawnFloatingText(s.x, s.y-150, 'CẦN ĐỐI THỦ CÙNG TẦNG TRONG 1/3 BẢN ĐỒ', '#6b7280', .9);
+                }
+                return !!ok;
+            }
+            SKILL_IMPL.chop = {
+                can: validStrengthTarget42v3,
+                start(s) {
+                    const o = enemyOf(s);
+                    if (!o) return;
+                    const actorFloor = lotusFloor42v3(s);
+                    const targetFloor = lotusFloor42v3(o);
+                    const dir = o.x >= s.x ? 1 : -1;
+                    s.beginCast('chop');
+                    s._lotusFullSpinAngle42v3 = 0;
+                    s._lotusSpin42 = 0;
+                    s._lotus42 = {
+                        target:o, phase:'approach', frame:0,
+                        dir1:dir, dir2:-dir, finalKnockDir:-dir,
+                        actorFloor, targetFloor,
+                        startX:s.x, startTargetX:o.x,
+                        approachEndX:clamp(o.x-dir*76,leftWall+50,rightWall-50),
+                        approachFrames:Math.max(8,Math.ceil(Math.abs(o.x-dir*76-s.x)/26)),
+                        totalDamage:0, hit1:false, hit2:false, hit3:false, hit4:false,
+                        impactDone:false, spinFrames:60
+                    };
+                    o.freezeFor(1000000,'lotusCombo42v3',s);
+                    o.state = 'hitstun'; o.grounded = true; o.vx = 0; o.vy = 0;
+                    if (typeof o.computeSkeletonPose === 'function') o.computeSkeletonPose();
+                    setPrincipleBadge('BIỂU LIÊN HOA — AUTO AIM / COMBO 4 ĐÒN!', 150);
+                    spawnFloatingText(o.x,o.y-165,'AUTO AIM · STUN!','#6b7280',1.1);
+                    camera.triggerShake(7);
+                }
+            };
 
-  function lotusSetTarget422(opp, x, y, state) {
-    opp.x=x; opp.y=y; opp.vx=0; opp.vy=0; opp.grounded=false;
-    if (state) opp.state=state;
-    if (opp.frozen && opp.frozen.kind==='lotus43') opp.frozen.left=999999;
-    if (typeof opp.computeSkeletonPose==='function') opp.computeSkeletonPose();
-  }
-  function lotusDamage422(s, opp, amount, label, color, heavy) {
-    const dmg=opp.maxHp*amount;
-    opp.hp=Math.max(0,opp.hp-dmg);
-    updateHealthUI();
-    spawnHitSparks(opp.x,opp.y-70,color||'#ffffff',!!heavy);
-    spawnFloatingText(opp.x,opp.y-150,`${label} -${Math.round(dmg)}`,'#374151',1.25);
-    hitstopFrames=heavy?8:4;
-    if (heavy) impactFlashFrames=5;
-    camera.triggerShake(heavy?20:10);
-  }
+            // Target freeze must not expire from its own frame timer; it is released only
+            // after Strength has landed and the finishing dust/knockback has been applied.
+            const _cancelCastLotus42v3 = SP.cancelCast;
+            SP.cancelCast = function () {
+                const L = this._lotus42;
+                if (L && L.target && L.target.frozen && L.target.frozen.kind === 'lotusCombo42v3') {
+                    L.target.frozen = null;
+                    L.target.state = L.target.hp > 0 ? 'hitstun' : 'knockdown';
+                    L.target.grounded = true;
+                    L.target.vx = 0; L.target.vy = 0;
+                }
+                this._lotus42 = null;
+                this._lotusFullSpinAngle42v3 = 0;
+                this._lotusSpin42 = 0;
+                return _cancelCastLotus42v3.apply(this, arguments);
+            };
 
-  // Giữ nguyên đối thủ bị stun xuyên suốt combo; không cho bộ đếm freeze
-  // tự giải phóng sớm kể cả khi máu đối thủ đã về 0.
-  const _updateWithLotusLock422 = SP.update;
-  SP.update = function (opponent, inputKeys) {
-    if (this.frozen && this.frozen.kind==='lotus43') {
-      this.vx=0; this.vy=0;
-      return;
-    }
-    return _updateWithLotusLock422.apply(this,arguments);
-  };
+            CASTS.chop = function (s, opp) {
+                let L = s._lotus42;
+                if (!L || L.target !== opp) {
+                    // Không dùng target ngẫu nhiên; nếu bị reset giữa combo thì kết thúc an toàn.
+                    s._lotus42 = null;
+                    s._lotusFullSpinAngle42v3 = 0;
+                    s.endCast();
+                    return;
+                }
+                // Leave the spin phase after exactly 60 rendered updates; prepareDive starts next frame.
+                if (L.phase === 'spin' && L.frame >= 59) {
+                    s._lotusFullSpinAngle42v3 = 0;
+                    lotusSetPhase42v3(L,'prepareDive');
+                }
+                L.frame++;
+                const f = L.frame;
+                s.vx = 0;
+                s._lotusSpin42 = 0;
+                if (opp.frozen && opp.frozen.kind === 'lotusCombo42v3') opp.frozen.left = 1000000;
+                lotusFx42 = null; // Không dùng hiệu ứng lốc/đá cũ chồng lên chuỗi mới.
 
-  if (CHAR_SKILLS.strength && CHAR_SKILLS.strength.KeyO) {
-    CHAR_SKILLS.strength.KeyO.name='Biểu Liên Hoa';
-    CHAR_SKILLS.strength.KeyO.short='Biểu Liên Hoa';
-  }
-  if (CHARACTERS.strength) {
-    CHARACTERS.strength.skillText=(CHARACTERS.strength.skillText||[]).map(t=>
-      t.startsWith('O ·')?'O · Biểu Liên Hoa (30% máu tối đa: 5% + 5% + 5% + 15%)':t);
-  }
+                switch (L.phase) {
+                    case 'approach': {
+                        const p = lotusEase42v3(f / L.approachFrames);
+                        const x = lotusLerp42v3(L.startX,L.approachEndX,p);
+                        lotusSetActorGround42v3(s,x,L.actorFloor,L.dir1);
+                        lotusSetTarget42v3(opp,L.startTargetX,L.targetFloor,'hitstun',true);
+                        if (f >= L.approachFrames) {
+                            lotusSetPhase42v3(L,'punch1');
+                            s.x = L.approachEndX;
+                        }
+                        break;
+                    }
+                    case 'punch1': {
+                        lotusSetActorGround42v3(s,opp.x-L.dir1*76,L.actorFloor,L.dir1);
+                        lotusSetTarget42v3(opp,opp.x,L.targetFloor,'hitstun',true);
+                        if (f === 4 && !L.hit1) {
+                            L.hit1 = true;
+                            L.totalDamage += lotusDamage42v3(s,L,.05,'ĐẤM 1','#6b7280');
+                            spawnFloatingText(opp.x,opp.y-190,'ĐẤM TAY PHẢI 1','#4b5563',.92);
+                            camera.triggerShake(8);
+                        }
+                        if (f >= 8) lotusStartChase42v3(s,L,L.dir1,'chase1');
+                        break;
+                    }
+                    case 'chase1': {
+                        const p = clamp(f / L.chaseFrames,0,1), e = lotusEase42v3(p);
+                        const tx = lotusLerp42v3(L.flightStartX,L.flightEndX,e);
+                        const ax = lotusLerp42v3(L.chaseStartX,L.chaseEndX,e);
+                        const pathFloor = lotusLerp42v3(L.chaseFloorStart,L.chaseFloorEnd,e);
+                        const ty = pathFloor - Math.sin(Math.PI*p)*30;
+                        lotusSetActorGround42v3(s,ax,pathFloor,L.chaseDirection);
+                        lotusSetTarget42v3(opp,tx,ty,'knockdown',false);
+                        if (f >= L.chaseFrames) {
+                            L.targetFloor = L.chaseFloorEnd; L.actorFloor = L.chaseFloorEnd;
+                            lotusSetTarget42v3(opp,L.flightEndX,L.targetFloor,'hitstun',true);
+                            lotusSetPhase42v3(L,'punch2');
+                        }
+                        break;
+                    }
+                    case 'punch2': {
+                        lotusSetActorGround42v3(s,opp.x-L.dir2*76,L.actorFloor,L.dir2);
+                        lotusSetTarget42v3(opp,opp.x,L.targetFloor,'hitstun',true);
+                        if (f === 4 && !L.hit2) {
+                            L.hit2 = true;
+                            L.totalDamage += lotusDamage42v3(s,L,.05,'ĐẤM 2','#6b7280');
+                            spawnFloatingText(opp.x,opp.y-190,'ĐẤM TAY PHẢI 2','#4b5563',.92);
+                            camera.triggerShake(9);
+                        }
+                        if (f >= 8) lotusStartChase42v3(s,L,L.dir2,'chase2');
+                        break;
+                    }
+                    case 'chase2': {
+                        const p = clamp(f / L.chaseFrames,0,1), e = lotusEase42v3(p);
+                        const tx = lotusLerp42v3(L.flightStartX,L.flightEndX,e);
+                        const ax = lotusLerp42v3(L.chaseStartX,L.chaseEndX,e);
+                        const pathFloor = lotusLerp42v3(L.chaseFloorStart,L.chaseFloorEnd,e);
+                        const ty = pathFloor - Math.sin(Math.PI*p)*30;
+                        lotusSetActorGround42v3(s,ax,pathFloor,L.chaseDirection);
+                        lotusSetTarget42v3(opp,tx,ty,'knockdown',false);
+                        if (f >= L.chaseFrames) {
+                            L.targetFloor = L.chaseFloorEnd; L.actorFloor = L.chaseFloorEnd;
+                            L.targetX = opp.x;
+                            lotusSetTarget42v3(opp,L.targetX,L.targetFloor,'hitstun',true);
+                            lotusSetPhase42v3(L,'kick3');
+                        }
+                        break;
+                    }
+                    case 'kick3': {
+                        lotusSetActorGround42v3(s,opp.x-L.dir2*76,L.actorFloor,L.dir2);
+                        lotusSetTarget42v3(opp,L.targetX,L.targetFloor,'hitstun',true);
+                        if (f === 4 && !L.hit3) {
+                            L.hit3 = true;
+                            L.totalDamage += lotusDamage42v3(s,L,.05,'ĐÁ 3','#6b7280');
+                            L.airStartY = L.targetFloor;
+                            L.airY = L.targetFloor - 420;
+                            L.airX = L.targetX;
+                            spawnFloatingText(opp.x,opp.y-185,'ĐÁ CHÂN PHẢI · AIR STUN!','#6b7280',1.0);
+                            camera.triggerShake(11);
+                        }
+                        if (f >= 8) lotusSetPhase42v3(L,'airLaunch');
+                        break;
+                    }
+                    case 'airLaunch': {
+                        const p = lotusEase42v3(f/16);
+                        const y = lotusLerp42v3(L.airStartY,L.airY,p);
+                        lotusSetActorGround42v3(s,L.targetX-L.dir2*76,L.actorFloor,L.dir2);
+                        lotusSetTarget42v3(opp,L.airX,y,'jump',false);
+                        if (f >= 16) {
+                            L.airY = opp.y;
+                            L.spinX = opp.x;
+                            L.spinY = L.airY - 140; // Strength lơ lửng cao hơn đối thủ khoảng một thân người.
+                            L.fallStartY = L.spinY;
+                            lotusSetPhase42v3(L,'ascend');
+                        }
+                        break;
+                    }
+                    case 'ascend': {
+                        const p = lotusEase42v3(f/20);
+                        const x = lotusLerp42v3(s.x,L.spinX,p);
+                        const y = lotusLerp42v3(L.actorFloor,L.spinY,p);
+                        lotusSetActorAir42v3(s,x,y,L.dir2);
+                        lotusSetTarget42v3(opp,L.airX,L.airY,'jump',false);
+                        if (f >= 20) {
+                            s.x = L.spinX; s.y = L.spinY;
+                            L.spinX = s.x; L.spinY = s.y;
+                            s._lotusFullSpinAngle42v3 = 0;
+                            lotusSetPhase42v3(L,'spin');
+                        }
+                        break;
+                    }
+                    case 'spin': {
+                        // Từ frame 1 đến frame 60: đúng 10 vòng, đứng yên tuyệt đối.
+                        s.x = L.spinX; s.y = L.spinY; s.grounded = false; s.vx = 0; s.vy = -s.gravity;
+                        s._lotusFullSpinAngle42v3 = (Math.PI * 20) * (f/59);
+                        s._lotusSpin42 = 0;
+                        lotusSetTarget42v3(opp,L.airX,L.airY,'jump',false);
+                        break;
+                    }
+                    case 'prepareDive': {
+                        s._lotusFullSpinAngle42v3 = 0;
+                        lotusSetActorAir42v3(s,L.spinX,L.spinY,L.dir2);
+                        lotusSetTarget42v3(opp,L.airX,L.airY,'jump',false);
+                        if (f >= 10) {
+                            L.diveActorStartY = L.spinY;
+                            L.diveTargetStartY = L.airY;
+                            L.targetFallFrames = 34;
+                            L.actorFallFrames = 54;
+                            L.impactDone = false;
+                            lotusSetPhase42v3(L,'finalDive');
+                        }
+                        break;
+                    }
+                    case 'finalDive': {
+                        const targetP = clamp(f/L.targetFallFrames,0,1);
+                        const actorP = clamp(f/L.actorFallFrames,0,1);
+                        const targetY = lotusLerp42v3(L.diveTargetStartY,L.targetFloor,lotusEase42v3(targetP));
+                        const actorY = lotusLerp42v3(L.diveActorStartY,L.targetFloor,lotusEase42v3(actorP));
+                        lotusSetActorAir42v3(s,L.targetX,actorY,L.dir2);
+                        lotusSetTarget42v3(opp,L.targetX,targetY,targetP>=1?'hitstun':'jump',targetP>=1);
+                        if (f >= L.targetFallFrames && !L.impactDone) {
+                            // Chỉ gây 15% tại frame đối thủ thật sự chạm sàn.
+                            L.impactDone = true;
+                            L.totalDamage += lotusDamage42v3(s,L,.15,'ĐẠP KẾT LIỄU','#4b5563');
+                            L.finalKnockDir = L.dir2;
+                            lotusSetTarget42v3(opp,L.targetX,L.targetFloor,'hitstun',true);
+                            spawnDust(L.targetX,L.targetFloor,34,L.finalKnockDir);
+                            for (let k=0;k<26;k++) {
+                                const a = k*Math.PI*2/26;
+                                const speed = rr(2.2,7.2);
+                                particles.push({
+                                    type:'spark',x:L.targetX+rr(-20,20),y:L.targetFloor-rr(2,18),
+                                    vx:Math.cos(a)*speed,vy:-Math.abs(Math.sin(a))*speed-rr(1,4),
+                                    length:rr(8,18),color:k%3?'#9ca3af':'#f8fafc',alpha:1,decay:.045
+                                });
+                            }
+                            blastRings.push({x:L.targetX,y:L.targetFloor-10,r:18,max:285,life:30,maxLife:30});
+                            spawnHitSparks(L.targetX,L.targetFloor-60,'#f8fafc',true);
+                            spawnFloatingText(L.targetX,L.targetFloor-210,'BIỂU LIÊN HOA · IMPACT!','#374151',1.4);
+                            hitstopFrames = Math.max(hitstopFrames,4);
+                            impactFlashFrames = Math.max(impactFlashFrames,4);
+                            camera.triggerShake(23);
+                        }
+                        if (f >= L.actorFallFrames) {
+                            s.x = L.targetX; s.y = L.targetFloor; s.grounded = true;
+                            s.vx = 0; s.vy = 0;
+                            lotusSetPhase42v3(L,'finish');
+                        }
+                        break;
+                    }
+                    case 'finish': {
+                        s.x = L.targetX; s.y = L.targetFloor; s.grounded = true; s.vx = 0; s.vy = 0;
+                        lotusSetTarget42v3(opp,L.targetX,L.targetFloor,'hitstun',true);
+                        if (f >= 8) {
+                            // Hết stun sau khi Strength đã hạ xuống và hiệu ứng va chạm hoàn tất.
+                            if (opp.frozen && opp.frozen.kind === 'lotusCombo42v3') opp.frozen = null;
+                            opp.state = 'knockdown';
+                            opp.stateTimer = 52;
+                            opp.grounded = false;
+                            opp.vx = L.finalKnockDir * ((WORLD_S()/4)/12.5);
+                            opp.vy = -9;
+                            opp._lotusSpin42 = 0;
+                            spawnFloatingText(opp.x,opp.y-160,`TỔNG SÁT THƯƠNG ${Math.round(L.totalDamage)}`,'#4b5563',1.0);
+                            s._lotusFullSpinAngle42v3 = 0;
+                            s._lotus42 = null;
+                            lotusFx42 = null;
+                            s.endCast();
+                            updateHealthUI();
+                        }
+                        break;
+                    }
+                }
+                if (opp && opp.frozen && opp.frozen.kind === 'lotusCombo42v3') opp.frozen.left = 1000000;
+                if (opp && typeof opp.computeSkeletonPose === 'function' && opp.frozen && opp.frozen.kind === 'lotusCombo42v3') {
+                    opp.computeSkeletonPose();
+                }
+            };
 
-  SKILL_IMPL.chop = {
-    can: groundIdle,
-    start(s) {
-      s.beginCast('chop');
-      s._lotus43=null; s._lotusSpin43=0;
-      setPrincipleBadge('BIỂU LIÊN HOA — COMBO 4 GIAI ĐOẠN!',150);
-    }
-  };
+            // Spin the complete stickman at the visual layer only. Position stays fixed.
+            const _drawStrengthSpin42v3 = SP.draw;
+            SP.draw = function (c) {
+                const a = this._lotusFullSpinAngle42v3 || 0;
+                if (!a) return _drawStrengthSpin42v3.call(this,c);
+                c.save();
+                c.translate(this.x,this.y-62);
+                c.rotate(a);
+                c.translate(-this.x,-(this.y-62));
+                try { _drawStrengthSpin42v3.call(this,c); }
+                finally { c.restore(); }
+            };
 
-  CASTS.chop = function (s, opp) {
-    s.castTimer++;
-    const t=s.castTimer;
-    s.vx=0;
-    let L=s._lotus43;
+            // Reset/cancel paths also clear only the new transient properties.
+            const _clearSpecials42v3 = clearSpecials;
+            clearSpecials = function () {
+                _clearSpecials42v3.apply(this,arguments);
+                [player,bot].forEach(f => {
+                    f._lotusFullSpinAngle42v3 = 0;
+                    f._lotusSpin42 = 0;
+                    f._lotus42 = null;
+                    f._spiritBomb42 = null;
+                });
+            };
 
-    if (t===1) {
-      const sFloor=floorAtFor(s), oFloor=floorAtFor(opp);
-      const inRange=opp && Math.abs(opp.x-s.x)<=WORLD_S()/3;
-      const sameTier=!!(opp && opp.grounded && Math.abs(oFloor-sFloor)<=12 && Math.abs(opp.y-s.y)<=18);
-      const available=!!(opp && opp.hp>0 && !opp.frozen && opp.state!=='knockdown' && opp.state!=='held');
-      if (!inRange || !sameTier || !available) {
-        spawnFloatingText(s.x,s.y-165,'KHÔNG CÓ MỤC TIÊU CÙNG TẦNG TRONG TẦM!','#6b7280',1.15);
-        s._lotus43=null; s.endCast(); return;
-      }
-      const dir1=opp.x>=s.x?1:-1;
-      const quarter=WORLD_S()/4;
-      const targetX=opp.x;
-      L=s._lotus43={
-        target:opp, dir1, dir2:-dir1, quarter,
-        startX:s.x, targetStartX:targetX, sFloor:sFloor, floorY:oFloor,
-        end1:clamp(targetX+dir1*quarter,leftWall,rightWall), end2:0,
-        airY:0, topY:0, finalEnd:0,
-        phase:'run1',phaseFrame:1,
-        hit1:false,hit2:false,hit3:false,hitFinal:false,
-        flight1Start:targetX, flight2Start:0,
-        attackerStart1:s.x, attackerStart2:0,
-        spinAngle:0
-      };
-      L.end2=clamp(L.end1+L.dir2*quarter,leftWall,rightWall);
-      L.airY=L.floorY-390;
-      L.floorY2=floorAtFor({x:L.end2,y:L.airY,vy:0});
-      if (!Number.isFinite(L.floorY2)) L.floorY2=L.floorY;
-      L.finalEnd=clamp(L.end2+dir1*quarter,leftWall,rightWall);
-      L.topY=L.airY-150;
-      s.facing=dir1; s.grounded=true; s.y=L.sFloor; s.vy=0;
-      opp.freezeFor(999999,'lotus43',s);
-      opp.state='hitstun'; opp.grounded=false; opp.vx=0; opp.vy=0;
-      lotusSetTarget422(opp,targetX,L.floorY,'hitstun');
-      spawnFloatingText(opp.x,opp.y-165,'AUTO AIM · STUN!','#6b7280',1.15);
-    }
-
-    if (!L || L.target!==opp) { s.endCast(); return; }
-    if (opp.hp<0) opp.hp=0;
-    if (!opp.frozen || opp.frozen.kind!=='lotus43') opp.freezeFor(999999,'lotus43',s);
-    opp.frozen.left=999999; opp.frozen.owner=s;
-    s.state='cast'; s.castType='chop'; s.beam=null;
-    s._lotusSpin42=0; s._lotusSpin43=0;
-
-    const runAt422=(startX,endX,dir,phase,frame,total)=>{
-      const p=clamp(frame/total,0,1);
-      s.x=clamp(lerp422(startX,endX,p),leftWall,rightWall);
-      s.y=L.sFloor; s.grounded=true; s.vy=0; s.vx=0; s.facing=dir;
-      L.phase=phase; L.phaseFrame=frame;
-      if (frame%5===0) spawnDust(s.x,s.y,2,-dir);
-    };
-    const holdTarget422=(x,y,state='hitstun')=>lotusSetTarget422(opp,x,y,state);
-
-    // GIAI ĐOẠN 1: chạy tiếp cận, cú đấm phải thứ nhất, bay theo hướng tấn công.
-    if (t>=1 && t<=28) {
-      const end=L.targetStartX-L.dir1*60;
-      runAt422(L.startX,end,L.dir1,'run1',t,28);
-      holdTarget422(L.targetStartX,L.floorY,'hitstun');
-    } else if (t>=29 && t<=34) {
-      s.x=L.targetStartX-L.dir1*60; s.y=L.sFloor; s.grounded=true; s.vy=0; s.facing=L.dir1;
-      L.phase='punch1'; L.phaseFrame=t-28;
-      holdTarget422(L.targetStartX,L.floorY,'hitstun');
-      if (t===31 && !L.hit1) {
-        L.hit1=true;
-        lotusDamage422(s,opp,.05,'ĐẤM 1','#e5e7eb',false);
-        L.flight1Start=opp.x;
-      }
-    }
-
-    // Chạy đón đầu quỹ đạo để cú đấm thứ hai đánh ngược chiều cú thứ nhất.
-    if (t>=35 && t<=70) {
-      const p=(t-35+1)/36, eased=smooth422(p);
-      const targetX=lerp422(L.flight1Start,L.end1,p);
-      const y=L.floorY-48*Math.sin(Math.PI*p);
-      holdTarget422(targetX,y,'hitstun');
-      const from=L.targetStartX-L.dir1*60, to=L.end1+L.dir1*60;
-      runAt422(from,to,L.dir1,'chase1',t-34,36);
-    } else if (t>=71 && t<=76) {
-      s.x=L.end1+L.dir1*60; s.y=L.sFloor; s.grounded=true; s.vy=0; s.facing=L.dir2;
-      L.phase='punch2'; L.phaseFrame=t-70;
-      holdTarget422(L.end1,L.floorY,'hitstun');
-      if (t===73 && !L.hit2) {
-        L.hit2=true;
-        lotusDamage422(s,opp,.05,'ĐẤM 2','#e5e7eb',false);
-        L.flight2Start=opp.x;
-      }
-    }
-
-    // GIAI ĐOẠN 2: đuổi theo hướng ngược lại, đấm lần hai theo chiều ngược.
-    if (t>=77 && t<=112) {
-      const p=(t-77+1)/36;
-      const targetX=lerp422(L.flight2Start,L.end2,p);
-      const y=L.floorY-48*Math.sin(Math.PI*p);
-      holdTarget422(targetX,y,'hitstun');
-      const from=L.end1+L.dir1*60, to=L.end2+L.dir2*60;
-      runAt422(from,to,L.dir2,'chase2',t-76,36);
-    } else if (t>=113 && t<=118) {
-      s.x=L.end2+L.dir2*60; s.y=L.sFloor; s.grounded=true; s.vy=0; s.facing=L.dir2;
-      L.phase='kick3'; L.phaseFrame=t-112;
-      holdTarget422(L.end2,L.floorY,'hitstun');
-      if (t===115 && !L.hit3) {
-        L.hit3=true;
-        lotusDamage422(s,opp,.05,'ĐÁ 3','#d1d5db',true);
-        L.kickRiseStart=L.floorY;
-        holdTarget422(L.end2,L.floorY,'jump');
-      }
-    }
-
-    // Đối thủ bị đá bay thẳng lên cao, vẫn bị khóa stun.
-    if (t>=119 && t<=134) {
-      const p=(t-118)/16;
-      const y=lerp422(L.floorY,L.airY,smooth422(p));
-      holdTarget422(L.end2,y,'jump');
-      s.x=L.end2+L.dir2*60; s.y=L.sFloor; s.grounded=true; s.vy=0;
-      L.phase='holdAfterKick'; L.phaseFrame=t-118; s.facing=L.dir2;
-    }
-
-    // Strength nhảy lên cao hơn đối thủ một chiều cao nhân vật.
-    if (t>=135 && t<=156) {
-      const p=(t-134)/22, eased=smooth422(p);
-      holdTarget422(L.end2,L.airY,'jump');
-      s.x=lerp422(L.end2+L.dir2*60,L.end2,eased);
-      s.y=lerp422(L.sFloor,L.topY,eased); s.grounded=false; s.vy=-s.gravity;
-      s.facing=L.dir2; L.phase='jumpAbove'; L.phaseFrame=t-134;
-    }
-
-    // GIAI ĐOẠN 3: đứng yên tại chỗ, xoay đủ 10 vòng trong đúng 60 frame.
-    if (t>=157 && t<=216) {
-      holdTarget422(L.end2,L.airY,'jump');
-      s.x=L.end2; s.y=L.topY; s.grounded=false; s.vy=-s.gravity;
-      s.facing=L.dir2; L.phase='spin10'; L.phaseFrame=t-156;
-      const progress=(t-156)/60;
-      L.spinAngle=Math.PI*20*progress;
-      s._lotusSpin43=L.spinAngle;
-    }
-
-    // Hoàn tất xoay, dừng hẳn rồi mới đưa chân phải vào tư thế chuẩn bị đạp.
-    if (t>=217 && t<=222) {
-      holdTarget422(L.end2,L.airY,'jump');
-      s.x=L.end2; s.y=L.topY; s.grounded=false; s.vy=-s.gravity;
-      s._lotusSpin43=0; L.phase='stompPrep'; L.phaseFrame=t-216;
-    }
-
-    // GIAI ĐOẠN 4: đạp thẳng xuống; cả hai hạ độ cao liên tục, chạm đất ở frame 246.
-    if (t>=223 && t<=246) {
-      const p=(t-222)/24, eased=smooth422(p);
-      const oppY=lerp422(L.airY,L.floorY2,eased);
-      const ownY=lerp422(L.topY,L.floorY2,eased);
-      holdTarget422(L.end2,oppY,'jump');
-      s.x=L.end2; s.y=ownY; s.grounded=false; s.vy=-s.gravity;
-      s._lotusSpin43=0; L.phase='stompDive'; L.phaseFrame=t-222;
-      if (t===246 && !L.hitFinal) {
-        L.hitFinal=true;
-        holdTarget422(L.end2,L.floorY2,'knockdown');
-        lotusDamage422(s,opp,.15,'TAEKWONDO FINISH','#ffffff',true);
-        blastRings.push({x:L.end2,y:L.floorY2-28,r:18,max:300,life:32,maxLife:32});
-        spawnDust(L.end2,L.floorY2,42,0);
-        for(let k=0;k<32;k++){
-          const a=k*TAU/32;
-          particles.push({type:'spark',x:L.end2,y:L.floorY2-20,
-            vx:Math.cos(a)*rr(5,15),vy:Math.sin(a)*rr(4,12)-2,
-            length:16,color:k%2?'#9ca3af':'#ffffff',alpha:1,decay:.045});
-        }
-        lotusDust422.push({x:L.end2,y:L.floorY2,age:0,life:34,seed:Math.random()*TAU});
-        camera.triggerShake(28); impactFlashFrames=7;
-      }
-    }
-
-    // Đối thủ bị đánh văng thêm 1/4 map sau tiếp đất; chỉ mở stun khi chuyển động cuối xong.
-    if (t>=247 && t<=270) {
-      const p=(t-246)/24;
-      const x=lerp422(L.end2,L.finalEnd,p);
-      const y=L.floorY2-78*Math.sin(Math.PI*p);
-      holdTarget422(x,y,'knockdown');
-      s.x=L.end2; s.y=L.floorY2; s.grounded=true; s.vy=0;
-      s._lotusSpin43=0; L.phase='finishFollow'; L.phaseFrame=t-246;
-    }
-
-    if (t>=270) {
-      holdTarget422(L.finalEnd,L.floorY2,'knockdown');
-      if (opp.frozen && opp.frozen.kind==='lotus43') opp.frozen=null;
-      opp.state='knockdown'; opp.stateTimer=42; opp.grounded=true; opp.vx=0; opp.vy=0;
-      if (typeof opp.computeSkeletonPose==='function') opp.computeSkeletonPose();
-      s._lotusSpin43=0; s._lotus43=null; lotusFx42=null;
-      s.endCast();
-    }
-  };
-
-  // Pose riêng cho từng giai đoạn Strength, ưu tiên animation chân/tay đúng động tác.
-  const _getCastPose422 = SP.getCastPose;
-  SP.getCastPose = function () {
-    if (this.charId==='energy' && this.castType==='bomb') {
-      const t=this.castTimer||0, P=o=>pose422(this,o);
-      if (t<=20) return _getCastPose422.call(this);
-      if (t<=50) return P({
-        hipX:0,hipY:-46,neckY:-94,headY:-114,
-        lShoulderX:-5,lShoulderY:-83,rShoulderX:5,rShoulderY:-83,
-        lElbowX:-15,lElbowY:-65,lHandX:-19,lHandY:-42,
-        rElbowX:15,rElbowY:-65,rHandX:19,rHandY:-42,
-        lKneeX:-12,lFootX:-16,rKneeX:12,rFootX:16
-      });
-      const raise=clamp((t-50)/16,0,1), armY=lerp422(-42,-154,raise), elbowY=lerp422(-64,-116,raise);
-      if (t<=112) return P({
-        hipX:0,hipY:-46,neckY:-94,headY:-114,
-        lShoulderX:-8,lShoulderY:-84,rShoulderX:8,rShoulderY:-84,
-        lElbowX:-24,lElbowY:elbowY,lHandX:-30,lHandY:armY,
-        rElbowX:24,rElbowY:elbowY,rHandX:30,rHandY:armY,
-        lKneeX:-14,lFootX:-24,rKneeX:14,rFootX:24
-      });
-      if (t<=120) return P({
-        hipX:5,hipY:-44,neckX:5,neckY:-88,headX:8,headY:-108,
-        lShoulderX:-4,lShoulderY:-86,rShoulderX:8,rShoulderY:-86,
-        lElbowX:8,lElbowY:-112,lHandX:28,lHandY:-126,
-        rElbowX:34,rElbowY:-88,rHandX:52,rHandY:-106,
-        lKneeX:-14,lFootX:-24,rKneeX:18,rFootX:28
-      });
-      return P({hipX:2,hipY:-44,neckY:-88,headY:-108,
-        lShoulderX:-4,lShoulderY:-84,rShoulderX:5,rShoulderY:-84,
-        lElbowX:-18,lElbowY:-75,lHandX:-28,lHandY:-60,
-        rElbowX:18,rElbowY:-74,rHandX:30,rHandY:-58,
-        lKneeX:-14,lFootX:-24,rKneeX:18,rFootX:28});
-    }
-
-    if (this.charId==='strength' && this.castType==='chop' && this._lotus43) {
-      const L=this._lotus43, f=L.phaseFrame||0, P=o=>pose422(this,o);
-      const run=()=>{
-        const a=Math.sin(f*1.22), b=Math.cos(f*1.22), bounce=Math.abs(b)*5;
-        return P({
-          hipX:10,hipY:-44-bounce,neckX:28,neckY:-82-bounce,headX:38,headY:-98-bounce,
-          lShoulderX:20,lShoulderY:-78,rShoulderX:20,rShoulderY:-78,
-          lElbowX:5-a*14,lElbowY:-70-bounce,lHandX:-10-a*17,lHandY:-62-bounce,
-          rElbowX:5+a*14,rElbowY:-70-bounce,rHandX:-10+a*17,rHandY:-62-bounce,
-          lKneeX:6+a*26,lKneeY:-24-bounce*.4,lFootX:2+a*38,lFootY:Math.max(-15,b*16),
-          rKneeX:6-a*26,rKneeY:-24-bounce*.4,rFootX:2-a*38,rFootY:Math.max(-15,-b*16)
-        });
-      };
-      const punch=(active)=>P({
-        hipX:active?14:-5,hipY:-44,neckX:active?24:-8,neckY:-84,headX:active?33:-10,headY:-103,
-        lShoulderX:active?-10:-8,lShoulderY:-82,rShoulderX:active?24:-14,rShoulderY:-82,
-        lElbowX:active?-28:8,lElbowY:-70,lHandX:active?-42:18,lHandY:-58,
-        rElbowX:active?47:-8,rElbowY:active?-80:-69,
-        rHandX:active?70:-30,rHandY:active?-84:-66,
-        lKneeX:-14,lFootX:-26,rKneeX:20,rFootX:28
-      });
-      switch(L.phase){
-        case 'run1': case 'chase1': case 'chase2': return run();
-        case 'punch1': case 'punch2': return punch(f>=3);
-        case 'kick3': return P({
-          hipX:8,hipY:-48,neckX:16,neckY:-88,headX:20,headY:-108,
-          lShoulderX:-12,lShoulderY:-82,rShoulderX:24,rShoulderY:-86,
-          lElbowX:-28,lElbowY:-70,lHandX:-40,lHandY:-58,
-          rElbowX:50,rElbowY:-92,rHandX:62,rHandY:-106,
-          lKneeX:-18,lKneeY:-25,lFootX:-32,lFootY:0,
-          rKneeX:34,rKneeY:-42,rFootX:72,rFootY:-42
-        });
-        case 'holdAfterKick': case 'jumpAbove': return P({
-          hipX:0,hipY:-50,neckY:-98,headY:-119,
-          lShoulderX:-8,lShoulderY:-86,rShoulderX:8,rShoulderY:-86,
-          lElbowX:-26,lElbowY:-105,lHandX:-38,lHandY:-126,
-          rElbowX:26,rElbowY:-105,rHandX:38,rHandY:-126,
-          lKneeX:-20,lKneeY:-30,lFootX:-34,lFootY:-8,
-          rKneeX:20,rKneeY:-30,rFootX:34,rFootY:-8
-        });
-        case 'spin10': return P({
-          hipX:0,hipY:-44,neckY:-86,headY:-106,
-          lShoulderX:-5,lShoulderY:-82,rShoulderX:5,rShoulderY:-82,
-          lElbowX:-42,lElbowY:-72,lHandX:-68,lHandY:-62,
-          rElbowX:42,rElbowY:-72,rHandX:68,rHandY:-62,
-          lKneeX:-32,lKneeY:-24,lFootX:-58,lFootY:-2,
-          rKneeX:32,rKneeY:-24,rFootX:58,rFootY:-2
-        });
-        case 'stompPrep': return P({
-          hipX:0,hipY:-44,neckX:4,neckY:-88,headX:6,headY:-108,
-          lShoulderX:-12,lShoulderY:-82,rShoulderX:14,rShoulderY:-82,
-          lElbowX:-34,lElbowY:-76,lHandX:-46,lHandY:-66,
-          rElbowX:34,rElbowY:-88,rHandX:46,rHandY:-102,
-          lKneeX:-18,lKneeY:-24,lFootX:-32,lFootY:0,
-          rKneeX:18,rKneeY:-38,rFootX:26,rFootY:28
-        });
-        case 'stompDive': return P({
-          hipX:0,hipY:-38,neckY:-74,headY:-92,
-          lShoulderX:-20,lShoulderY:-74,rShoulderX:18,rShoulderY:-74,
-          lElbowX:-42,lElbowY:-54,lHandX:-56,lHandY:-38,
-          rElbowX:38,rElbowY:-58,rHandX:48,rHandY:-40,
-          lKneeX:-18,lKneeY:-16,lFootX:-38,lFootY:4,
-          rKneeX:16,rKneeY:-12,rFootX:18,rFootY:44
-        });
-        case 'finishFollow': return P({
-          hipX:2,hipY:-44,neckY:-86,headY:-106,
-          lShoulderX:-12,lShoulderY:-82,rShoulderX:12,rShoulderY:-82,
-          lElbowX:-30,lElbowY:-72,lHandX:-42,lHandY:-56,
-          rElbowX:28,rElbowY:-74,rHandX:40,rHandY:-60,
-          lKneeX:-14,lFootX:-26,rKneeX:18,rFootX:28
-        });
-      }
-    }
-    return _getCastPose422.call(this);
-  };
-
-  // Xoay toàn thân đúng 10 vòng/60 frame. Không có chuyển động ngang trong pha xoay.
-  const _drawStickman422 = SP.draw;
-  SP.draw = function (c) {
-    if (this.charId==='strength' && this.castType==='chop' && this._lotusSpin43) {
-      const oldSpin=this._lotusSpin42||0;
-      this._lotusSpin42=0;
-      c.save(); c.translate(this.x,this.y-66); c.rotate(this._lotusSpin43); c.translate(-this.x,-(this.y-66));
-      try { _drawStickman422.call(this,c); } finally { c.restore(); this._lotusSpin42=oldSpin; }
-      return;
-    }
-    return _drawStickman422.apply(this,arguments);
-  };
-
-  // Vẽ quả cầu đang tích tụ (không tồn tại trong pha bất động 0,5 giây).
-  function drawSpiritCharge422(c) {
-    [player,bot].forEach((s)=>{
-      const B=s && s._spiritBomb42;
-      if (!B || B.thrown || !(B.radius>0) || s.castType!=='bomb') return;
-      const x=s.x,y=s.y-270,r=B.radius,tm=performance.now()*.003;
-      c.save();
-      const glow=c.createRadialGradient(x-r*.22,y-r*.28,1,x,y,r*1.24);
-      glow.addColorStop(0,'rgba(255,255,255,1)');
-      glow.addColorStop(.34,'rgba(219,234,254,.99)');
-      glow.addColorStop(.72,'rgba(96,165,250,.96)');
-      glow.addColorStop(1,'rgba(37,99,235,.08)');
-      c.globalAlpha=clamp(B.radius/20,0,1);
-      c.shadowColor='#60a5fa'; c.shadowBlur=42;
-      c.fillStyle=glow; c.beginPath(); c.arc(x,y,r,0,TAU); c.fill();
-      c.strokeStyle='rgba(255,255,255,.92)'; c.lineWidth=Math.max(1.2,r*.035);
-      c.beginPath(); c.arc(x,y,r*.82,tm,tm+Math.PI*1.55); c.stroke();
-      c.strokeStyle='rgba(191,219,254,.9)'; c.lineWidth=Math.max(1,r*.018);
-      c.beginPath(); c.arc(x,y,r*.62,-tm*1.4,-tm*1.4+Math.PI*1.45); c.stroke();
-      c.restore();
-    });
-  }
-
-  // Hiệu ứng khói lớn tại điểm tiếp đất cuối combo.
-  function drawLotusDust422(c) {
-    for(let i=lotusDust422.length-1;i>=0;i--){
-      const f=lotusDust422[i],p=f.age/f.life;
-      if(p>=1){lotusDust422.splice(i,1);continue;}
-      const expand=18+p*88,alpha=(1-p)*.42;
-      c.save(); c.globalAlpha=alpha; c.fillStyle='#9ca3af'; c.shadowColor='#6b7280'; c.shadowBlur=18;
-      for(let j=0;j<13;j++){
-        const a=f.seed+j*TAU/13, wobble=Math.sin(f.age*.22+j)*7;
-        const x=f.x+Math.cos(a)*(expand*.72+wobble);
-        const y=f.y-14-Math.sin(p*Math.PI/2)*35+Math.sin(a)*(expand*.34+wobble*.4);
-        const r=8+p*19+(j%3)*3;
-        c.beginPath(); c.arc(x,y,r,0,TAU); c.fill();
-      }
-      c.restore(); f.age++;
-    }
-  }
-  const _drawSkillEffects422=drawSkillEffects;
-  drawSkillEffects=function(c){
-    _drawSkillEffects422.apply(this,arguments);
-    drawSpiritCharge422(c);
-    drawLotusDust422(c);
-  };
-
-  // Dọn trạng thái mới khi reset/đổi round, không ảnh hưởng những hệ thống cũ.
-  const _clearSpecials422=clearSpecials;
-  clearSpecials=function(){
-    [player,bot].forEach((fighter)=>{
-      const L=fighter && fighter._lotus43;
-      if(L && L.target && L.target.frozen && L.target.frozen.kind==='lotus43'){
-        L.target.frozen=null;
-        L.target.state='idle'; L.target.vx=0; L.target.vy=0;
-      }
-      if(fighter){fighter._lotus43=null;fighter._lotusSpin43=0;fighter._lotusSpin42=0;}
-    });
-    lotusDust422.length=0;
-    return _clearSpecials422.apply(this,arguments);
-  };
-
-  const _cancelCast422=SP.cancelCast;
-  SP.cancelCast=function(){
-    const L=this._lotus43;
-    if(L && L.target && L.target.frozen && L.target.frozen.kind==='lotus43'){
-      L.target.frozen=null; L.target.state='idle'; L.target.vx=0; L.target.vy=0;
-      this._lotus43=null; this._lotusSpin43=0;
-    }
-    return _cancelCast422.apply(this,arguments);
-  };
-
-  console.info('[UPD4.2.2] Smoke-glass HUD, staged Spirit Bomb and 30% Lotus combo loaded.');
-})();
-
+            console.info('[UPD4.2.3] Smoke-glass HUD, strict Spirit Bomb sequence and four-hit Lotus combo loaded.');
+        })();
 
         console.info('[UPD4.2 FINAL] Three-column 2P picker and character tuning loaded.');
     })();
@@ -8323,9 +8735,43 @@ HTML
         }, true);
     }
 })();
+
+        // ================= [UPD4.2.4] COOLDOWN RIÊNG CHO CHIÊU O =================
+        // Chỉ cập nhật thời gian hồi chiêu, giữ nguyên các cơ chế và animation hiện có.
+        // Energy: 30s | Speed: 20s | Strength: 30s.
+        (function applyCharacterOCooldowns424() {
+            const cooldownByCharacter = {
+                energy: 30000,
+                speed: 20000,
+                strength: 30000
+            };
+
+            Object.entries(cooldownByCharacter).forEach(([characterId, cooldown]) => {
+                const skillO = CHAR_SKILLS[characterId] && CHAR_SKILLS[characterId].KeyO;
+                if (skillO) skillO.cd = cooldown;
+            });
+
+            // Bot AI 1 người vẫn dùng luồng tryBotSkill cũ; tạm áp dụng cooldown O
+            // theo nhân vật đang dùng, sau đó phục hồi giá trị mặc định toàn cục.
+            const _tryBotSkillCooldown424 = SP.tryBotSkill;
+            SP.tryBotSkill = function (dist) {
+                const defaultCooldown = SKILLS.KeyO.cd;
+                const characterSkillO = CHAR_SKILLS[this.charId] && CHAR_SKILLS[this.charId].KeyO;
+                if (characterSkillO) SKILLS.KeyO.cd = characterSkillO.cd;
+                try {
+                    return _tryBotSkillCooldown424.call(this, dist);
+                } finally {
+                    SKILLS.KeyO.cd = defaultCooldown;
+                }
+            };
+
+            console.info('[UPD4.2.4] Character O cooldowns: Energy 30s, Speed 20s, Strength 30s.');
+        })();
+
 </script>
 </body>
 </html>
+
 
 
 
