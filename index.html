@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>T-Fighter UPD4.2</title>
+    <title>T-Fighter UPD5</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,700&family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
     <style>
@@ -514,7 +514,7 @@
 
     <!-- ===== MENU GAME: TEA FIGHTER ===== -->
     <div id="menuScreen" class="menu-screen">
-        <div class="menu-title"><span class="lg-top">T-Fighter</span><span class="lg-bot">UPD4.2</span></div>
+        <div class="menu-title"><span class="lg-top">T-Fighter</span><span class="lg-bot">UPD5</span></div>
 
         <svg viewBox="0 0 640 240" style="width:min(640px,90vw);max-height:34vh" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -8164,6 +8164,1068 @@
     })();
 
 })();
+
+
+        // =====================================================================
+        // [UPD5 APPEND-ONLY PATCH]
+        //  1) Quy tắc sát thương: hp = điểm máu thực = số hiển thị trên thanh máu (500% - 15% = 485%).
+        //     Mọi sát thương mới của Ghost trừ TRỰC TIẾP vào hp, không quy đổi theo % máu tối đa.
+        //  2) Smash (đòn đánh thường cuối): đối thủ bị hất văng xa thêm ~1-2 bước chân.
+        //  3) Nhân vật GHOST (kiếm + biến đổi Ma), đứng ngay cạnh Space trong màn chọn nhân vật.
+        // Không xóa / không sửa cấu trúc cũ: chỉ bọc các hàm cũ bằng wrapper và thêm dữ liệu mới.
+        // =====================================================================
+        (function installUPD5() {
+            const GH = 'ghost', GF = 'ghostform';          // ghostform = trạng thái Ma (dùng riêng để HUD/skill tự đổi theo)
+            const SWORD_LEN = 64;
+            const SMASH_EXTRA_VX = 6.4;                    // quãng văng = vx * 11.5 (ma sát .92/frame) => +~74px ≈ 1-2 bước chân
+            const FORM_MS = 30000, TF_CD_MS = 40000;
+            const isG = (s) => !!s && (s.charId === GH || s.charId === GF);
+            const isF2 = (s) => !!s && s.charId === GF;
+            const sm = (v, a, b) => { const t = clamp((v - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
+            const lerp = (a, b, t) => a + (b - a) * t;
+            const lerpAng = (a, b, t) => { let d = ((b - a + Math.PI) % TAU + TAU) % TAU - Math.PI; return a + d * t; };
+
+            function gs(s) {
+                return s._gh || (s._gh = {
+                    mode: 'sheathed', p: 0, drawSpd: 1 / 8, lastAct: 0, sc: 1, formUntil: 0, spinT: 0,
+                    cd: { slash: 0, hac: 0, tf: 0, pull: 0, breath: 0 }       // bộ đếm hồi chiêu ĐỘC LẬP của từng kỹ năng
+                });
+            }
+
+            // ------------------------------------------------------------------
+            // 0. SMASH: văng xa hơn một chút (chỉ đòn đánh thường cuối, không đụng tới skill / đòn trước)
+            // ------------------------------------------------------------------
+            const _takeHit5 = SP.takeHit;
+            SP.takeHit = function (damage, kx, ky, heavy, attacker, isSkill) {
+                if (attacker && !isSkill && heavy && kx && attacker.state === 'attack' && attacker.comboStep === 3) {
+                    kx += Math.sign(kx) * SMASH_EXTRA_VX;
+                }
+                return _takeHit5.call(this, damage, kx, ky, heavy, attacker, isSkill);
+            };
+
+            // ------------------------------------------------------------------
+            // 1. DỮ LIỆU NHÂN VẬT
+            // ------------------------------------------------------------------
+            CHAR_SKILLS.ghost = {
+                KeyU: { type: 'ghostslash', name: 'Ghostly Slash', short: 'Ghostly Slash', cd: 10000 },
+                KeyI: { type: 'hactram', name: 'Hắc trảm', short: 'Hắc trảm', cd: 15000 },
+                KeyO: { type: 'ghosttf', name: 'Biến đổi', short: 'Biến đổi', cd: TF_CD_MS }
+            };
+            CHAR_SKILLS.ghostform = {
+                KeyU: { type: 'ghostpull', name: 'Ba con ma kéo', short: 'Ma kéo', cd: 15000 },
+                KeyI: { type: 'nospell', name: '(đang biến đổi)', short: '—', cd: 1000 },
+                KeyO: { type: 'ghostbreath', name: 'Hơi thở Ma', short: 'Hơi thở Ma', cd: 20000 }
+            };
+            CHAR_STYLE.ghost = { p1: { color: '#6b7280', accent: '#e5e7eb' }, p2: { color: '#4b5563', accent: '#e5e7eb' } };
+            CHAR_STYLE.ghostform = CHAR_STYLE.ghost;
+
+            const ghostIcon = (x, y, k) => `<g transform="translate(${x} ${y}) scale(${k})"><path d="M-12 0 a12 12 0 0 1 24 0 v17 q-4 7 -8 0 q-4 -7 -8 0 q-4 7 -8 0 z" fill="#fff" stroke="#111" stroke-width="2.2" stroke-linejoin="round"/><ellipse cx="-4.3" cy="-1" rx="2" ry="3.2" fill="#111"/><ellipse cx="4.3" cy="-1" rx="2" ry="3.2" fill="#111"/><ellipse cx="0" cy="6.5" rx="1.7" ry="2.3" fill="#111"/></g>`;
+            const ghBehind = `<g stroke-linecap="round"><path d="M68 100 L27 129" stroke="#fcfaf2" stroke-width="13"/><path d="M68 100 L27 129" stroke="#374151" stroke-width="7.5"/><path d="M57 108 L52 111.5 M36 123 L31 126.5" stroke="#9ca3af" stroke-width="7.5"/></g>${ghostIcon(24, 52, 1.25)}`;
+            const ghFront = `<g stroke-linecap="round"><path d="M104 89 L147 29" stroke="#fcfaf2" stroke-width="11"/><path d="M111 79 L147 29" stroke="#94a3b8" stroke-width="5.6"/><path d="M114 77 L146 33" stroke="#f8fafc" stroke-width="1.8"/><path d="M102.5 75.8 L117.5 86.4" stroke="#374151" stroke-width="4.2"/><path d="M107 85 L100 95" stroke="#111827" stroke-width="5.4"/></g>`;
+            CHARACTERS.ghost = {
+                id: 'ghost', name: 'ghost', skills: ['KeyU', 'KeyI', 'KeyO'],
+                skillText: ['U · Ghostly Slash', 'I · Hắc trảm', 'O · Biến đổi (dạng Ma)', 'S · Khiên (chung)'],
+                preview: stickPreview('#6b7280', '#e5e7eb', ghBehind, ghFront)
+                    .replace(/<g stroke="(#fcfaf2|#6b7280)" fill=/g, '<g opacity=".8" stroke="$1" fill=')
+            };
+
+            // ------------------------------------------------------------------
+            // 2. ÂM THANH NHỎ (WebAudio tổng hợp, dùng chung AudioContext của Space)
+            // ------------------------------------------------------------------
+            function gSfx(kind) {
+                try {
+                    const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+                    spAC = spAC || new AC(); if (spAC.state === 'suspended') spAC.resume();
+                    const c = spAC, t0 = c.currentTime, g = c.createGain(); g.gain.value = 0.22; g.connect(c.destination);
+                    const osc = (type, f0, f1, dur, vol) => { const o = c.createOscillator(), og = c.createGain(); o.type = type; o.frequency.setValueAtTime(f0, t0); o.frequency.exponentialRampToValueAtTime(Math.max(1, f1), t0 + dur); og.gain.setValueAtTime(vol, t0); og.gain.exponentialRampToValueAtTime(0.001, t0 + dur); o.connect(og); og.connect(g); o.start(t0); o.stop(t0 + dur + 0.02); };
+                    const noise = (dur, vol, fq, type) => { const n = Math.floor(c.sampleRate * dur), b = c.createBuffer(1, n, c.sampleRate), d = b.getChannelData(0); for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n); const sr = c.createBufferSource(); sr.buffer = b; const f = c.createBiquadFilter(); f.type = type || 'bandpass'; f.frequency.value = fq; const og = c.createGain(); og.gain.value = vol; sr.connect(f); f.connect(og); og.connect(g); sr.start(t0); };
+                    if (kind === 'draw') { noise(0.16, 0.5, 4200, 'highpass'); osc('triangle', 1800, 2600, 0.12, 0.12); }
+                    else if (kind === 'sheathe') { noise(0.1, 0.4, 3000, 'highpass'); osc('square', 900, 500, 0.08, 0.14); }
+                    else if (kind === 'slash') { noise(0.14, 0.6, 2800, 'bandpass'); }
+                    else if (kind === 'thrust') { noise(0.12, 0.6, 1800, 'bandpass'); osc('sawtooth', 300, 700, 0.1, 0.12); }
+                    else if (kind === 'spin') { noise(0.3, 0.4, 1200, 'bandpass'); osc('sine', 300, 900, 0.3, 0.2); }
+                    else if (kind === 'ghost') { osc('sine', 700, 220, 0.5, 0.35); osc('triangle', 1400, 500, 0.4, 0.12); noise(0.3, 0.2, 1500); }
+                    else if (kind === 'crack') { osc('sawtooth', 120, 35, 0.6, 0.5); noise(0.5, 0.6, 700, 'lowpass'); }
+                    else if (kind === 'trans') { osc('sine', 80, 420, 0.7, 0.5); osc('triangle', 600, 120, 0.6, 0.2); noise(0.6, 0.3, 900); }
+                    else if (kind === 'breath') { osc('sawtooth', 70, 160, 0.9, 0.4); noise(0.9, 0.55, 700); }
+                } catch (e) { }
+            }
+
+            // ------------------------------------------------------------------
+            // 3. TRẠNG THÁI / HỒI CHIÊU / UI
+            // ------------------------------------------------------------------
+            function syncCd(s) {                                  // phản chiếu bộ đếm riêng lên 3 ô U-I-O để HUD hiển thị đúng
+                const cd = s.cdAt; if (!cd) return; const g = gs(s);
+                if (isF2(s)) { cd.KeyU = g.cd.pull; cd.KeyI = 0; cd.KeyO = g.cd.breath; s._oCdDuration42 = 20000; }
+                else { cd.KeyU = g.cd.slash; cd.KeyI = g.cd.hac; cd.KeyO = g.cd.tf; s._oCdDuration42 = TF_CD_MS; }
+            }
+            function fixLabels() {
+                try {
+                    [playerNameLabel, botNameLabel].forEach(el => { if (el && el.textContent.includes('ghostform')) el.textContent = el.textContent.replace(/ghostform/g, 'ghost (Ma)'); });
+                    const p2l = $('p2Label'); if (p2l && p2l.textContent.includes('ghostform')) p2l.textContent = p2l.textContent.replace(/ghostform/g, 'ghost (Ma)');
+                    if (helpExtra && helpExtra.innerHTML.includes('ghostform')) helpExtra.innerHTML = helpExtra.innerHTML.replace(/ghostform/g, 'ghost (Ma)');
+                } catch (e) { }
+            }
+            function refreshGhostUI() {
+                try { applyCharacter(); } catch (e) { }
+                try { refreshP2Hud(); refreshPadLabels(); } catch (e) { }
+                fixLabels();
+            }
+            function ghostReset(s) {
+                if (!s) return;
+                const was = s.charId === GF;
+                if (was) s.charId = GH;
+                s._gh = null; s._gDrawn = false;
+                if (was) refreshGhostUI();
+            }
+            function ghostMouth(s) {
+                const sc = gs(s).sc || 1, p = s.currentPose;
+                return { x: s.x + s.facing * (p.headX + 13) * sc, y: s.y + (p.headY + 6) * sc };
+            }
+
+            // ------------------------------------------------------------------
+            // 4. HÀNH ĐỘNG TRÁNH LỖI: dừng / khống chế đối thủ
+            // ------------------------------------------------------------------
+            function gPrep(o) {
+                if (o.state === 'cast') { try { o.cancelCast(); } catch (e) { } }
+                o.castType = null; o.beam = null; o.heldBy = null; o.gat = null; o.ls = null;
+                o.attackPhase = 'none'; o.comboStep = 0; o.queuedNextCombo = false;
+                if (['cast', 'attack', 'guard', 'held', 'dash', 'crouch_prep'].includes(o.state)) o.state = o.grounded ? 'idle' : 'jump';
+                o.vx = 0; if (o.grounded) o.vy = 0;
+            }
+            function gStun(o, frames, owner, kind) {
+                if (!o || o.hp <= 0 || o.frozen) return false;
+                gPrep(o);
+                o.freezeFor(frames, kind, owner);
+                return true;
+            }
+            const isGKind = (f) => !!f && (f.kind === 'gstun' || f.kind === 'gpull' || f.kind === 'gbreath');
+
+            // ------------------------------------------------------------------
+            // 5. RÚT KIẾM / CẤT KIẾM
+            // ------------------------------------------------------------------
+            const _ta5 = SP.triggerAttack;
+            SP.triggerAttack = function () {
+                if (isG(this) && !this.isClone && !isF2(this)) {
+                    const blocked = this.frozen || ['hitstun', 'knockdown', 'dash', 'cast', 'held'].includes(this.state);
+                    if (!blocked) {
+                        const g = gs(this); g.lastAct = nowMs();                   // đặt lại bộ đếm 3 giây
+                        if (g.mode === 'sheathed') { g.mode = 'drawing'; g.drawSpd = 1 / 8; gSfx('draw'); }
+                        else if (g.mode === 'sheathing') { g.mode = 'drawing'; g.drawSpd = 1 / 5; }   // ưu tiên hành động mới, ngắt animation cất kiếm
+                    }
+                }
+                return _ta5.apply(this, arguments);
+            };
+
+            function ghostTick(s) {
+                const g = gs(s), now = nowMs();
+                // kích thước thân (1,3 lần ở dạng Ma), chuyển đổi mượt
+                const tgt = isF2(s) ? 1.3 : 1;
+                g.sc += (tgt - g.sc) * 0.2; if (Math.abs(tgt - g.sc) < 0.003) g.sc = tgt;
+                if (!(s.state === 'cast' && s.castType === 'ghostslash')) g.spinT = 0;
+                if (isF2(s)) {
+                    g.mode = 'sheathed'; g.p = 0;
+                    if (now >= g.formUntil) ghostExitForm(s);
+                } else {
+                    if (g.mode === 'drawing') { g.p = Math.min(1, g.p + g.drawSpd); if (g.p >= 1) { g.p = 1; g.mode = 'drawn'; } }
+                    else if (g.mode === 'sheathing') { g.p = Math.max(0, g.p - 1 / 16); if (g.p <= 0) { g.p = 0; g.mode = 'sheathed'; gSfx('sheathe'); } }
+                    else if (g.mode === 'drawn' && now - g.lastAct >= 3000 && s.state !== 'attack' && s.state !== 'cast' && !s.frozen) {
+                        g.mode = 'sheathing';                                       // 3 giây không đánh / dùng skill => tự cất kiếm
+                    }
+                }
+                syncCd(s);
+            }
+            const _upd5 = SP.update;
+            SP.update = function (opp, inputKeys) {
+                if (isG(this) && !this.isClone) ghostTick(this);
+                return _upd5.call(this, opp, inputKeys);
+            };
+
+            // ------------------------------------------------------------------
+            // 6. ĐÁNH THƯỜNG: KIẾM (dạng 1) / TAY KHÔNG TẦM ĐÁNH x1,3 (dạng Ma)
+            // ------------------------------------------------------------------
+            const CFG5 = {
+                1: { dmg: 8, range: 95, kbX: 7, kbY: -3, heavy: false },
+                2: { dmg: 12, range: 110, kbX: 10, kbY: -6, heavy: false },
+                3: { dmg: 22, range: 125, kbX: 18, kbY: -12, heavy: true }
+            };
+            let gNoSmear = false;
+            const _ssa5 = spawnSmearArc;
+            spawnSmearArc = function () { if (gNoSmear) return; return _ssa5.apply(this, arguments); };   // dạng kiếm: không có vệt đấm tay
+
+            function spawnSwordFx(s) {
+                const st = s.comboStep, d = s.facing, sx = s.x + d * 12, sy = s.y - 86;
+                if (st === 1) gFx.push({ type: 'arc', x: sx, y: sy, r: 108, a0: -2.15, a1: 0.85, dir: d, life: 11, max: 11 });          // chém từ trên-sau xuống dưới-trước
+                else if (st === 2) gFx.push({ type: 'arc', x: sx, y: sy + 8, r: 104, a0: 0.95, a1: -1.75, dir: d, life: 11, max: 11 });   // chém ngược từ dưới hất lên
+                else gFx.push({ type: 'thrust', x: s.x + d * 70, y: s.y - 80, dir: d, life: 12, max: 12 });                             // đâm thẳng
+                gSfx(st === 3 ? 'thrust' : 'slash');
+            }
+            function ghostMeleeHit(s, o) {
+                const cfg = CFG5[s.comboStep]; if (!cfg) return;
+                const k = isF2(s) ? 1.3 : 1;                                   // dạng Ma: tầm đánh + phạm vi va chạm x1,3
+                const dx = o.x - s.x, dy = Math.abs(o.y - s.y);
+                if (!(((dx * s.facing) >= -20 * k) && Math.abs(dx) <= cfg.range * k && dy < 95 * k)) return;
+                s.hasHitCurrentAttack = true;
+                if (o.tryBlockNormal(s)) return;
+                const finalDmg = (s.isBot && !s.isClone)
+                    ? Math.max(1, Math.round(cfg.dmg * BOT_NERF))
+                    : Math.round(cfg.dmg * NORMAL_ATK_MULT * (typeof s.atkMult === 'function' ? s.atkMult() : 1) * 10) / 10;
+                o.takeHit(finalDmg, s.facing * cfg.kbX, cfg.kbY, cfg.heavy, s);      // sát thương/knockback = đòn thường của nhân vật bình thường
+                const hitX = (s.x + o.x) / 2 + s.facing * 15, hitY = o.y - 78;
+                spawnHitSparks(hitX, hitY, isF2(s) ? s.accentColor : '#e5e7eb', cfg.heavy);
+                if (cfg.heavy) {
+                    hitstopFrames = 7; impactFlashFrames = 3; camera.triggerShake(18);
+                    spawnFloatingText(hitX, hitY - 30, 'SMASH!! -' + finalDmg, '#dc2626', 1.35);
+                } else {
+                    hitstopFrames = 3; camera.triggerShake(7);
+                    spawnFloatingText(hitX, hitY - 20, '-' + finalDmg, '#1e1b18', 1.0);
+                }
+                if (!s.isBot && !s.isClone && !s.isP2) registerPlayerCombo(s.comboStep);
+            }
+            const _uas5 = SP.updateAttackState;
+            SP.updateAttackState = function (opponent) {
+                if (!isG(this) || this.isClone) return _uas5.call(this, opponent);
+                const before = this.attackPhase, ox = opponent.x, oy = opponent.y, f2 = isF2(this);
+                if (this.attackPhase === 'active') opponent.x = this.x + this.facing * 100000;    // chặn hit của hàm cũ, tự xử lý bên dưới
+                gNoSmear = !f2;
+                try { _uas5.call(this, opponent); } finally { opponent.x = ox; opponent.y = oy; gNoSmear = false; }
+                if (this.state === 'attack' && this.attackPhase === 'active') {
+                    if (before !== 'active' && !f2) spawnSwordFx(this);
+                    if (!this.hasHitCurrentAttack) ghostMeleeHit(this, opponent);
+                }
+            };
+
+            // Tư thế tay kiếm: kiếm luôn nối tiếp cẳng tay phải (khuỷu -> bàn tay) nên luôn dính chặt vào tay.
+            const _gap5 = SP.getAttackPose;
+            SP.getAttackPose = function () {
+                const pose = _gap5.call(this);
+                if (!isG(this) || isF2(this) || this.isClone) return pose;
+                const ant = this.attackPhase === 'anticipation', st = this.comboStep;
+                let o;
+                if (st === 1) o = ant
+                    ? { rShoulderX: -14, rShoulderY: -84, rElbowX: -30, rElbowY: -112, rHandX: -22, rHandY: -138 }
+                    : { rShoulderX: 24, rShoulderY: -84, rElbowX: 46, rElbowY: -96, rHandX: 84, rHandY: -62 };
+                else if (st === 2) o = ant
+                    ? { rShoulderX: -8, rShoulderY: -86, rElbowX: -18, rElbowY: -56, rHandX: -34, rHandY: -40,
+                        lKneeX: -10, lKneeY: -24, lFootX: -14, rKneeX: 16, rKneeY: -24, rFootX: 22, rFootY: 0 }
+                    : { hipX: 8, neckX: 12, neckY: -86, headX: 18, headY: -106, rShoulderX: 10, rShoulderY: -84, rElbowX: 40, rElbowY: -70, rHandX: 78, rHandY: -100,
+                        lKneeX: -8, lKneeY: -24, lFootX: -22, rKneeX: 30, rKneeY: -26, rFootX: 40, rFootY: 0 };
+                else o = ant
+                    ? { hipX: -12, hipY: -40, neckX: -10, neckY: -84, headX: -12, headY: -104, lShoulderX: -8, lShoulderY: -82, rShoulderX: -8, rShoulderY: -82,
+                        rElbowX: -26, rElbowY: -80, rHandX: -8, rHandY: -80, lElbowX: 10, lElbowY: -82, lHandX: 30, lHandY: -90,
+                        lKneeX: -18, lKneeY: -22, lFootX: -30, rKneeX: 20, rKneeY: -26, rFootX: 34 }
+                    : { hipX: 20, hipY: -38, neckX: 40, neckY: -72, headX: 52, headY: -88, lShoulderX: 36, lShoulderY: -70, rShoulderX: 36, rShoulderY: -70,
+                        rElbowX: 70, rElbowY: -78, rHandX: 108, rHandY: -80, lElbowX: 14, lElbowY: -64, lHandX: -6, lHandY: -58,
+                        lKneeX: -6, lKneeY: -22, lFootX: -34, rKneeX: 44, rKneeY: -24, rFootX: 62, rFootY: 0 };
+                return Object.assign({}, pose, o);
+            };
+
+            // Khi đang rút / cất kiếm: bàn tay phải đưa tới chuôi kiếm ở hông trái
+            const _csp5 = SP.computeSkeletonPose;
+            SP.computeSkeletonPose = function () {
+                _csp5.call(this);
+                if (!isG(this) || isF2(this) || this.isClone) return;
+                const g = gs(this), p = g.p; if (p <= 0 || p >= 1) return;
+                let w = Math.sin(Math.PI * p);
+                if (this.state === 'attack' && this.attackPhase !== 'anticipation') w *= 0.3;
+                if (this.state === 'cast') w *= 0.2;
+                const ps = this.currentPose, hx = ps.hipX + 2, hy = ps.hipY - 5;
+                ps.rHandX += (hx - ps.rHandX) * w; ps.rHandY += (hy - ps.rHandY) * w;
+                ps.rElbowX += (((ps.rShoulderX + hx) / 2 + 4) - ps.rElbowX) * w * 0.8;
+                ps.rElbowY += (((ps.rShoulderY + hy) / 2 + 6) - ps.rElbowY) * w * 0.8;
+            };
+
+            // ------------------------------------------------------------------
+            // 7. KỸ NĂNG (U / I / O) — bộ đếm hồi chiêu riêng, bỏ qua cdAt gốc
+            // ------------------------------------------------------------------
+            const _trig5 = SP.triggerSkill;
+            SP.triggerSkill = function (id) {
+                if (!isG(this)) return _trig5.apply(this, arguments);
+                if (this.isBot || this.isClone || this.frozen) return;
+                const g = gs(this), now = nowMs(), f2 = isF2(this);
+                const key = f2 ? ({ KeyU: 'pull', KeyO: 'breath' })[id] : ({ KeyU: 'slash', KeyI: 'hac', KeyO: 'tf' })[id];
+                if (!key) return;                                              // dạng Ma: chiêu I không khả dụng
+                if (now < g.cd[key]) { flashDeny(this, id); return; }
+                if (!groundIdle(this)) return;
+                const def = CHAR_SKILLS[this.charId][id];
+                if (key !== 'tf') g.cd[key] = now + def.cd;                     // tf: hồi chiêu chỉ bắt đầu SAU KHI hết dạng Ma
+                if (!f2) { g.mode = 'drawn'; g.p = 1; g.lastAct = now; }        // dùng skill trước khi đánh thường: kiếm xuất hiện ngay trên tay
+                const type = ({ slash: 'ghostslash', hac: 'hactram', tf: 'ghosttf', pull: 'ghostpull', breath: 'ghostbreath' })[key];
+                this.beginCast(type);
+                setPrincipleBadge(def.name + '!', 80);
+                syncCd(this);
+            };
+
+            const gProjs = [], gCracks = [], gBreaths = [], gPulls = [], gDots = [], gFx = [];
+
+            // ----- U: Ghostly Slash -----
+            CASTS.ghostslash = function (s, opp) {
+                s.castTimer++; const t = s.castTimer, g = gs(s); s.vx *= 0.6;
+                g.spinT = t <= 12 ? t / 12 : 0;                                // xoay người 1 vòng nhanh (12 frame)
+                if (t === 1) gSfx('spin');
+                if (t === 13) {
+                    const d = s.facing;
+                    gProjs.push({ owner: s, target: enemyOf(s), x: s.x + d * 70, y: s.y - 76, dir: d, speed: 38, travel: 0, max: WORLD_S() / 2, age: 0, hit: false, trail: [] });
+                    gFx.push({ type: 'arc', x: s.x + d * 12, y: s.y - 80, r: 112, a0: -0.9, a1: 0.7, dir: d, life: 9, max: 9 });
+                    gSfx('ghost'); camera.triggerShake(6);
+                }
+                if (t >= 28) s.endCast();
+            };
+            function ghostRecoil(s) {
+                s.hp = Math.max(1, s.hp - 15);                                 // trừ CHÍNH XÁC 15 điểm (500 -> 485)
+                updateHealthUI();
+                const dir = -s.facing, maxD = dir > 0 ? (rightWall - s.x) : (s.x - leftWall);
+                const D = Math.min(WORLD_S() / 4, Math.max(0, maxD * 0.9));    // bay lùi 1/4 map (không đập tường)
+                s.castType = null; s.beam = null; s.attackPhase = 'none'; s.comboStep = 0;
+                s.state = 'knockdown'; s.stateTimer = 46; s.grounded = false;
+                s.vx = dir * D / 11.5; s.vy = -11; s.scaleX = 0.7; s.scaleY = 1.3;
+                spawnFloatingText(s.x, s.y - 150, 'PHẢN CHẤN -15', '#4b5563', 1.2);
+                spawnHitSparks(s.x, s.y - 70, '#e5e7eb', true); camera.triggerShake(14);
+            }
+
+            // ----- I: Hắc trảm -----
+            CASTS.hactram = function (s, opp) {
+                s.castTimer++; const t = s.castTimer; s.vx *= 0.6;
+                if (t === 9) {
+                    const d = s.facing, ox = s.x + d * 136;
+                    const room = d > 0 ? (rightWall - ox) : (ox - leftWall);
+                    gCracks.push({ owner: s, target: enemyOf(s), dir: d, x0: ox, floorY: s.y, len: 0, max: Math.max(0, Math.min(WORLD_S() * 2 / 3, room)),
+                                   speed: 80, age: 0, hold: 0, hit: false, seed: Math.random() * 99 });
+                    for (let i = 0; i < 12; i++) particles.push({ type: 'spark', x: ox + rr(-18, 18), y: s.y - rr(0, 14), vx: rr(-3, 3) + d * 2, vy: rr(-8, -2), length: 11, color: '#4ade80', alpha: 1, decay: 0.04 });
+                    gSfx('crack'); camera.triggerShake(14); impactFlashFrames = 2;
+                    spawnFloatingText(s.x, s.y - 160, 'HẮC TRẢM!', '#16a34a', 1.4);
+                }
+                if (t >= 26) s.endCast();
+            };
+
+            // ----- O: Biến đổi -----
+            CASTS.ghosttf = function (s, opp) {
+                s.castTimer++; const t = s.castTimer; s.vx *= 0.5;
+                if (t === 1) gSfx('trans');
+                if (t % 3 === 0 && t < 14) { const a = rr(0, TAU); particles.push({ type: 'spark', x: s.x + Math.cos(a) * 70, y: s.y - 70 + Math.sin(a) * 70, vx: -Math.cos(a) * 4, vy: -Math.sin(a) * 4, length: 9, color: '#d1d5db', alpha: 1, decay: 0.06 }); }
+                if (t === 14 && !isF2(s)) ghostEnterForm(s);
+                if (t >= 26) s.endCast();
+            };
+            function ghostEnterForm(s) {
+                const g = gs(s), now = nowMs();
+                g.formUntil = now + FORM_MS;                                   // duy trì 30 giây
+                g.cd.tf = Infinity;                                            // hồi chiêu 40s KHÔNG chạy trong lúc biến đổi
+                g.mode = 'sheathed'; g.p = 0;
+                s.charId = GF; syncCd(s); refreshGhostUI();
+                blastRings.push({ x: s.x, y: s.y - 70, r: 20, max: 190, life: 20, maxLife: 20 });
+                for (let i = 0; i < 16; i++) particles.push({ type: 'spark', x: s.x + rr(-24, 24), y: s.y - rr(10, 120), vx: rr(-4, 4), vy: rr(-5, 1), length: 11, color: i % 2 ? '#e5e7eb' : '#86efac', alpha: 1, decay: 0.05 });
+                spawnFloatingText(s.x, s.y - 190, 'DẠNG MA!', '#374151', 1.4);
+                camera.triggerShake(12); impactFlashFrames = 2;
+            }
+            function ghostExitForm(s) {
+                const g = gs(s), now = nowMs();
+                if (!isF2(s)) return;
+                s.charId = GH;
+                g.cd.tf = now + TF_CD_MS;                                      // NOW mới bắt đầu đếm 40 giây
+                g.mode = 'drawn'; g.p = 1; g.lastAct = now;                    // kiếm trở lại trên tay phải, rồi tự cất theo cơ chế 3 giây
+                syncCd(s); refreshGhostUI();
+                blastRings.push({ x: s.x, y: s.y - 70, r: 20, max: 150, life: 16, maxLife: 16 });
+                for (let i = 0; i < 12; i++) particles.push({ type: 'spark', x: s.x + rr(-20, 20), y: s.y - rr(10, 110), vx: rr(-3, 3), vy: rr(-4, 1), length: 10, color: '#d1d5db', alpha: 1, decay: 0.05 });
+                spawnFloatingText(s.x, s.y - 190, 'TRỞ LẠI!', '#374151', 1.2);
+            }
+
+            // ----- U (dạng Ma): ba con ma khống chế & kéo -----
+            CASTS.ghostpull = function (s, opp) {
+                s.castTimer++; const t = s.castTimer; s.vx *= 0.6;
+                if (t === 10) {
+                    const e = enemyOf(s);
+                    if (e && e.hp > 0 && !e.frozen && gStun(e, 1000000, s, 'gpull')) {
+                        const dist = Math.abs(s.x - e.x);
+                        gPulls.push({ owner: s, target: e, tx: s.x, ty: s.y, phase: 'pull', age: 0, t: 0, speed: clamp(dist / 150, 10, 40), stunLeft: 60, fade: 0 });
+                        gSfx('ghost'); camera.triggerShake(6);
+                        spawnFloatingText(e.x, e.y - 170, 'BA CON MA!', '#374151', 1.3);
+                    } else spawnFloatingText(s.x, s.y - 150, 'TRƯỢT!', '#6b7280', 1.0);
+                }
+                if (t >= 24) s.endCast();
+            };
+
+            // ----- O (dạng Ma): hơi thở xanh -----
+            CASTS.ghostbreath = function (s, opp) {
+                s.castTimer++; const t = s.castTimer; s.vx *= 0.5;
+                if (t < 16 && t % 2 === 0) { const m = ghostMouth(s), a = rr(0, TAU); particles.push({ type: 'spark', x: m.x + Math.cos(a) * 60, y: m.y + Math.sin(a) * 60, vx: -Math.cos(a) * 4, vy: -Math.sin(a) * 4, length: 10, color: '#4ade80', alpha: 1, decay: 0.06 }); }
+                if (t === 16) {
+                    const m = ghostMouth(s);
+                    gBreaths.push({ owner: s, target: enemyOf(s), dir: s.facing, ox: m.x, oy: m.y, len: 0, max: WORLD_S() / 2, age: 0, life: 48, hit: false, hw: 42 });
+                    gSfx('breath'); camera.triggerShake(12); impactFlashFrames = 2;
+                    spawnFloatingText(s.x, s.y - 190, 'HƠI THỞ MA!', '#15803d', 1.4);
+                }
+                if (t >= 16 + 48 + 8) s.endCast();
+            };
+
+            // Tư thế niệm chiêu
+            const _gcp5 = SP.getCastPose;
+            SP.getCastPose = function () {
+                const t = this.castTimer || 0, P = (o) => Object.assign(this.getDefaultPose(), o);
+                switch (this.castType) {
+                    case 'ghostslash':
+                        if (t <= 12) return P({ neckX: 2, headX: 3, rElbowX: 42, rElbowY: -90, rHandX: 88, rHandY: -90, lElbowX: -36, lElbowY: -84, lHandX: -70, lHandY: -80, lKneeX: -16, lFootX: -22, rKneeX: 16, rFootX: 22 });
+                        return P({ hipX: 16, hipY: -38, neckX: 38, neckY: -74, headX: 50, headY: -90, lShoulderX: 34, lShoulderY: -72, rShoulderX: 34, rShoulderY: -72,
+                                   rElbowX: 70, rElbowY: -76, rHandX: 112, rHandY: -76, lElbowX: 12, lElbowY: -62, lHandX: -14, lHandY: -54,
+                                   lKneeX: -8, lKneeY: -20, lFootX: -34, rKneeX: 40, rKneeY: -22, rFootX: 58 });
+                    case 'hactram':
+                        if (t < 9) return P({ hipX: -6, neckX: -4, headX: -4, lShoulderX: -2, rShoulderX: -2, rElbowX: 2, rElbowY: -124, rHandX: 12, rHandY: -160,
+                                              lElbowX: -8, lElbowY: -120, lHandX: 4, lHandY: -152, lKneeX: -14, lFootX: -22, rKneeX: 16, rFootX: 24 });
+                        return P({ hipX: 14, hipY: -38, neckX: 34, neckY: -70, headX: 46, headY: -86, lShoulderX: 30, lShoulderY: -68, rShoulderX: 30, rShoulderY: -68,
+                                   rElbowX: 50, rElbowY: -62, rHandX: 84, rHandY: -42, lElbowX: 44, lElbowY: -58, lHandX: 78, lHandY: -40,
+                                   lKneeX: -6, lKneeY: -20, lFootX: -30, rKneeX: 36, rKneeY: -22, rFootX: 54 });
+                    case 'ghosttf':
+                        if (t < 14) return P({ lElbowX: -34, lElbowY: -100, lHandX: -50, lHandY: -132, rElbowX: 34, rElbowY: -100, rHandX: 50, rHandY: -132, lKneeX: -16, lFootX: -24, rKneeX: 16, rFootX: 24 });
+                        return P({ hipY: -40, neckY: -88, lElbowX: -26, lElbowY: -72, lHandX: -38, lHandY: -52, rElbowX: 26, rElbowY: -72, rHandX: 38, rHandY: -52, lKneeX: -18, lFootX: -28, rKneeX: 18, rFootX: 28 });
+                    case 'ghostpull':
+                        if (t < 10) return P({ lElbowX: -20, lElbowY: -112, lHandX: -14, lHandY: -148, rElbowX: 30, rElbowY: -112, rHandX: 36, rHandY: -148, lFootX: -22, rFootX: 24 });
+                        return P({ hipX: 6, neckX: 14, headX: 20, lShoulderX: 10, rShoulderX: 10, rElbowX: 46, rElbowY: -96, rHandX: 80, rHandY: -110,
+                                   lElbowX: 30, lElbowY: -90, lHandX: 62, lHandY: -104, lKneeX: -10, lFootX: -28, rKneeX: 22, rFootX: 34 });
+                    case 'ghostbreath':
+                        if (t < 8) return P({ hipX: -4, neckX: -6, headX: -6, lElbowX: -10, lElbowY: -66, lHandX: -6, lHandY: -52, rElbowX: 12, rElbowY: -66, rHandX: 16, rHandY: -52, lKneeX: -14, lFootX: -22, rKneeX: 16, rFootX: 26 });
+                        return P({ hipX: 8, hipY: -40, neckX: 44, neckY: -72, headX: 64, headY: -80, lShoulderX: 40, lShoulderY: -70, rShoulderX: 40, rShoulderY: -70,
+                                   lElbowX: 14, lElbowY: -58, lHandX: 2, lHandY: -48, rElbowX: 26, rElbowY: -60, rHandX: 14, rHandY: -50,
+                                   lKneeX: -14, lKneeY: -22, lFootX: -34, rKneeX: 26, rKneeY: -24, rFootX: 44 });
+                }
+                return _gcp5.call(this);
+            };
+
+            // ------------------------------------------------------------------
+            // 8. CẬP NHẬT HIỆU ỨNG / VA CHẠM KỸ NĂNG
+            // ------------------------------------------------------------------
+            function updateGhostFx() {
+                // DoT của Hơi thở Ma: đúng 8/giây trong 3 giây = 24 điểm (trừ thẳng vào hp)
+                for (let i = gDots.length - 1; i >= 0; i--) {
+                    const d = gDots[i], o = d.target;
+                    if (o.hp <= 0 || d.n >= d.frames) { gDots.splice(i, 1); continue; }
+                    o.hp = Math.max(0, o.hp - d.total / d.frames); d.n++; updateHealthUI();
+                }
+                // Ghostly Slash: luồng chém hình con ma
+                for (let i = gProjs.length - 1; i >= 0; i--) {
+                    const p = gProjs[i], e = p.target, s = p.owner, x0 = p.x;
+                    p.age++; p.x += p.dir * p.speed; p.travel += p.speed;
+                    p.trail.push({ x: p.x, y: p.y }); if (p.trail.length > 7) p.trail.shift();
+                    if (p.age % 2 === 0) particles.push({ type: 'spark', x: p.x - p.dir * rr(10, 40), y: p.y + rr(-30, 30), vx: -p.dir * 3, vy: rr(-1, 1), length: 12, color: '#e5e7eb', alpha: 1, decay: 0.08 });
+                    if (!p.hit && e && e.hp > 0 && !(e.state === 'knockdown' && e.grounded)) {
+                        const lo = Math.min(x0, p.x) - 46, hi = Math.max(x0, p.x) + 46;
+                        if (e.x >= lo && e.x <= hi && Math.abs((e.y - 70) - p.y) < 90) {
+                            p.hit = true;                                       // lướt xuyên qua thân: Stun đúng 1 giây
+                            gStun(e, 60, s, 'gstun');
+                            spawnHitSparks(e.x, e.y - 70, '#e5e7eb', true);
+                            spawnFloatingText(e.x, e.y - 175, 'STUN 1s!', '#4b5563', 1.2);
+                            hitstopFrames = 4; camera.triggerShake(10);
+                            ghostRecoil(s);                                      // phản chấn: -15 máu + hất lùi 1/4 map
+                        }
+                    }
+                    if (p.travel >= p.max || p.x < leftWall - 120 || p.x > rightWall + 120 || s.hp <= 0) gProjs.splice(i, 1);
+                }
+                // Hắc trảm: vết nứt chạy nhanh trên mặt đất
+                for (let i = gCracks.length - 1; i >= 0; i--) {
+                    const c = gCracks[i], e = c.target, s = c.owner;
+                    c.age++; c.len = Math.min(c.max, c.len + c.speed);
+                    if (c.age % 2 === 0 && c.len > 0) { const fx = c.x0 + c.dir * c.len; particles.push({ type: 'spark', x: fx, y: c.floorY - rr(0, 20), vx: rr(-2, 2), vy: rr(-7, -2), length: 10, color: '#4ade80', alpha: 1, decay: 0.06 }); }
+                    if (!c.hit && e && e.hp > 0) {
+                        const rel = (e.x - c.x0) * c.dir;
+                        if (rel >= -20 && rel <= c.len + 20 && e.y >= c.floorY - 62 && e.y <= c.floorY + 40) {
+                            c.hit = true;                                       // mỗi lần dùng chỉ gây sát thương 1 lần
+                            e.takeHit(20, c.dir * 3, -20, true, s, true);        // -20 máu + hất tung mạnh lên trời
+                            spawnHitSparks(e.x, e.y - 40, '#4ade80', true);
+                            spawnFloatingText(e.x, e.y - 160, 'HẮC TRẢM!! -20', '#16a34a', 1.5);
+                            hitstopFrames = 6; impactFlashFrames = 3; camera.triggerShake(22);
+                        }
+                    }
+                    if (c.len >= c.max && ++c.hold > 36) gCracks.splice(i, 1);
+                    else if (s.hp <= 0 && c.age > 90) gCracks.splice(i, 1);
+                }
+                // Hơi thở Ma: tia xanh, trúng => Stun 3s + DoT 24
+                for (let i = gBreaths.length - 1; i >= 0; i--) {
+                    const b = gBreaths[i], e = b.target, s = b.owner;
+                    b.age++; b.len = Math.min(b.max, b.len + b.max / 7);
+                    const m = ghostMouth(s); b.ox = m.x; b.oy = m.y;
+                    if (b.age % 2 === 0) particles.push({ type: 'spark', x: b.ox + b.dir * rr(30, b.len), y: b.oy + rr(-b.hw, b.hw), vx: b.dir * rr(2, 6), vy: rr(-2, 2), length: 12, color: '#86efac', alpha: 1, decay: 0.07 });
+                    if (!b.hit && e && e.hp > 0) {
+                        const rel = (e.x - b.ox) * b.dir;
+                        if (rel > -10 && rel < b.len + 30 && (e.y - 118) < b.oy + b.hw && e.y > b.oy - b.hw) {
+                            if (gStun(e, 180, s, 'gbreath')) {
+                                b.hit = true;
+                                gDots.push({ target: e, n: 0, frames: 180, total: 24 });
+                                spawnHitSparks(e.x, e.y - 80, '#4ade80', true);
+                                spawnFloatingText(e.x, e.y - 170, 'STUN 3s! -8%/s', '#15803d', 1.3);
+                                hitstopFrames = 5; camera.triggerShake(16);
+                            }
+                        }
+                    }
+                    if (b.age >= b.life || s.hp <= 0) gBreaths.splice(i, 1);
+                }
+                // Ba con ma: bay vòng, KÉO THẬT đối thủ về chỗ Ghost đứng lúc kích hoạt
+                for (let i = gPulls.length - 1; i >= 0; i--) {
+                    const pl = gPulls[i], e = pl.target, s = pl.owner;
+                    pl.age++;
+                    const held = e.frozen && e.frozen.kind === 'gpull';
+                    if (pl.phase === 'fade') { if (--pl.fade <= 0) gPulls.splice(i, 1); continue; }
+                    if (!held || s.hp <= 0 || e.hp <= 0) {
+                        if (held) e.releaseFreeze();
+                        pl.phase = 'fade'; pl.fade = 14; continue;
+                    }
+                    if (pl.phase === 'pull') {
+                        if (pl.age >= 24) {                                      // đợi cả 3 con ma xuất hiện rồi mới kéo
+                            pl.t++;
+                            const ease = Math.min(1, pl.t / 14), dx = pl.tx - e.x, step = Math.min(Math.abs(dx), pl.speed * ease);
+                            e.x += Math.sign(dx) * step; e.y += (pl.ty - e.y) * 0.14;
+                            e.hp = Math.max(0, e.hp - 2 / 60); updateHealthUI();   // -2 máu / giây trong lúc bị kéo
+                            if (Math.abs(pl.tx - e.x) < 1.5) {
+                                e.x = pl.tx; e.y = pl.ty; e.grounded = (floorAtFor(e) <= e.y + 1.5) || e.y >= pl.ty - 1;
+                                pl.phase = 'stun'; pl.stunLeft = 60;
+                                spawnFloatingText(e.x, e.y - 175, 'STUN 1s!', '#4b5563', 1.2);
+                                spawnHitSparks(e.x, e.y - 70, '#e5e7eb', true); camera.triggerShake(8);
+                            }
+                        }
+                    } else if (pl.phase === 'stun') {
+                        e.x = pl.tx; e.y = pl.ty;
+                        if (--pl.stunLeft <= 0) { e.releaseFreeze(); pl.phase = 'fade'; pl.fade = 14; }
+                    }
+                }
+                // hiệu ứng ngắn
+                for (let i = gFx.length - 1; i >= 0; i--) { if (--gFx[i].life <= 0) gFx.splice(i, 1); }
+            }
+            const _up5 = updateProjectiles;
+            updateProjectiles = function () { _up5.apply(this, arguments); updateGhostFx(); };
+
+            // ------------------------------------------------------------------
+            // 9. VẼ
+            // ------------------------------------------------------------------
+            function drawGhostShape(c, x, y, size, dir, ph, alpha) {
+                const w = size * 0.5, hgt = size * 0.55, amp = size * 0.1;
+                c.save(); c.translate(x, y); c.scale(dir, 1); c.globalAlpha *= alpha;
+                c.lineJoin = 'round';
+                c.beginPath(); c.moveTo(-w, 0); c.arc(0, 0, w, Math.PI, 0, false); c.lineTo(w, hgt);
+                const n = 3, seg = 2 * w / n;
+                for (let i = 0; i < n; i++) {                                    // đáy gợn sóng
+                    const x1 = w - seg * (i + 1), xm = w - seg * (i + 0.5), wob = Math.sin(ph * 7 + i * 1.7) * amp * 0.5;
+                    c.quadraticCurveTo(xm, hgt + amp * 2 + wob, x1, hgt);
+                }
+                c.closePath();
+                c.fillStyle = '#ffffff'; c.fill();
+                c.strokeStyle = '#111111'; c.lineWidth = Math.max(2, size * 0.05); c.stroke();            // viền đen
+                c.fillStyle = '#111111';
+                const fx = w * 0.08;
+                c.beginPath(); c.ellipse(-w * 0.36 + fx, -w * 0.05, w * 0.14, w * 0.23, 0, 0, TAU); c.fill();   // 2 mắt oval
+                c.beginPath(); c.ellipse(w * 0.36 + fx, -w * 0.05, w * 0.14, w * 0.23, 0, 0, TAU); c.fill();
+                c.beginPath(); c.ellipse(fx, w * 0.4, w * 0.1, w * 0.15, 0, 0, TAU); c.fill();                // miệng nhỏ
+                c.restore();
+            }
+            function drawSwordShape(c, ox, oy, ang, vis, glow) {
+                c.save(); c.translate(ox, oy); c.rotate(ang); c.lineCap = 'round'; c.lineJoin = 'round'; c.globalAlpha = 1;
+                // viền giấy trắng (đồng bộ kiểu sticker)
+                c.strokeStyle = '#fcfaf2'; c.lineWidth = 10; c.beginPath(); c.moveTo(-15, 0); c.lineTo(Math.max(2, vis), 0); c.stroke();
+                if (vis > 4) {
+                    if (glow) { c.shadowColor = '#9ca3af'; c.shadowBlur = 8; }
+                    c.fillStyle = '#cbd5e1'; c.strokeStyle = '#475569'; c.lineWidth = 1.6;
+                    c.beginPath(); c.moveTo(4, -3.4); c.lineTo(vis - 9, -3.4); c.lineTo(vis, 0); c.lineTo(vis - 9, 3.4); c.lineTo(4, 3.4); c.closePath(); c.fill(); c.stroke();
+                    c.shadowBlur = 0;
+                    c.strokeStyle = '#f8fafc'; c.lineWidth = 1.4; c.beginPath(); c.moveTo(7, -1); c.lineTo(vis - 12, -1); c.stroke();
+                }
+                c.strokeStyle = '#374151'; c.lineWidth = 4.4; c.beginPath(); c.moveTo(3, -9); c.lineTo(3, 9); c.stroke();        // tsuba
+                c.strokeStyle = '#111827'; c.lineWidth = 5.4; c.beginPath(); c.moveTo(-14, 0); c.lineTo(2, 0); c.stroke();        // chuôi
+                c.fillStyle = '#9ca3af'; c.strokeStyle = '#111827'; c.lineWidth = 1.5; c.beginPath(); c.arc(-15, 0, 3.2, 0, TAU); c.fill(); c.stroke();
+                c.restore();
+            }
+            function drawScabbardShape(c, hx, hy, ang) {
+                const L = 56, dx = Math.cos(ang), dy = Math.sin(ang);
+                c.save(); c.lineCap = 'round'; c.globalAlpha = 1;
+                c.strokeStyle = '#fcfaf2'; c.lineWidth = 13; c.beginPath(); c.moveTo(hx, hy); c.lineTo(hx + dx * L, hy + dy * L); c.stroke();
+                c.strokeStyle = '#374151'; c.lineWidth = 8; c.beginPath(); c.moveTo(hx, hy); c.lineTo(hx + dx * L, hy + dy * L); c.stroke();
+                c.strokeStyle = '#9ca3af'; c.lineWidth = 8;
+                c.beginPath(); c.moveTo(hx + dx * 3, hy + dy * 3); c.lineTo(hx + dx * 9, hy + dy * 9); c.moveTo(hx + dx * (L - 7), hy + dy * (L - 7)); c.lineTo(hx + dx * L, hy + dy * L); c.stroke();
+                c.restore();
+            }
+            function drawCapeShape(c, s, pose) {
+                const t = s.animTime || 0, sway = Math.sin(t * 0.16) * 4 + clamp(-s.vx * 1.1, -12, 12);
+                const ax = pose.neckX - 3, ay = pose.neckY + 5;
+                const bx = pose.hipX - 3, by = pose.hipY - 6;
+                const cx = pose.hipX - 38 + sway, cy = pose.hipY + 28;
+                c.save(); c.globalAlpha = 0.95; c.lineJoin = 'round';
+                const path = () => {
+                    c.beginPath(); c.moveTo(ax, ay);
+                    c.bezierCurveTo(ax - 22, ay + 6, cx - 10, cy - 40, cx, cy);
+                    c.quadraticCurveTo(cx + 8, cy + 10 + sway * 0.3, bx - 22, by + 40);
+                    c.quadraticCurveTo(bx - 14, by + 30 - sway * 0.3, bx - 6, by + 38);
+                    c.quadraticCurveTo(bx + 4, by + 22, bx, by + 2);
+                    c.closePath();
+                };
+                path(); c.fillStyle = '#fcfaf2'; c.strokeStyle = '#fcfaf2'; c.lineWidth = 9; c.fill(); c.stroke();
+                path(); c.fillStyle = '#9ca3af'; c.strokeStyle = '#4b5563'; c.lineWidth = 2.2; c.fill(); c.stroke();
+                c.strokeStyle = 'rgba(75,85,99,.55)'; c.lineWidth = 1.6;
+                c.beginPath(); c.moveTo(ax - 4, ay + 8); c.quadraticCurveTo(cx + 6, (ay + cy) / 2, cx + 2, cy - 2); c.moveTo(ax - 2, ay + 14); c.quadraticCurveTo(cx + 26, (ay + cy) / 2 + 8, cx + 18, cy + 6); c.stroke();
+                drawGhostShape(c, (ax + cx) / 2 - 6, (ay + cy) / 2 - 8, 26, 1, t * 0.05, 1);        // biểu tượng Ghost trên áo choàng
+                c.restore();
+            }
+            const _dps5 = SP.drawPoseSkeleton;
+            SP.drawPoseSkeleton = function (c, x, y, facing, sx, sy, pose, isGhost, ga) {
+                if (!isG(this) || this.isClone || isGhost) return _dps5.apply(this, arguments);
+                const g = gs(this), f2 = isF2(this);
+                c.save(); c.translate(x, y); c.scale(facing * sx, sy);
+                if (f2) drawCapeShape(c, this, pose);
+                else {                                                                                   // bao kiếm ở hông trái, vẽ phía sau thân
+                    const sway = this.state === 'run' ? Math.sin((this.animTime || 0) * 0.36) * 0.1 : clamp(-this.vx * 0.012, -0.12, 0.12);
+                    drawScabbardShape(c, pose.hipX + 2, pose.hipY - 5, 2.5 + sway);
+                }
+                c.restore();
+                _dps5.apply(this, arguments);
+                c.save(); c.translate(x, y); c.scale(facing * sx, sy);
+                if (!f2) {
+                    const p = g.p, hx = pose.hipX + 2, hy = pose.hipY - 5;
+                    const sway = this.state === 'run' ? Math.sin((this.animTime || 0) * 0.36) * 0.1 : clamp(-this.vx * 0.012, -0.12, 0.12);
+                    const scabAng = 2.5 + sway;
+                    const handAng = Math.atan2(pose.rHandY - pose.rElbowY, pose.rHandX - pose.rElbowX);
+                    const e1 = sm(p, 0.35, 0.75), e2 = sm(p, 0.4, 0.9);
+                    const gx = lerp(hx, pose.rHandX, e1), gy = lerp(hy, pose.rHandY, e1);
+                    const ang = lerpAng(scabAng, handAng, e2), vis = SWORD_LEN * sm(p, 0.2, 0.6);
+                    drawSwordShape(c, gx + Math.cos(ang) * 6, gy + Math.sin(ang) * 6, ang, vis, p >= 1);
+                } else if (this.state === 'cast' && this.castType === 'ghostbreath' && (this.castTimer || 0) >= 10) {
+                    c.save(); c.shadowColor = '#22ff88'; c.shadowBlur = 14; c.fillStyle = '#052e16';
+                    c.beginPath(); c.ellipse(pose.headX + 9, pose.headY + 5, 5.5, 8.5, 0.3, 0, TAU); c.fill(); c.restore();
+                }
+                c.restore();
+            };
+
+            const _draw5 = SP.draw;
+            SP.draw = function (c) {
+                const jit = isGKind(this.frozen), gh = isG(this) && !this.isClone;
+                if (!jit && !gh) return _draw5.call(this, c);
+                c.save();
+                try {
+                    if (jit) c.translate((Math.random() - 0.5) * 7, (Math.random() - 0.5) * 3);           // co giật nhẹ khi bị Stun
+                    if (gh) {
+                        const g = gs(this);
+                        if (g.sc > 1.001) { c.translate(this.x, this.y); c.scale(g.sc, g.sc); c.translate(-this.x, -this.y); }   // dạng Ma x1,3
+                        c.globalAlpha *= 0.8;                                                                 // cơ thể hơi mờ như ma
+                        if (g.spinT > 0) {                                                                    // xoay người quanh trục dọc
+                            let k = Math.cos(g.spinT * TAU); if (Math.abs(k) < 0.08) k = k < 0 ? -0.08 : 0.08;
+                            c.translate(this.x, 0); c.scale(k, 1); c.translate(-this.x, 0);
+                        }
+                    }
+                    _draw5.call(this, c);
+                } finally { c.restore(); }
+            };
+
+            const _dfo5 = drawFrozenOverlay;
+            drawFrozenOverlay = function (c, s) { if (s && isGKind(s.frozen)) return; return _dfo5.apply(this, arguments); };
+
+            function drawArcFx(c, f) {
+                const p = 1 - f.life / f.max, span = f.a1 - f.a0;
+                const head = f.a0 + span * Math.min(1, p * 2.4), tail = f.a0 + span * Math.max(0, p * 2.4 - 0.6);
+                const a = 1 - Math.max(0, (p - 0.4) / 0.6), ccw = span < 0;
+                if (Math.abs(head - tail) < 0.02) return;
+                c.save(); c.translate(f.x, f.y); c.scale(f.dir, 1); c.globalAlpha = a; c.lineCap = 'round';
+                c.shadowColor = '#d1d5db'; c.shadowBlur = 18;
+                c.beginPath(); c.arc(0, 0, f.r, tail, head, ccw); c.arc(0, 0, f.r * 0.8, head, tail, !ccw); c.closePath();
+                const gr = c.createRadialGradient(0, 0, f.r * 0.7, 0, 0, f.r); gr.addColorStop(0, 'rgba(156,163,175,.15)'); gr.addColorStop(0.7, 'rgba(229,231,235,.8)'); gr.addColorStop(1, 'rgba(255,255,255,1)');
+                c.fillStyle = gr; c.fill(); c.shadowBlur = 0;
+                c.strokeStyle = '#ffffff'; c.lineWidth = 3.2; c.beginPath(); c.arc(0, 0, f.r, tail, head, ccw); c.stroke();
+                c.restore();
+            }
+            function drawThrustFx(c, f) {
+                const p = 1 - f.life / f.max, a = 1 - p, L = 70 + 110 * Math.min(1, p * 3);
+                c.save(); c.translate(f.x, f.y); c.scale(f.dir, 1); c.globalAlpha = a;
+                c.shadowColor = '#e5e7eb'; c.shadowBlur = 14; c.fillStyle = 'rgba(255,255,255,.92)';
+                c.beginPath(); c.moveTo(0, -4); c.lineTo(L, 0); c.lineTo(0, 4); c.closePath(); c.fill(); c.shadowBlur = 0;
+                c.strokeStyle = 'rgba(229,231,235,.85)'; c.lineWidth = 2; c.lineCap = 'round';
+                [-16, -8, 8, 16].forEach((o, i) => { c.beginPath(); c.moveTo(-6 - i * 4, o); c.lineTo(L * (0.55 - i * 0.05), o * 0.5); c.stroke(); });
+                c.restore();
+            }
+            function drawCrack(c, k) {
+                if (k.len < 2) return;
+                const fade = k.len >= k.max ? Math.max(0, 1 - k.hold / 36) : 1, now = nowMs() / 1000;
+                const n = Math.max(2, Math.ceil(k.len / 36)), pts = [];
+                for (let i = 0; i <= n; i++) {
+                    const u = i / n, x = k.x0 + k.dir * k.len * u, j = Math.sin(k.seed + i * 12.9898) * 7 + Math.sin(i * 5.3 + now * 18) * 1.8;
+                    pts.push({ x, y: k.floorY + 3 + j * 0.5, w: 15 * (1 - u * 0.65) + 3 });
+                }
+                c.save(); c.globalAlpha = fade; c.lineJoin = 'round';
+                c.shadowColor = '#22ff6a'; c.shadowBlur = 28;
+                c.beginPath();
+                pts.forEach((q, i) => i ? c.lineTo(q.x, q.y - q.w * 0.5) : c.moveTo(q.x, q.y - q.w * 0.5));
+                for (let i = pts.length - 1; i >= 0; i--) c.lineTo(pts[i].x, pts[i].y + pts[i].w * 0.5);
+                c.closePath(); c.fillStyle = '#052e16'; c.fill();                                      // khe nứt tối
+                c.strokeStyle = '#39ff7a'; c.lineWidth = 4; c.stroke(); c.shadowBlur = 0;
+                c.strokeStyle = '#d9ffe6'; c.lineWidth = 1.6; c.beginPath(); pts.forEach((q, i) => i ? c.lineTo(q.x, q.y) : c.moveTo(q.x, q.y)); c.stroke();      // lõi sáng
+                for (let i = 0; i < pts.length; i += 2) {                                               // tia sáng neon vọt lên
+                    const q = pts[i], h = 26 + 40 * Math.abs(Math.sin(i * 1.7 + now * 12)) * (1 - i / pts.length * 0.5);
+                    const gr = c.createLinearGradient(q.x, q.y, q.x, q.y - h); gr.addColorStop(0, 'rgba(74,255,128,.75)'); gr.addColorStop(1, 'rgba(74,255,128,0)');
+                    c.fillStyle = gr; c.fillRect(q.x - 3, q.y - h, 6, h);
+                }
+                const fr = pts[pts.length - 1];
+                const g2 = c.createRadialGradient(fr.x, fr.y, 2, fr.x, fr.y, 46); g2.addColorStop(0, 'rgba(220,255,230,.95)'); g2.addColorStop(1, 'rgba(34,255,106,0)');
+                c.fillStyle = g2; c.beginPath(); c.arc(fr.x, fr.y, 46, 0, TAU); c.fill();
+                c.restore();
+            }
+            function drawBreath(c, b) {
+                if (b.len < 2) return;
+                const p = b.age / b.life, scale = p > 0.75 ? Math.max(0.1, (1 - p) / 0.25) : 1, now = nowMs();
+                const pulse = 1 + Math.sin(now * 0.05) * 0.08, hw = b.hw * pulse * scale, len = b.len;
+                c.save(); c.translate(b.ox, b.oy); c.scale(b.dir, 1);
+                c.save(); c.shadowColor = '#22ff6a'; c.shadowBlur = 56; c.fillStyle = 'rgba(34,197,94,.45)'; c.fillRect(0, -hw * 1.9, len, hw * 3.8); c.restore();
+                c.fillStyle = '#16e07a'; c.beginPath(); c.moveTo(0, -hw);
+                for (let x = 0; x <= len; x += 14) c.lineTo(x, -hw - Math.random() * 10 * scale);
+                c.lineTo(len, hw);
+                for (let x = len; x >= 0; x -= 14) c.lineTo(x, hw + Math.random() * 10 * scale);
+                c.closePath(); c.fill();
+                c.fillStyle = '#a7ffcf'; c.fillRect(0, -hw * 0.62, len, hw * 1.24);
+                c.fillStyle = '#ffffff'; c.fillRect(0, -hw * 0.26, len, hw * 0.52);
+                for (let i = 0; i < 16; i++) {                                                          // luồng khí ma quái
+                    const x = ((i * len / 16 + now * 0.9) % len), y = Math.sin(i * 2.3 + now * 0.01) * hw * 1.45, r = 9 + (i % 4) * 4;
+                    c.fillStyle = 'rgba(209,250,229,.45)'; c.beginPath(); c.arc(x, y, r, 0, TAU); c.fill();
+                }
+                const og = c.createRadialGradient(0, 0, 4, 0, 0, hw * 1.7); og.addColorStop(0, 'rgba(255,255,255,.95)'); og.addColorStop(1, 'rgba(34,255,106,0)');
+                c.fillStyle = og; c.beginPath(); c.arc(0, 0, hw * 1.7, 0, TAU); c.fill();
+                c.restore();
+            }
+            function drawPulls(c) {
+                const now = nowMs() / 1000;
+                gPulls.forEach(pl => {
+                    const e = pl.target, fade = pl.phase === 'fade' ? Math.max(0, pl.fade / 14) : 1;
+                    for (let i = 0; i < 3; i++) {
+                        const k = clamp((pl.age - i * 8) / 8, 0, 1) * fade; if (k <= 0) continue;
+                        const a = pl.age * 0.12 + i * TAU / 3, gx = e.x + Math.cos(a) * 78, gy = e.y - 76 + Math.sin(a) * 44;
+                        c.save(); c.globalAlpha = 0.5 * k; c.strokeStyle = '#e5e7eb'; c.lineWidth = 2; c.setLineDash([5, 6]);
+                        c.beginPath(); c.moveTo(gx, gy); c.lineTo(e.x, e.y - 76); c.stroke(); c.restore();            // dây ma khống chế
+                        drawGhostShape(c, gx, gy, 46 * k, Math.cos(a) >= 0 ? -1 : 1, now + i, 0.95 * k);
+                    }
+                });
+            }
+            function drawStunMarks(c) {
+                const t = nowMs() / 1000;
+                [player, bot].forEach(f => {
+                    if (!f || !isGKind(f.frozen)) return;
+                    for (let k = 0; k < 3; k++) {
+                        const a = t * 5 + k * TAU / 3, px = f.x + Math.cos(a) * 24, py = f.y - 144 + Math.sin(a) * 7;
+                        c.save(); c.fillStyle = '#ffffff'; c.strokeStyle = '#4b5563'; c.lineWidth = 1.5; c.shadowColor = '#e5e7eb'; c.shadowBlur = 8;
+                        c.beginPath(); c.arc(px, py, 4.4, 0, TAU); c.fill(); c.stroke(); c.restore();
+                    }
+                });
+            }
+            function drawGhostFx(c) {
+                gCracks.forEach(k => drawCrack(c, k));
+                gProjs.forEach(p => {
+                    p.trail.forEach((q, i) => drawGhostShape(c, q.x, q.y, 84, p.dir, p.age * 0.3, 0.07 + i * 0.03));      // ảnh mờ thể hiện tốc độ rất cao
+                    c.save(); c.globalAlpha = 0.6; c.strokeStyle = '#e5e7eb'; c.lineWidth = 3; c.lineCap = 'round';
+                    [-26, -9, 10, 28].forEach((o, i) => { c.beginPath(); c.moveTo(p.x - p.dir * (50 + i * 12), p.y + o); c.lineTo(p.x - p.dir * (130 + i * 18), p.y + o); c.stroke(); });
+                    c.restore();
+                    c.save(); c.shadowColor = '#f3f4f6'; c.shadowBlur = 16; drawGhostShape(c, p.x, p.y, 96, p.dir, p.age * 0.3, 1); c.restore();
+                });
+                gBreaths.forEach(b => drawBreath(c, b));
+                drawPulls(c);
+                gFx.forEach(f => { if (f.type === 'arc') drawArcFx(c, f); else if (f.type === 'thrust') drawThrustFx(c, f); });
+                drawStunMarks(c);
+            }
+            const _dse5 = drawSkillEffects;
+            drawSkillEffects = function (c) { _dse5(c); drawGhostFx(c); };
+
+            // ------------------------------------------------------------------
+            // 10. RESET: setupFighter / resetSkills / clearSpecials
+            // ------------------------------------------------------------------
+            const _setupFighter5 = setupFighter;
+            setupFighter = function (s, charId, side) { s._gh = null; return _setupFighter5.apply(this, arguments); };
+            const _resetSkills5 = resetSkills;
+            resetSkills = function () { _resetSkills5.apply(this, arguments); [player, bot].forEach(ghostReset); };
+            const _clearSpecials5 = clearSpecials;
+            clearSpecials = function () {
+                _clearSpecials5.apply(this, arguments);
+                gProjs.length = 0; gCracks.length = 0; gBreaths.length = 0; gPulls.length = 0; gDots.length = 0; gFx.length = 0;
+                [player, bot].forEach(f => { if (f && f._gh) f._gh.spinT = 0; });
+            };
+
+
+            // =====================================================================
+            // [UPD6 APPEND-ONLY PATCH] Ghost: chỉnh Ghostly Slash (U) + Biến đổi (O), thêm Ảo ảnh (I - dạng Ma)
+            //  * KHÔNG xoá / KHÔNG sửa code cũ ở trên: mọi thay đổi đều là bọc (wrap) hàm cũ hoặc thêm hàm mới.
+            //  * Quy ước máu giống phần Ghost cũ: 1 điểm hp = 1% (tối đa 500%)  =>  15% = 15 hp, 5% = 5 hp.
+            //  * Tái sử dụng sẵn có: gStun/freezeFor (Stun), takeHit (hất văng, vx = quãng/11.5 do ma sát 0.92 của
+            //    trạng thái knockdown), updateHealthUI, hiệu ứng spawnHitSparks / blastRings / gFx / gSfx.
+            // =====================================================================
+            const GHOST_SLASH_SELF_RECOIL = false;     // true = bật lại "phản chấn" cũ (Ghost mất 15 máu + bị hất lùi). Mặc định tắt vì đòn mới tác động lên ĐỐI THỦ.
+            const SLASH_STUN_FRAMES = 60;              // Ghostly Slash: Stun đúng 1 giây (60 khung)
+            const SLASH_DMG = 15;                      // 15% sát thương lên đối thủ, đúng lúc bị hất tung
+            const FORM_SPEED_MULT = 0.8;               // dạng Ma: chỉ còn 80% tốc độ chạy
+            const ILL_CD_MS = 15000;                   // hồi chiêu Ảo ảnh (chiêu I dạng Ma)
+            const ILL_STUN_FRAMES = 150;               // trần an toàn của Stun Ảo ảnh; bộ điều khiển tự nhả Stun ở đòn kết liễu
+            const ILL = { SPAWN: 14, APPEAR: 6, DASH: 9, TURN: 2, WIND: 4, LUNGE: 5, HOLD: 4, VANISH: 8, AMP: 190, GAP: 58, HIT: 5 };
+            // Quãng hất văng = 1/4 chiều rộng THỰC của map (không dùng pixel cố định). Mẫu số 11.34 đã hiệu chỉnh bằng đo thực tế:
+            // ma sát 0.92/khung của knockdown cho 11.5, nhưng đoạn cuối (khi đã chuyển sang idle) mất thêm ~1.4% quãng.
+            const knockV6 = () => (WORLD_S() / 4) / 11.34;
+            const gSlashPend = [], gIlls = [], gIllFx = [];
+
+            // ------------------------------------------------------------------
+            // U (dạng người) - Ghostly Slash: Stun 1s  ->  hất tung 1/4 map + 15% sát thương
+            // ------------------------------------------------------------------
+            // "Phản chấn" cũ (Ghost tự mất 15 máu + bị hất lùi) được vô hiệu hoá: hàm cũ vẫn còn nguyên, chỉ bọc lại.
+            const _ghostRecoil5 = ghostRecoil;
+            ghostRecoil = function (s) { if (GHOST_SLASH_SELF_RECOIL) return _ghostRecoil5.apply(this, arguments); };
+
+            // Bọc gStun: khi luồng chém Ghostly Slash (Stun 60 khung, kind 'gstun') thực sự gây Stun => lên lịch pha 2 + pha 3
+            const _gStun5 = gStun;
+            gStun = function (o, frames, owner, kind) {
+                const ok = _gStun5.apply(this, arguments);
+                if (ok && kind === 'gstun' && frames === SLASH_STUN_FRAMES && owner) {
+                    gSlashPend.push({ target: o, owner, age: -1, dir0: owner.facing });   // age -1: khung tạo Stun không tính
+                }
+                return ok;
+            };
+
+            function updateSlashPend6() {
+                for (let i = gSlashPend.length - 1; i >= 0; i--) {
+                    const p = gSlashPend[i], e = p.target, s = p.owner;
+                    if (!e || e.hp <= 0) { gSlashPend.splice(i, 1); continue; }
+                    p.age++;
+                    const f = e.frozen, ours = !!f && f.kind === 'gstun' && f.owner === s;
+                    if (p.age < SLASH_STUN_FRAMES) { if (!ours) gSlashPend.splice(i, 1); continue; }   // Stun bị huỷ giữa chừng (reset...) => bỏ
+                    gSlashPend.splice(i, 1);
+                    if (ours) e.releaseFreeze(); else if (e.frozen) continue;
+                    // --- Hết đúng 1 giây Stun: Giai đoạn 2 (hất tung) + Giai đoạn 3 (15% sát thương) cùng lúc ---
+                    const dx = e.x - s.x, dir = Math.abs(dx) < 1 ? p.dir0 : (dx > 0 ? 1 : -1);   // hướng ra xa Ghost, tính tại thời điểm hất
+                    e.takeHit(SLASH_DMG, dir * knockV6(), -12, true, s, true);
+                    spawnHitSparks(e.x, e.y - 70, '#e5e7eb', true);
+                    spawnFloatingText(e.x, e.y - 175, 'HẤT TUNG!! -' + SLASH_DMG, '#4b5563', 1.35);
+                    blastRings.push({ x: e.x, y: e.y - 70, r: 16, max: 150, life: 16, maxLife: 16 });
+                    hitstopFrames = Math.max(hitstopFrames, 6); camera.triggerShake(16);
+                }
+            }
+
+            // ------------------------------------------------------------------
+            // O (dạng người) - Biến đổi: dạng Ma chỉ còn 80% tốc độ chạy, hết dạng Ma khôi phục 100%
+            // ------------------------------------------------------------------
+            function applyFormSlow6(s) {
+                const g = gs(s);
+                if (g.slowOn) return;                               // chống cộng dồn khi kích hoạt nhiều lần
+                g.baseSpeed = s.speed; s.speed = g.baseSpeed * FORM_SPEED_MULT; g.slowOn = true;
+            }
+            function clearFormSlow6(s) {
+                const g = s && s._gh; if (!g || !g.slowOn) return;
+                const expect = g.baseSpeed * FORM_SPEED_MULT;
+                s.speed = Math.abs(s.speed - expect) < 1e-6 ? g.baseSpeed : s.speed / FORM_SPEED_MULT;
+                g.slowOn = false;
+            }
+            const _ghostEnterForm5 = ghostEnterForm;
+            ghostEnterForm = function (s) { _ghostEnterForm5.apply(this, arguments); applyFormSlow6(s); };
+            const _ghostExitForm5 = ghostExitForm;
+            ghostExitForm = function (s) { const was = isF2(s); _ghostExitForm5.apply(this, arguments); if (was) clearFormSlow6(s); };
+            const _ghostReset5 = ghostReset;
+            ghostReset = function (s) { if (s) clearFormSlow6(s); return _ghostReset5.apply(this, arguments); };
+
+            // ------------------------------------------------------------------
+            // I (dạng Ma) - Ảo ảnh
+            // ------------------------------------------------------------------
+            CHAR_SKILLS.ghostform.KeyI = { type: 'ghostillusion', name: 'Ảo ảnh', short: 'Ảo ảnh', cd: ILL_CD_MS };
+
+            // hồi chiêu riêng của Ảo ảnh được phản chiếu lên ô I trên HUD
+            const _syncCd5 = syncCd;
+            syncCd = function (s) {
+                _syncCd5.apply(this, arguments);
+                try { if (s && s.cdAt && isF2(s)) s.cdAt.KeyI = gs(s).cd.ill || 0; } catch (e) { }
+            };
+
+            const _trigSkill6 = SP.triggerSkill;
+            SP.triggerSkill = function (id) {
+                if (id === 'KeyI' && isF2(this) && !this.isClone) {
+                    if (this.isBot || this.frozen) return;
+                    const g = gs(this), now = nowMs();
+                    if (now < (g.cd.ill || 0)) { flashDeny(this, id); return; }
+                    if (!groundIdle(this)) return;
+                    const def = CHAR_SKILLS[GF].KeyI;
+                    g.cd.ill = now + def.cd;
+                    this.beginCast('ghostillusion');
+                    setPrincipleBadge(def.name + '!', 80);
+                    syncCd(this);
+                    return;
+                }
+                return _trigSkill6.apply(this, arguments);
+            };
+
+            CASTS.ghostillusion = function (s, opp) {
+                s.castTimer++; const t = s.castTimer; s.vx *= 0.5;
+                if (t === 1) {
+                    const e = enemyOf(s);
+                    // Giai đoạn 1: đối thủ bị Stun NGAY khi kích hoạt (kind 'gstun' + 150 khung để không lẫn với Ghostly Slash)
+                    if (e && e.hp > 0 && !e.frozen && gStun(e, ILL_STUN_FRAMES, s, 'gstun')) {
+                        startIllusion6(s, e);
+                        gSfx('trans');
+                        spawnFloatingText(e.x, e.y - 175, 'STUN!', '#4b5563', 1.2);
+                        spawnFloatingText(s.x, s.y - 190, 'ẢO ẢNH!', '#374151', 1.4);
+                    } else {
+                        gs(s).cd.ill = 0; syncCd(s);                                  // không Stun được => hoàn lại hồi chiêu
+                        spawnFloatingText(s.x, s.y - 150, 'TRƯỢT!', '#6b7280', 1.0);
+                        s.endCast(); return;
+                    }
+                }
+                if (t === 12) {                                                        // tay phải chạm đất: sóng chấn + bụi
+                    const hx = s.x + s.facing * 96;
+                    blastRings.push({ x: hx, y: s.y - 6, r: 14, max: 130, life: 14, maxLife: 14 });
+                    try { spawnDust(hx, s.y, 10, 0); } catch (e2) { }
+                    for (let i = 0; i < 8; i++) particles.push({ type: 'spark', x: hx + rr(-20, 20), y: s.y - rr(0, 10), vx: rr(-4, 4), vy: rr(-6, -1), length: 10, color: '#d1d5db', alpha: 1, decay: 0.06 });
+                    camera.triggerShake(8);
+                }
+                if (t >= 26) s.endCast();
+            };
+
+            // Tư thế niệm chiêu: giơ tay phải cao rồi ĐẬP xuống mặt đất
+            const _gcp6 = SP.getCastPose;
+            SP.getCastPose = function () {
+                if (this.castType === 'ghostillusion') {
+                    const t = this.castTimer || 0, P = (o) => Object.assign(this.getDefaultPose(), o);
+                    if (t < 10) return P({ hipX: -4, neckX: -2, headX: 0, lShoulderX: -2, rShoulderX: -2, rElbowX: 18, rElbowY: -120, rHandX: 24, rHandY: -154,
+                                           lElbowX: -22, lElbowY: -92, lHandX: -34, lHandY: -104, lKneeX: -12, lFootX: -22, rKneeX: 16, rFootX: 24 });
+                    return P({ hipX: 12, hipY: -34, neckX: 36, neckY: -62, headX: 50, headY: -72, lShoulderX: 32, lShoulderY: -60, rShoulderX: 32, rShoulderY: -60,
+                               rElbowX: 54, rElbowY: -32, rHandX: 76, rHandY: -2, lElbowX: 16, lElbowY: -46, lHandX: 2, lHandY: -42,
+                               lKneeX: -6, lKneeY: -20, lFootX: -30, rKneeX: 38, rKneeY: -20, rFootX: 54 });
+                }
+                return _gcp6.apply(this, arguments);
+            };
+
+            // Phân thân: một Stickman "dạng người" của Ghost (kiếm + bao kiếm) chỉ dùng để VẼ.
+            // Không nằm trong mảng clones của Speed, không có thanh máu, không bị trúng đòn => miễn nhiễm sát thương.
+            function makeIllClone6(s, x, y, facing) {
+                const c = new Stickman({ name: 'ghost-illusion', x, facing, color: s.color, accentColor: s.accentColor, isBot: true });
+                initExtra(c);
+                c.cdAt = { KeyU: 0, KeyI: 0, KeyO: 0 };                  // initExtra dùng chung bảng cd => tách riêng
+                c.charId = GH; c._illusion = true;
+                c.hp = c.maxHp = 1e9; c.x = x; c.y = y; c.facing = facing; c.grounded = true;
+                const g = gs(c); g.mode = 'drawn'; g.p = 1; g.sc = 1; g.lastAct = nowMs() + 1e9;
+                c.state = 'idle'; c.currentPose = c.getDefaultPose();
+                return c;
+            }
+            function startIllusion6(s, e) {
+                const dx = e.x - s.x, c0 = Math.abs(dx) < 1 ? s.facing : (dx > 0 ? 1 : -1);   // xuất hiện SAU đối thủ (phía xa Ghost)
+                const A = clamp(Math.min(e.x - leftWall, rightWall - e.x) - 8, 70, ILL.AMP);    // biên độ lướt mỗi bên đối thủ
+                gIlls.push({ owner: s, target: e, c0, A, age: 0, cl: null, alpha: 0, hitK: [false, false, false], trail: [], struck: false, done: false, endAge: 0 });
+            }
+            function illHit6(I, k) {                                       // mỗi lần lướt xuyên người: đúng 5% (trừ thẳng vào hp)
+                const e = I.target;
+                e.hp = Math.max(0, e.hp - ILL.HIT); updateHealthUI();
+                if (e.frozen) e.frozen.flash = 6;
+                spawnHitSparks(e.x, e.y - 70, '#e5e7eb', false);
+                spawnFloatingText(e.x + (k - 1) * 16, e.y - 150 - k * 14, '-' + ILL.HIT, '#4b5563', 1.1);
+                camera.triggerShake(6); hitstopFrames = Math.max(hitstopFrames, 2);
+            }
+            function illFinish6(I) {                                       // đòn đâm kết liễu kiểu Smash: hất văng 1/4 map, rồi phân thân biến mất
+                const e = I.target, s = I.owner, cl = I.cl;
+                I.struck = true;
+                if (e.frozen && e.frozen.kind === 'gstun' && e.frozen.owner === s) e.releaseFreeze();
+                const dir = e.x >= cl.x ? 1 : -1;
+                e.takeHit(0, dir * knockV6(), -12, true, s, true);
+                const hx = (cl.x + e.x) / 2 + dir * 15, hy = e.y - 78;
+                gFx.push({ type: 'thrust', x: cl.x + dir * 70, y: cl.y - 80, dir, life: 12, max: 12 });
+                spawnHitSparks(hx, hy, '#e5e7eb', true);
+                spawnFloatingText(hx, hy - 30, 'SMASH!!', '#dc2626', 1.35);
+                blastRings.push({ x: e.x, y: e.y - 70, r: 18, max: 190, life: 18, maxLife: 18 });
+                hitstopFrames = Math.max(hitstopFrames, 7); impactFlashFrames = 3; camera.triggerShake(18);
+                gSfx('crack');
+            }
+            function updateIlls6() {
+                const P = ILL, DASH0 = P.SPAWN + P.APPEAR, SEG = P.DASH + P.TURN, WIND0 = DASH0 + 3 * SEG, LUNGE0 = WIND0 + P.WIND, END0 = LUNGE0 + P.LUNGE;
+                for (let i = gIlls.length - 1; i >= 0; i--) {
+                    const I = gIlls[i], s = I.owner, e = I.target;
+                    I.age++;
+                    const held = !!e.frozen && e.frozen.kind === 'gstun' && e.frozen.owner === s;
+                    // huỷ giữa chừng (Ghost/đối thủ hết máu, reset, Stun bị gỡ) => nhả Stun, phân thân biến mất
+                    if (!I.done && !I.struck && (!held || s.hp <= 0 || e.hp <= 0)) { if (held) e.releaseFreeze(); I.done = true; I.endAge = I.age; }
+                    if (!I.cl && !I.done && I.age >= P.SPAWN) {
+                        I.cl = makeIllClone6(s, e.x + I.c0 * I.A, e.y, -I.c0);
+                        const x0 = I.cl.x;
+                        blastRings.push({ x: x0, y: e.y - 6, r: 12, max: 120, life: 14, maxLife: 14 });
+                        for (let k = 0; k < 10; k++) particles.push({ type: 'spark', x: x0 + rr(-26, 26), y: e.y - rr(0, 110), vx: rr(-2, 2), vy: rr(-4, 0), length: 10, color: k % 2 ? '#e5e7eb' : '#86efac', alpha: 1, decay: 0.06 });
+                        gSfx('ghost');
+                    }
+                    const cl = I.cl;
+                    if (cl && !I.done) {
+                        const age = I.age;
+                        if (!I.struck) cl.y = e.y;                                            // sau đòn kết liễu đứng yên tại chỗ (không bám theo đối thủ bị hất)
+                        if (age < DASH0) {                                                  // xuất hiện sau lưng đối thủ
+                            I.alpha = Math.min(1, (age - P.SPAWN + 1) / P.APPEAR);
+                            cl.x = e.x + I.c0 * I.A; cl.facing = -I.c0; cl.state = 'idle'; cl.vx = 0;
+                        } else if (age < WIND0) {                                           // 3 lần lướt: Trái->Phải->Trái (hoặc ngược lại)
+                            const local = age - DASH0, k = Math.floor(local / SEG), w = local % SEG, sk = I.c0 * (k % 2 === 0 ? 1 : -1);
+                            if (w < P.DASH) {
+                                const p = (w + 1) / P.DASH;
+                                cl.x = e.x + sk * I.A - 2 * sk * I.A * p;
+                                cl.facing = -sk; cl.state = 'run'; cl.vx = -sk * 2 * I.A / P.DASH; cl.animTime += 3;     // vẫn chạy/lướt liên tục, không dịch chuyển tức thời
+                                if (w === 0) {
+                                    gSfx('slash');
+                                    gIllFx.push({ x0: e.x + sk * I.A, x1: e.x - sk * I.A, y: e.y - 74, life: 9, max: 9 });
+                                }
+                                if (!I.hitK[k] && (cl.x - e.x) * (-sk) >= 0) { I.hitK[k] = true; illHit6(I, k); }   // đi xuyên qua người: 5% (1 lần / lượt lướt)
+                                if (!I.hitK[k] && w === P.DASH - 1) { I.hitK[k] = true; illHit6(I, k); }
+                            } else {                                                        // khựng ngắn để quay đầu (vẫn hiện rõ)
+                                cl.x = e.x - sk * I.A; cl.facing = sk; cl.state = 'run'; cl.vx = 0; cl.animTime += 1;
+                            }
+                        } else if (age < LUNGE0) {                                          // lấy đà đâm
+                            cl.x = e.x - I.c0 * I.A; cl.facing = I.c0; cl.vx = 0;
+                            cl.state = 'attack'; cl.comboStep = 3; cl.attackPhase = 'anticipation';
+                        } else if (age < END0) {                                            // lao tới + đâm
+                            const w = age - LUNGE0, p = (w + 1) / P.LUNGE;
+                            cl.x = e.x - I.c0 * I.A + I.c0 * (I.A - P.GAP) * p;
+                            cl.facing = I.c0; cl.state = 'attack'; cl.comboStep = 3; cl.attackPhase = 'active'; cl.vx = I.c0 * 12;
+                            if (w === 0) {
+                                gSfx('thrust');
+                                gIllFx.push({ x0: e.x - I.c0 * I.A, x1: e.x - I.c0 * P.GAP, y: e.y - 80, life: 9, max: 9 });
+                            }
+                            if (w === P.LUNGE - 1 && !I.struck) illFinish6(I);
+                        } else {                                                            // dư chấn ngắn rồi biến mất
+                            cl.facing = I.c0; cl.state = 'attack'; cl.attackPhase = 'active'; cl.vx = 0;           // giữ nguyên vị trí lúc đâm
+                            if (age >= END0 + P.HOLD) { I.done = true; I.endAge = age; }
+                        }
+                        if (cl.state === 'run' || cl.state === 'attack') {
+                            I.trail.push({ x: cl.x, y: cl.y, facing: cl.facing, pose: Object.assign({}, cl.currentPose) });
+                            if (I.trail.length > 6) I.trail.shift();
+                        } else if (I.trail.length) I.trail.shift();
+                        cl.computeSkeletonPose();
+                    }
+                    if (I.done) {                                                           // biến mất hoàn toàn
+                        if (!cl) { gIlls.splice(i, 1); continue; }
+                        const v = I.age - I.endAge;
+                        I.alpha = Math.max(0, 1 - v / P.VANISH);
+                        if (I.trail.length) I.trail.shift();
+                        cl.animTime++; cl.computeSkeletonPose();
+                        if (v === 1) for (let k = 0; k < 8; k++) particles.push({ type: 'spark', x: cl.x + rr(-24, 24), y: cl.y - rr(10, 120), vx: rr(-2, 2), vy: rr(-4, -1), length: 10, color: '#e5e7eb', alpha: 1, decay: 0.06 });
+                        if (v >= P.VANISH) gIlls.splice(i, 1);
+                    }
+                }
+                for (let i = gIllFx.length - 1; i >= 0; i--) { if (--gIllFx[i].life <= 0) gIllFx.splice(i, 1); }
+            }
+            const _up6 = updateProjectiles;
+            updateProjectiles = function () { _up6.apply(this, arguments); updateSlashPend6(); updateIlls6(); };
+
+            function drawIllusionFx6(c) {
+                gIllFx.forEach(f => {                                                       // vệt lướt
+                    const a = f.life / f.max;
+                    c.save(); c.globalAlpha = a * 0.9; c.lineCap = 'round'; c.shadowColor = '#e5e7eb'; c.shadowBlur = 14;
+                    c.strokeStyle = '#ffffff'; c.lineWidth = 3 + 9 * a; c.beginPath(); c.moveTo(f.x0, f.y); c.lineTo(f.x1, f.y); c.stroke();
+                    c.restore();
+                });
+                gIlls.forEach(I => {
+                    const cl = I.cl; if (!cl || I.alpha <= 0) return;
+                    I.trail.forEach((h, idx) => {                                           // bóng mờ thể hiện tốc độ rất cao
+                        try { cl.drawPoseSkeleton(c, h.x, h.y, h.facing, 1, 1, h.pose, true, (0.08 + idx * 0.04) * I.alpha); } catch (e) { }
+                    });
+                    c.save(); c.globalAlpha *= I.alpha; c.shadowColor = '#e5e7eb'; c.shadowBlur = 12;
+                    cl.draw(c);
+                    c.restore();
+                });
+            }
+            const _dse6 = drawSkillEffects;
+            drawSkillEffects = function (c) { _dse6(c); drawIllusionFx6(c); };
+
+            const _clearSpecials6 = clearSpecials;
+            clearSpecials = function () {
+                _clearSpecials6.apply(this, arguments);
+                try { gIlls.forEach(I => { const e = I.target; if (e && e.frozen && e.frozen.kind === 'gstun' && e.frozen.owner === I.owner) e.releaseFreeze(); }); } catch (e) { }
+                gIlls.length = 0; gIllFx.length = 0; gSlashPend.length = 0;
+            };
+
+            console.info('[UPD6] Ghost: Ghostly Slash (stun 1s -> hất tung 1/4 map + 15%), Biến đổi (-20% tốc độ chạy), Ảo ảnh (dạng Ma - phím I) loaded.');
+
+            console.info('[UPD5] Ghost character + sword/transform system + Smash knockback loaded.');
+        })();
+
 
     })();
     
