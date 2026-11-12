@@ -9221,7 +9221,231 @@
                 gIlls.length = 0; gIllFx.length = 0; gSlashPend.length = 0;
             };
 
-            console.info('[UPD6] Ghost: Ghostly Slash (stun 1s -> hất tung 1/4 map + 15%), Biến đổi (-20% tốc độ chạy), Ảo ảnh (dạng Ma - phím I) loaded.');
+
+            // =====================================================================
+            // [UPD7 APPEND-ONLY PATCH]
+            //  1) Smash (đòn đánh thường cuối): hất văng ngang đúng 1/5 chiều dài map, tính từ vị trí đối thủ lúc trúng đòn.
+            //  2) Time · I (Bước nhảy thời gian): dịch chuyển ra sau lưng + ĐẤM thật (animation) -> -20 máu, hất 1/4 map, hiệu ứng Neon Green.
+            //  3) Ghost · U (dạng Ma - Ba con ma kéo): kéo đối thủ tới TRƯỚC MẶT Ghost (1-2 bước chân) thay vì đúng chỗ Ghost đứng.
+            //  Không xóa / không sửa code cũ: chỉ bọc (wrap) hàm cũ và thêm hàm mới. Tái sử dụng: takeHit, knockV6, gPulls, gStun,
+            //  releaseFreeze, ripples, particles, spawnHitSparks, CASTS / getCastPose.
+            // =====================================================================
+
+            // ------------------------------------------------------------------
+            // 1. SMASH = 1/5 MAP
+            // ------------------------------------------------------------------
+            // Cùng hệ số hiệu chỉnh 11.34 với knockV6 (ma sát 0.92/khung của knockdown + đoạn trượt cuối): vx = quãng / 11.34.
+            const SMASH_MAP_FRAC7 = 1 / 5;
+            const smashV7 = () => (WORLD_S() * SMASH_MAP_FRAC7) / 11.34;
+            const _takeHit7 = SP.takeHit;
+            SP.takeHit = function (damage, kx, ky, heavy, attacker, isSkill) {
+                // đúng điều kiện nhận diện Smash của UPD5 (đòn thường, heavy, bước combo 3); Space được loại trừ theo yêu cầu
+                const isSmash = !!attacker && !isSkill && !!heavy && !!kx && attacker.state === 'attack' && attacker.comboStep === 3
+                    && attacker.charId !== 'space' && !this.frozen;
+                if (this._slide7) this._slide7 = null;               // bị đánh trúng cú mới -> hủy điều khiển quãng văng cũ
+                const x0 = this.x;
+                const r = _takeHit7.apply(this, arguments);
+                // Sau cả chuỗi wrapper cũ: nếu đối thủ vừa bị hất (knockdown mới) -> đặt lại vận tốc ngang = 1/5 map, giữ nguyên độ cao (vy) & sát thương
+                if (isSmash && this.state === 'knockdown' && this.stateTimer >= 45) {
+                    this.vx = Math.sign(kx) * smashV7();
+                    startSlide7(this, Math.sign(kx), WORLD_S() * SMASH_MAP_FRAC7, x0);
+                }
+                return r;
+            };
+
+            // Điều khiển quãng văng: vật lý cũ (ma sát 0.92) cho chuyển động tự nhiên, nhưng quãng THỰC có thể lệch vài % tùy bệ/độ cao.
+            // Nên khi cú văng kết thúc, phần dư được trượt nốt (mượt, ~8 khung, không teleport) để quãng đúng bằng 1/5 (Smash) hoặc 1/4 (Đấm thời gian) map.
+            // Chạm mép map: DỪNG tại ranh giới (bản cũ nảy ngược 65% cho mọi cú văng mạnh -> chỉ tắt nảy cho 2 đòn này).
+            function startSlide7(f, dir, dist, x0) {
+                const from = (typeof x0 === 'number') ? x0 : f.x;
+                f._slide7 = { tx: clamp(from + dir * dist, leftWall, rightWall), phase: 'fly', fin: 8 };
+            }
+            const _update7 = SP.update;
+            SP.update = function () {
+                const r = _update7.apply(this, arguments);
+                const sl = this._slide7;
+                if (sl) {
+                    if (this.hp <= 0 || this.frozen) this._slide7 = null;
+                    else if (this.state === 'knockdown') {
+                        if ((this.x <= leftWall && this.vx > 0) || (this.x >= rightWall && this.vx < 0)) this.vx = 0;   // không nảy lại khỏi mép
+                    } else if (this.state === 'idle' || this.state === 'hitstun' || this.state === 'run') {
+                        sl.phase = 'fin';
+                        const left = sl.tx - this.x;
+                        this.x = clamp(this.x + left / sl.fin, leftWall, rightWall); this.vx = 0;
+                        if (--sl.fin <= 0) this._slide7 = null;
+                    } else this._slide7 = null;
+                }
+                return r;
+            };
+
+            // ------------------------------------------------------------------
+            // 2. TIME · I : Bước nhảy thời gian + cú đấm
+            // ------------------------------------------------------------------
+            const TP7 = { HIT_T: 8, END_T: 24, DMG: 20, NEON: '#39ff14', NEON2: '#b6ff9e', NEON3: '#16a34a' };
+            const tFx7 = [];
+
+            const _castTimeleap7 = castTimeleap;
+            castTimeleap = function (s) {
+                _castTimeleap7.apply(this, arguments);          // dịch chuyển ra sau lưng + hiệu ứng + stun ngắn của bản cũ (giữ nguyên)
+                if (s.hp <= 0) return;
+                s.beginCast('timepunch'); s.tp7 = { hit: false };   // nối ngay animation cú đấm
+            };
+
+            CASTS.timepunch = function (s, opp) {
+                s.castTimer++; const t = s.castTimer; s.vx *= 0.5;
+                const T = s.tp7 || (s.tp7 = { hit: false });
+                if (t === TP7.HIT_T && !T.hit) {
+                    T.hit = true;
+                    const e = enemyOf(s), d = s.facing;
+                    const near = e && e.hp > 0 && ((e.x - s.x) * d) > -30 && Math.abs(e.x - s.x) <= 170 && Math.abs(e.y - s.y) < 120;
+                    if (near) {
+                        if (e.frozen && e.frozen.kind === 'stun') e.releaseFreeze();     // thả stun ngắn để cú đấm là thứ hất văng
+                        const hpBefore = e.hp, x0 = e.x;
+                        e.takeHit(TP7.DMG, d * knockV6(), -12, true, s, true);           // -20 máu (trừ thẳng, không theo % máu tối đa) + hất 1/4 map
+                        if (e.state === 'knockdown') startSlide7(e, d, WORLD_S() / 4, x0);   // quãng đúng 1/4 map từ chỗ trúng đòn; chạm mép thì dừng ở ranh giới
+                        timePunchFx7(s, e);
+                        spawnFloatingText(e.x, e.y - 160, 'ĐẤM THỜI GIAN!! -' + Math.round(hpBefore - e.hp), TP7.NEON3, 1.4);
+                        hitstopFrames = 8; impactFlashFrames = 3; camera.triggerShake(20);
+                    } else spawnFloatingText(s.x, s.y - 150, 'TRƯỢT!', '#78716c', 1.0);
+                }
+                if (t >= TP7.END_T) s.endCast();
+            };
+
+            // Animation cú đấm: gồng tay ra sau -> lao người + vung tay phải -> giữ -> thu về
+            const _getCastPose7 = SP.getCastPose;
+            SP.getCastPose = function () {
+                if (this.castType !== 'timepunch') return _getCastPose7.apply(this, arguments);
+                const t = this.castTimer, P = (o) => Object.assign(this.getDefaultPose(), o);
+                if (t < TP7.HIT_T - 3)           // gồng
+                    return P({ hipX: -6, hipY: -44, neckX: -6, neckY: -92, headX: -4, headY: -112, lShoulderX: -2, rShoulderX: -2,
+                        rElbowX: -16, rElbowY: -84, rHandX: -32, rHandY: -92, lElbowX: 16, lElbowY: -84, lHandX: 30, lHandY: -98,
+                        lKneeX: -14, lFootX: -24, rKneeX: 14, rFootX: 22 });
+                if (t < TP7.HIT_T + 8)           // đấm (tay phải duỗi thẳng ra trước)
+                    return P({ hipX: 12, hipY: -42, neckX: 26, neckY: -86, headX: 34, headY: -106, lShoulderX: 20, lShoulderY: -84, rShoulderX: 20, rShoulderY: -84,
+                        rElbowX: 64, rElbowY: -85, rHandX: 118, rHandY: -86, lElbowX: 4, lElbowY: -72, lHandX: -6, lHandY: -60,
+                        lKneeX: -8, lKneeY: -22, lFootX: -28, rKneeX: 30, rKneeY: -22, rFootX: 44 });
+                return P({ hipX: 4, neckX: 10, headX: 14, lShoulderX: 6, rShoulderX: 6, rElbowX: 34, rElbowY: -78, rHandX: 56, rHandY: -76, lFootX: -20, rFootX: 24 });   // thu về
+            };
+
+            // Hiệu ứng va chạm Neon Green: vòng năng lượng thời gian (có vạch đồng hồ), tia sáng, gợn sóng không gian, vệt sáng
+            function timePunchFx7(s, e) {
+                const d = s.facing, hx = e.x - d * 10, hy = e.y - 88;
+                tFx7.push({ x: hx, y: hy, dir: d, age: 0, life: 36, seed: Math.random() * TAU });
+                ripples.push({ x: hx, y: hy, r: 10, max: 240, life: 24, maxLife: 24, col: TP7.NEON });
+                ripples.push({ x: hx, y: hy, r: 6, max: 150, life: 18, maxLife: 18, col: TP7.NEON2 });
+                spawnHitSparks(hx, hy, TP7.NEON, true);
+                const cols = [TP7.NEON, TP7.NEON2, TP7.NEON3];
+                for (let i = 0; i < 28; i++) particles.push({ type: 'spark', x: hx, y: hy, vx: rr(-10, 10) + d * 3, vy: rr(-9, 9), length: rr(8, 18), color: cols[i % 3], alpha: 1, decay: 0.045 });
+            }
+            function drawTimeFx7(c) {
+                tFx7.forEach(f => {
+                    const t = f.age / f.life, a = 1 - t, e1 = 1 - Math.pow(1 - t, 3);
+                    c.save(); c.globalCompositeOperation = 'lighter'; c.lineCap = 'round';
+                                        // lõi sáng
+                    const R0 = 70 * (1 - t) + 8, g = c.createRadialGradient(f.x, f.y, 0, f.x, f.y, R0);
+                    g.addColorStop(0, 'rgba(240,255,235,' + (0.95 * a) + ')'); g.addColorStop(0.5, 'rgba(57,255,20,' + (0.55 * a) + ')'); g.addColorStop(1, 'rgba(57,255,20,0)');
+                    c.fillStyle = g; c.beginPath(); c.arc(f.x, f.y, R0, 0, TAU); c.fill();
+                    // 3 vòng năng lượng thời gian (vòng ngoài có vạch đồng hồ quay)
+                    for (let i = 0; i < 3; i++) {
+                        const k = clamp((t * 1.25 - i * 0.12), 0, 1); if (k <= 0) continue;
+                        const r = 26 + (1 - Math.pow(1 - k, 3)) * (150 + i * 42), al = (1 - k) * 0.95;
+                        c.globalAlpha = al * 0.28; c.strokeStyle = TP7.NEON; c.lineWidth = 16 - i * 3;      // quầng sáng (thay shadowBlur cho nhẹ máy)
+                        c.beginPath(); c.arc(f.x, f.y, r, 0, TAU); c.stroke();
+                        c.globalAlpha = al; c.strokeStyle = i === 1 ? TP7.NEON2 : TP7.NEON; c.lineWidth = 6 - i * 1.5;
+                        c.beginPath(); c.arc(f.x, f.y, r, 0, TAU); c.stroke();
+                        if (i === 0) {
+                            c.lineWidth = 3;
+                            for (let q = 0; q < 12; q++) {
+                                const an = q * TAU / 12 + f.age * 0.16 * f.dir;
+                                c.beginPath(); c.moveTo(f.x + Math.cos(an) * (r - 10), f.y + Math.sin(an) * (r - 10)); c.lineTo(f.x + Math.cos(an) * (r + (q % 3 === 0 ? 12 : 4)), f.y + Math.sin(an) * (r + (q % 3 === 0 ? 12 : 4))); c.stroke();
+                            }
+                        }
+                    }
+                    // kim đồng hồ quay nhanh
+                    c.globalAlpha = a * 0.9; c.strokeStyle = TP7.NEON2; c.lineWidth = 4;
+                    const hr = 34 + 70 * e1;
+                    c.beginPath(); c.moveTo(f.x, f.y); c.lineTo(f.x + Math.cos(f.seed + f.age * 0.5) * hr, f.y + Math.sin(f.seed + f.age * 0.5) * hr); c.stroke();
+                    c.lineWidth = 6; c.beginPath(); c.moveTo(f.x, f.y); c.lineTo(f.x + Math.cos(f.seed - f.age * 0.11) * hr * 0.62, f.y + Math.sin(f.seed - f.age * 0.11) * hr * 0.62); c.stroke();
+                    // tia sáng xanh tỏa ra
+                    c.strokeStyle = TP7.NEON; c.lineWidth = 3.2 * a + 0.6;
+                    for (let q = 0; q < 16; q++) {
+                        const an = q * TAU / 16 + f.seed, r1 = 20 + e1 * 40, r2 = 60 + e1 * (110 + (q % 3) * 38);
+                        c.globalAlpha = a * 0.85; c.beginPath(); c.moveTo(f.x + Math.cos(an) * r1, f.y + Math.sin(an) * r1); c.lineTo(f.x + Math.cos(an) * r2, f.y + Math.sin(an) * r2); c.stroke();
+                    }
+                    // gợn sóng không gian (elip méo)
+                    c.lineWidth = 3;
+                    for (let i = 0; i < 2; i++) {
+                        const k = clamp(t * 1.1 - i * 0.18, 0, 1); if (k <= 0) continue;
+                        c.globalAlpha = (1 - k) * 0.6; c.strokeStyle = TP7.NEON3;
+                        c.beginPath(); c.ellipse(f.x, f.y, 40 + k * 230, 16 + k * 70, f.dir * 0.12, 0, TAU); c.stroke();
+                    }
+                    // vệt sáng theo hướng hất văng
+                    for (let q = 0; q < 6; q++) {
+                        const oy = (q - 2.5) * 13, len = (90 + q * 14) + e1 * 220;
+                        c.globalAlpha = a * 0.8; c.strokeStyle = q % 2 ? TP7.NEON2 : TP7.NEON; c.lineWidth = 3.5 - q * 0.3;
+                        c.beginPath(); c.moveTo(f.x + f.dir * 14, f.y + oy); c.lineTo(f.x + f.dir * len, f.y + oy * (1 + t)); c.stroke();
+                    }
+                    c.restore();
+                });
+            }
+            const _dse7 = drawSkillEffects;
+            drawSkillEffects = function (c) { _dse7(c); drawTimeFx7(c); drawPullRopes7(c); };
+
+            // ------------------------------------------------------------------
+            // 3. GHOST · U (dạng Ma): kéo đối thủ đến TRƯỚC MẶT Ghost
+            // ------------------------------------------------------------------
+            // Khoảng cách dừng = 1,5 bước chân, lấy theo kích thước thật của nhân vật (chiều dài chân), KHÔNG dùng pixel cố định.
+            const PULL_STEPS7 = 1.5;
+            const pullGap7 = (s) => Math.abs(s.getDefaultPose().hipY) * PULL_STEPS7;
+            function retargetPulls7() {
+                for (let i = 0; i < gPulls.length; i++) {
+                    const pl = gPulls[i];
+                    if (pl.phase !== 'pull' || !pl.owner) continue;
+                    const s = pl.owner;
+                    pl.tx = clamp(s.x + s.facing * pullGap7(s), leftWall, rightWall);       // phía trước mặt Ghost theo hướng đang quay (trái/phải)
+                    pl.ty = s.y;
+                }
+            }
+            const _up7 = updateProjectiles;
+            updateProjectiles = function () {
+                retargetPulls7();                       // đổi điểm đến TRƯỚC khi hệ thống kéo cũ (updateGhostFx) di chuyển đối thủ
+                _up7.apply(this, arguments);
+                for (let i = tFx7.length - 1; i >= 0; i--) { if (++tFx7[i].age >= tFx7[i].life) tFx7.splice(i, 1); }
+            };
+
+            // Ba con ma cùng giữ dây kéo: dây căng từ từng con ma về phía Ghost + mũi tên chạy theo hướng kéo
+            function drawPullRopes7(c) {
+                const now = nowMs() / 1000;
+                gPulls.forEach(pl => {
+                    if (pl.phase === 'fade' || !pl.owner) return;
+                    const e = pl.target, s = pl.owner, pulling = pl.phase === 'pull' && pl.age >= 24;
+                    for (let i = 0; i < 3; i++) {
+                        const k = clamp((pl.age - i * 8) / 8, 0, 1); if (k <= 0) continue;
+                        const a = pl.age * 0.12 + i * TAU / 3, gx = e.x + Math.cos(a) * 78, gy = e.y - 76 + Math.sin(a) * 44;
+                        const ex = s.x + s.facing * pullGap7(s) * 0.4, ey = s.y - 76;
+                        c.save(); c.lineCap = 'round'; c.shadowColor = '#e5e7eb'; c.shadowBlur = 8;
+                        c.globalAlpha = (pulling ? 0.65 : 0.25) * k; c.strokeStyle = '#f3f4f6'; c.lineWidth = pulling ? 2.4 : 1.4; c.setLineDash([]);
+                        c.beginPath(); c.moveTo(gx, gy);
+                        const mx = (gx + ex) / 2, my = (gy + ey) / 2 + (pulling ? Math.sin(now * 14 + i) * 3 : 8);
+                        c.quadraticCurveTo(mx, my, ex, ey); c.stroke();
+                        if (pulling) {                                  // mũi tên nhỏ chạy dọc dây theo chiều kéo
+                            for (let q = 0; q < 3; q++) {
+                                const u = ((now * 1.6 + i * 0.31 + q / 3) % 1), px = gx + (ex - gx) * u, py = gy + (ey - gy) * u;
+                                c.globalAlpha = 0.8 * k * (1 - u * 0.6); c.fillStyle = '#ffffff';
+                                const dir = Math.sign(ex - gx) || 1;
+                                c.beginPath(); c.moveTo(px + dir * 6, py); c.lineTo(px - dir * 4, py - 4); c.lineTo(px - dir * 4, py + 4); c.closePath(); c.fill();
+                            }
+                        }
+                        c.restore();
+                    }
+                });
+            }
+
+            // Reset an toàn khi sang round mới / thoát trận
+            const _clearSpecials7 = clearSpecials;
+            clearSpecials = function () { _clearSpecials7.apply(this, arguments); tFx7.length = 0; [player, bot].forEach(f => { if (f) f.tp7 = null; }); };
+
+            console.info('[UPD7] Smash = 1/5 map, Time · I = teleport + đấm (-20, 1/4 map, Neon Green), Ghost · U = kéo tới trước mặt Ghost loaded.');
 
             console.info('[UPD5] Ghost character + sword/transform system + Smash knockback loaded.');
         })();
