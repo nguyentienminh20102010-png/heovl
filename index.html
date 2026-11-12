@@ -9447,6 +9447,171 @@
 
             console.info('[UPD7] Smash = 1/5 map, Time · I = teleport + đấm (-20, 1/4 map, Neon Green), Ghost · U = kéo tới trước mặt Ghost loaded.');
 
+            // =====================================================================
+            // [UPD8 APPEND-ONLY PATCH] Khóa chiêu O (chiêu thứ 3) 10 giây ở ĐẦU MỖI ROUND - áp dụng cho MỌI nhân vật, kể cả Ghost
+            //  Nguyên nhân lỗi cũ: bản khóa 10s (UPD4.2, nằm trong beginRound) ghi vào cdAt.KeyO, nhưng Ghost có bộ đếm hồi chiêu RIÊNG
+            //  (gs(s).cd.tf / gs(s).cd.breath) và syncCd() ghi đè cdAt mỗi khung -> khóa bị xóa, Ghost dùng được O ngay.
+            //  Cách sửa: bọc beginRound (không sửa code cũ), cùng một điểm vào cho mọi nhân vật.
+            //
+            //  >>> QUY TẮC BẮT BUỘC KHI THÊM NHÂN VẬT MỚI <<<
+            //   - Nhân vật dùng bảng hồi chiêu chung (cdAt = skillReadyAt / botSkillReadyAt): TỰ ĐỘNG được khóa O 10s, không cần làm gì thêm.
+            //   - Nhân vật có bộ đếm hồi chiêu RIÊNG (như Ghost): BẮT BUỘC đăng ký hook:
+            //         OPENING_O_LOCK_HOOKS['<charId>'] = (s, untilMs) => { /* đặt bộ đếm riêng của chiêu O = untilMs */ };
+            //     (nhớ đăng ký cho cả các biến thể charId, ví dụ 'ghost' và 'ghostform').
+            // =====================================================================
+            const OPENING_O_LOCK_MS = 10000;
+            const OPENING_O_LOCK_HOOKS = {};
+            OPENING_O_LOCK_HOOKS[GH] = OPENING_O_LOCK_HOOKS[GF] = function (s, until) {
+                const g = gs(s); g.cd.tf = until; g.cd.breath = until;          // Biến đổi (dạng người) + Hơi thở Ma (dạng Ma) đều là chiêu O
+                syncCd(s);
+            };
+            function applyOpeningOLock8() {
+                const until = nowMs() + OPENING_O_LOCK_MS;
+                [player, bot].forEach(s => {
+                    if (!s) return;
+                    if (s.cdAt) s.cdAt.KeyO = until;
+                    s._oCdDuration42 = OPENING_O_LOCK_MS; s._openOUntil7 = until;
+                    const h = OPENING_O_LOCK_HOOKS[s.charId]; if (h) h(s, until);
+                });
+                if (typeof updateSkillUI === 'function') updateSkillUI();
+            }
+            const _beginRound8 = beginRound;
+            beginRound = function () { _beginRound8.apply(this, arguments); applyOpeningOLock8(); };
+
+            // Thanh hồi chiêu của Ghost: trong 10s đầu hiển thị theo thang 10s (syncCd cũ đặt thang 40s/20s)
+            const _syncCd8 = syncCd;
+            syncCd = function (s) {
+                _syncCd8.apply(this, arguments);
+                if (s && nowMs() < (s._openOUntil7 || 0)) s._oCdDuration42 = OPENING_O_LOCK_MS;
+            };
+
+            console.info('[UPD8] Chiêu O khóa 10s đầu mỗi round cho mọi nhân vật (kể cả Ghost) loaded.');
+
+            // =====================================================================
+            // [UPD9 APPEND-ONLY PATCH]
+            //  1) Ghost · Nội tại "Ảnh Ảo" (Phantom Dodge): 20% né MỌI đòn nhắm vào Ghost (đánh thường + mọi kỹ năng của đối thủ).
+            //  2) Space · Đánh thường: tia năng lượng trúng đối thủ => Stun 0,1 giây (6 khung) ngay lúc va chạm.
+            //  Không xóa / không sửa code cũ: chỉ bọc (wrap) hàm cũ và thêm hàm mới.
+            // =====================================================================
+
+            // ------------------------------------------------------------------
+            // 1. GHOST · ẢNH ẢO (NỘI TẠI)
+            // ------------------------------------------------------------------
+            const DODGE_CHANCE8 = 0.2;           // 20%
+            const DODGE_WINDOW_MS8 = 200;        // một chiêu của đối thủ thường chạm nhiều lần trong vài khung (đánh + stun + hất): chỉ tung xúc xắc 1 lần / chiêu
+            const DODGE_FX_MS8 = 440;            // thời lượng hiệu ứng mờ (mờ dần -> giữ -> hiện lại mượt)
+            const isGhostTarget8 = (s) => !!s && isG(s) && !s.isClone && s.hp > 0 && !s.frozen;
+            const whoAtt8 = (a) => (a && a.isClone && a.owner) ? a.owner : a;
+
+            function phantomDodgeFx8(s) {
+                s._dodgeAt8 = nowMs();
+                ripples.push({ x: s.x, y: s.y - 70, r: 14, max: 130, life: 18, maxLife: 18, col: '#e5e7eb' });
+                for (let i = 0; i < 14; i++) particles.push({ type: 'spark', x: s.x + rr(-22, 22), y: s.y - rr(10, 120), vx: rr(-3, 3), vy: rr(-4, 0.5), length: 10, color: i % 2 ? '#ffffff' : '#c7d2fe', alpha: 1, decay: 0.05 });
+                spawnFloatingText(s.x, s.y - 175, 'NÉ! (Ảnh Ảo)', '#6b7280', 1.25);
+                try { gSfx('ghost'); } catch (e) { }
+            }
+            // Tung xúc xắc 1 lần cho mỗi chiêu của cùng một đối thủ (cache theo cửa sổ thời gian)
+            function phantomRoll8(g, attacker) {
+                const who = whoAtt8(attacker), now = nowMs(), d = g._dg8;
+                if (d && d.who === who && now - d.t < DODGE_WINDOW_MS8) return d.ok;
+                const ok = Math.random() < DODGE_CHANCE8;
+                g._dg8 = { who, t: now, ok };
+                if (ok) phantomDodgeFx8(g);
+                return ok;
+            }
+            const hostile8 = (g, a) => !!a && a !== g && a.owner !== g && whoAtt8(a) !== g;
+
+            // Đòn đánh thường (cận chiến, tia Space, dư ảnh...): đều đi qua tryBlockNormal -> true = đòn trượt hoàn toàn
+            const _tbn8 = SP.tryBlockNormal;
+            SP.tryBlockNormal = function (attacker) {
+                if (isGhostTarget8(this) && hostile8(this, attacker) && phantomRoll8(this, attacker)) return true;
+                const blocked = _tbn8.apply(this, arguments);
+                // Tia năng lượng của Space chỉ gọi tryBlockNormal đúng lúc va chạm: nếu không bị đỡ / né => tia TRÚNG => xếp lịch Stun 0,1s
+                if (!blocked && attacker && attacker.charId === 'space' && !attacker.isClone && attacker !== this) this._pendStun8 = { owner: attacker };
+                return blocked;
+            };
+            // Kỹ năng gây sát thương / hất
+            const _takeHit8 = SP.takeHit;
+            SP.takeHit = function (damage, kx, ky, heavy, attacker) {
+                if (isGhostTarget8(this) && hostile8(this, attacker) && phantomRoll8(this, attacker)) return;
+                return _takeHit8.apply(this, arguments);
+            };
+            // Kỹ năng khống chế: đóng băng / stun / ngưng đọng thời gian, tóm giữ (Kamehameha, Liên hoàn đấm...), Stun của Ghost khác
+            const _freezeFor8 = SP.freezeFor;
+            SP.freezeFor = function (frames, kind, owner) {
+                if (isGhostTarget8(this) && hostile8(this, owner) && phantomRoll8(this, owner)) return;
+                return _freezeFor8.apply(this, arguments);
+            };
+            const _getHeld8 = SP.getHeld;
+            SP.getHeld = function (owner) {
+                if (isGhostTarget8(this) && hostile8(this, owner) && phantomRoll8(this, owner)) return;
+                return _getHeld8.apply(this, arguments);
+            };
+            const _gStun8 = gStun;
+            gStun = function (o, frames, owner) {
+                if (isGhostTarget8(o) && hostile8(o, owner) && phantomRoll8(o, owner)) return false;
+                return _gStun8.apply(this, arguments);
+            };
+
+            // Hiệu ứng mờ -> hiện lại mượt + 2 bóng mờ trượt ra hai bên
+            function dodgeK8(s) {
+                const t = nowMs() - (s._dodgeAt8 || -1e9);
+                if (t < 0 || t >= DODGE_FX_MS8) return null;
+                const u = t / DODGE_FX_MS8, MIN = 0.16;
+                const k = u < 0.2 ? 1 - (1 - MIN) * sm(u, 0, 0.2) : (u < 0.62 ? MIN : MIN + (1 - MIN) * sm(u, 0.62, 1));
+                return { k, u };
+            }
+            const _draw8 = SP.draw;
+            SP.draw = function (c) {
+                const d = (isG(this) && !this.isClone) ? dodgeK8(this) : null;
+                if (!d) return _draw8.call(this, c);
+                c.save();
+                try {
+                    const spread = Math.sin(d.u * Math.PI) * 34, ga = 0.22 * (1 - d.u);
+                    [-1, 1].forEach(sd => { try { this.drawPoseSkeleton(c, this.x + sd * spread, this.y, this.facing, 1, 1, this.currentPose, true, ga); } catch (e) { } });
+                    c.globalAlpha *= d.k;
+                    _draw8.call(this, c);
+                } finally { c.restore(); }
+            };
+
+            // Mô tả nhân vật (màn chọn nhân vật)
+            if (CHARACTERS.ghost && Array.isArray(CHARACTERS.ghost.skillText)) CHARACTERS.ghost.skillText.unshift('Nội tại · Ảnh Ảo (20% né mọi đòn)');
+
+            // ------------------------------------------------------------------
+            // 2. SPACE · ĐÁNH THƯỜNG: tia trúng => Stun 0,1 giây
+            // ------------------------------------------------------------------
+            const SPACE_STUN_FRAMES8 = 6;        // 0,1 giây ở 60 khung/giây
+            // Stun áp dụng ở khung ngay sau va chạm (để đòn cuối kết liễu không bị kẹt trong stun) - đòn trừ máu của bản cũ vẫn chạy nguyên vẹn
+            const _update8 = SP.update;
+            SP.update = function () {
+                const ps = this._pendStun8;
+                if (ps) {
+                    this._pendStun8 = null;
+                    if (this.hp > 0 && !this.frozen && this.state !== 'held' && this.state !== 'knockdown') {
+                        const sv = { vx: this.vx, vy: this.vy };
+                        this.freezeFor(SPACE_STUN_FRAMES8, 'stun', ps.owner);
+                        if (this.frozen && this.frozen.kind === 'stun') {
+                            this._stunSave8 = sv;
+                            spawnFloatingText(this.x, this.y - 168, 'STUN 0,1s', '#7c3aed', 0.95);
+                            spawnHitSparks(this.x, this.y - 100, '#c4b5fd', false);
+                        }
+                    }
+                }
+                return _update8.apply(this, arguments);
+            };
+            // Hết stun: trả lại vận tốc cũ (freezeFor đặt vx = vy = 0) để không làm mất chuyển động đang có của đối thủ
+            const _releaseFreeze8 = SP.releaseFreeze;
+            SP.releaseFreeze = function () {
+                const f = this.frozen, sv = this._stunSave8;
+                _releaseFreeze8.apply(this, arguments);
+                if (sv && f && f.kind === 'stun') {
+                    this._stunSave8 = null;
+                    if (this.hp > 0 && !this.frozen && this.state !== 'held') { this.vx = sv.vx; this.vy = sv.vy; }
+                }
+            };
+
+            console.info('[UPD9] Ghost nội tại Ảnh Ảo (né 20%) + Space đánh thường stun 0,1s loaded.');
+
             console.info('[UPD5] Ghost character + sword/transform system + Smash knockback loaded.');
         })();
 
