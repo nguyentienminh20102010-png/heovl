@@ -8178,7 +8178,7 @@
             const GH = 'ghost', GF = 'ghostform';          // ghostform = trạng thái Ma (dùng riêng để HUD/skill tự đổi theo)
             const SWORD_LEN = 64;
             const SMASH_EXTRA_VX = 6.4;                    // quãng văng = vx * 11.5 (ma sát .92/frame) => +~74px ≈ 1-2 bước chân
-            const FORM_MS = 30000, TF_CD_MS = 40000;
+            const FORM_MS = 20000 /* [UPD10] giá trị cũ: 30000 (30s) -> 20s */, TF_CD_MS = 40000;
             const isG = (s) => !!s && (s.charId === GH || s.charId === GF);
             const isF2 = (s) => !!s && s.charId === GF;
             const sm = (v, a, b) => { const t = clamp((v - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
